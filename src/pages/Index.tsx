@@ -8,9 +8,7 @@ const Index: React.FC = () => {
     <div 
       className="flex flex-row items-center justify-center relative w-[1280px] h-[832px] mx-auto px-[426px] py-[116px] gap-[10px] overflow-hidden"
       style={{ 
-        background: `url('/lovable-uploads/cc7bcae7-92b0-4743-8790-eda2da7d6fac.png')`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
+        background: `linear-gradient(247deg, #B1C9C3 0%, #000 100%)`,
       }}
     >
       <BackgroundText text="Rachid" position="bottomLeft" />
