@@ -1,3 +1,4 @@
+
 import React from "react";
 
 interface BackgroundTextProps {
@@ -10,13 +11,13 @@ export const BackgroundText: React.FC<BackgroundTextProps> = ({
   position,
 }) => {
   const positionClasses = {
-    topRight: "right-[5%] top-[15%]",
-    bottomLeft: "left-[5%] top-[80%]",
+    topRight: "right-[5%] top-[10%] text-right",
+    bottomLeft: "left-[5%] bottom-[10%]",
   };
 
   return (
     <div
-      className={`font-bold text-[120px] text-[rgba(255,255,255,0.1)] absolute whitespace-nowrap ${positionClasses[position]}`}
+      className={`font-bold text-[180px] text-[rgba(255,255,255,0.08)] absolute whitespace-nowrap ${positionClasses[position]}`}
     >
       {text}
     </div>

@@ -1,3 +1,4 @@
+
 import React from "react";
 
 interface FormInputProps {
@@ -20,19 +21,15 @@ export const FormInput: React.FC<FormInputProps> = ({
   return (
     <div className="mb-4 w-full">
       <div className="text-sm font-medium text-gray-700 mb-1">{label}</div>
-      <div className="relative">
-        <div className="absolute top-[10px] left-[10px] text-gray-500 text-sm">
-          {placeholder}
-        </div>
-        <input
-          type={type}
-          name={name}
-          onChange={onChange}
-          value={value}
-          className="w-full h-10 border border-[rgba(115,115,115,0.5)] rounded-[5px] px-2 bg-transparent"
-          aria-label={label}
-        />
-      </div>
+      <input
+        type={type}
+        name={name}
+        onChange={onChange}
+        value={value}
+        placeholder={placeholder}
+        className="w-full h-10 border border-[rgba(115,115,115,0.3)] rounded-[5px] px-4 bg-white/50 text-gray-700 placeholder:text-gray-400 focus:outline-none focus:border-[#BFA76F] transition-colors"
+        aria-label={label}
+      />
     </div>
   );
 };
