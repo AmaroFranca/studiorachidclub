@@ -19,20 +19,24 @@ export const FormInput: React.FC<FormInputProps> = ({
   value,
 }) => {
   return (
-    <div className="mb-[20px] w-full">
-      <div className="text-xs font-semibold text-[#737373] mb-[5px]">{label}</div>
-      <div className="relative">
+    <div className="flex flex-col items-start gap-[5px] w-[346px] mb-[20px]">
+      <div className="font-poppins font-semibold text-[12px] leading-[18px] text-[#737373] h-[9px] flex items-center">
+        {label}
+      </div>
+      <div className="relative w-full">
         <input
           type={type}
           name={name}
           onChange={onChange}
           value={value}
-          className="w-full h-[25px] border border-[rgba(115,115,115,0.5)] rounded-[5px] px-[11px] py-0 bg-transparent text-[10px] text-[#737373] focus:outline-none focus:border-[#BFA76F] transition-colors"
+          className="w-[346px] h-[25px] border border-[rgba(115,115,115,0.5)] rounded-[5px] px-[11px] py-0 bg-transparent text-[10px]"
           aria-label={label}
         />
-        <div className="absolute left-[11px] top-[2.5px] pointer-events-none text-[10px] text-[rgba(115,115,115,0.5)]">
-          {!value && placeholder}
-        </div>
+        {!value && (
+          <div className="absolute left-[11px] top-[5px] font-poppins font-normal text-[10px] leading-[15px] text-[rgba(115,115,115,0.5)]">
+            {placeholder}
+          </div>
+        )}
       </div>
     </div>
   );

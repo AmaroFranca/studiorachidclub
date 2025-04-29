@@ -27,17 +27,19 @@ export const RegistrationForm: React.FC = () => {
   };
 
   return (
-    <div className="relative w-[428px] shadow-[10px_10px_15px_rgba(0,0,0,0.5)] border border-solid border-[rgba(115,115,115,0.5)] flex flex-col items-center gap-[10px] bg-[#E4E4E4] py-[26px] px-0 rounded-[10px]">
+    <div className="relative w-[428px] box-border flex flex-col items-center gap-[10px] bg-[#E4E4E4] py-[26px] px-0 rounded-[10px] border border-solid border-[rgba(115,115,115,0.5)] shadow-[10px_10px_15px_rgba(0,0,0,0.5)] h-[490px]">
       <div className="w-[398px] px-[15px]">
-        <div className="flex items-center justify-center gap-[10px] mb-2">
+        <div className="flex items-center justify-center gap-[10px] mb-[5px]">
           <Heart className="text-[#B1C9C3]" size={24} />
-          <div className="font-poppins font-semibold text-[22px] text-[#737373]">Faça o seu cadastro</div>
+          <div className="font-poppins font-semibold text-[22px] leading-[33px] text-[#737373] h-[14px] flex items-center">
+            Faça o seu cadastro
+          </div>
         </div>
-        <div className="font-poppins text-[14px] text-[#737373] mb-5 text-center">
+        <div className="font-poppins text-[14px] leading-[22px] text-[#737373] text-center mb-[20px] h-[14px]">
           Preencha com seus dados para fazer o cadastro
         </div>
 
-        <form onSubmit={handleSubmit} className="w-full">
+        <form onSubmit={handleSubmit} className="w-full flex flex-col items-center">
           <div className="w-[346px] mx-auto">
             <FormInput
               label="Nome"
@@ -88,10 +90,12 @@ export const RegistrationForm: React.FC = () => {
       
       <button
         type="submit"
-        className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 w-[378px] py-[15px] px-[33px] bg-[#BFA76F] text-[#EFEFEF] font-poppins font-bold text-[16px] rounded-[5px] hover:bg-[#a89058] transition-colors uppercase text-center"
+        className="absolute w-[378px] py-[15px] px-[33px] bg-[#BFA76F] rounded-[5px] left-1/2 transform -translate-x-1/2 top-[389.55px]"
         onClick={(e) => handleSubmit(e)}
       >
-        Enviar meus dados
+        <span className="font-poppins font-bold text-[16px] leading-[24px] text-[#EFEFEF] uppercase">
+          ENVIAR MEUS DADOS
+        </span>
       </button>
     </div>
   );
