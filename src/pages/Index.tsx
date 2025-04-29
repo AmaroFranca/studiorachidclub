@@ -1,11 +1,24 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import React from "react";
+import { BackgroundText } from "@/components/registration/BackgroundText";
+import { RegistrationForm } from "@/components/registration/RegistrationForm";
 
-const Index = () => {
+const Index: React.FC = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
+    <div className="max-w-none w-full h-screen flex items-center justify-center relative mx-auto bg-gray-900 max-md:max-w-[991px] max-md:p-5 max-sm:max-w-screen-sm max-sm:p-4">
+      <BackgroundText text="Rachid" position="bottomLeft" />
+      <BackgroundText text="Studio" position="topRight" />
+
+      <div className="flex flex-col items-center gap-[30px]">
+        <div className="text-center">
+          <div className="font-normal text-[28px] text-[#EFEFEF] tracking-[-1.4px]">
+            Programa de indicação
+          </div>
+          <div className="font-bold text-4xl text-[#EFEFEF] tracking-[-1.8px]">
+            Studio Rachid
+          </div>
+        </div>
+
+        <RegistrationForm />
       </div>
     </div>
   );
