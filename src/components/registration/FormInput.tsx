@@ -19,15 +19,15 @@ export const FormInput: React.FC<FormInputProps> = ({
   value,
 }) => {
   return (
-    <div className="mb-4 w-full">
-      <div className="text-sm font-medium text-gray-700 mb-1">{label}</div>
+    <div className="mb-5 w-full">
+      <div className="text-sm font-semibold text-[#737373] mb-1.5">{label}</div>
       <input
         type={type}
         name={name}
         onChange={onChange}
         value={value}
         placeholder={placeholder}
-        className="w-full h-10 border border-[rgba(115,115,115,0.3)] rounded-[5px] px-4 bg-white/50 text-gray-700 placeholder:text-gray-400 focus:outline-none focus:border-[#BFA76F] transition-colors"
+        className="w-full h-9 border border-[rgba(115,115,115,0.5)] rounded-[5px] px-3 py-2 bg-transparent text-xs text-gray-700 placeholder:text-[#737373] focus:outline-none focus:border-[#BFA76F] transition-colors"
         aria-label={label}
       />
     </div>

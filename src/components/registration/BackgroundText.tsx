@@ -11,13 +11,14 @@ export const BackgroundText: React.FC<BackgroundTextProps> = ({
   position,
 }) => {
   const positionClasses = {
-    topRight: "right-[5%] top-[10%] text-right",
+    topRight: "right-[5%] top-0 text-right",
     bottomLeft: "left-[5%] bottom-[10%]",
   };
 
   return (
     <div
-      className={`font-bold text-[180px] text-[rgba(255,255,255,0.08)] absolute whitespace-nowrap ${positionClasses[position]}`}
+      className={`font-poppins font-bold text-[180px] text-[rgba(255,255,255,0.08)] absolute whitespace-nowrap tracking-[-6px] ${positionClasses[position]}`}
+      style={{ letterSpacing: "-6px" }}
     >
       {text}
     </div>

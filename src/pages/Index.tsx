@@ -6,7 +6,7 @@ import { RegistrationForm } from "@/components/registration/RegistrationForm";
 const Index: React.FC = () => {
   return (
     <div 
-      className="max-w-none w-full h-screen flex items-center justify-center relative mx-auto overflow-hidden"
+      className="max-w-none w-full h-screen flex items-center justify-center relative mx-auto overflow-hidden font-poppins"
       style={{ 
         background: "linear-gradient(135deg, #4B5E5A 0%, #6F8983 100%)",
         boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)"
