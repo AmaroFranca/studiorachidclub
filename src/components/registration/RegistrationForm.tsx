@@ -2,8 +2,11 @@
 import React, { useState } from "react";
 import { FormInput } from "./FormInput";
 import { Heart } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export const RegistrationForm: React.FC = () => {
+  const isMobile = useIsMobile();
+  
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -26,21 +29,30 @@ export const RegistrationForm: React.FC = () => {
     console.log("Form submitted:", formData);
   };
 
+  // Ajustes responsivos
+  const formPadding = isMobile ? "py-[20px] px-[15px]" : "py-[26px] px-0";
+  const formHeight = isMobile ? "min-h-[480px]" : "min-h-[490px]";
+  const titleSize = isMobile ? "text-[18px] leading-[27px]" : "text-[22px] leading-[33px]";
+  const subtitleSize = isMobile ? "text-[12px] leading-[18px]" : "text-[14px] leading-[22px]";
+  const buttonMargin = isMobile ? "mt-[20px]" : "mt-[30px]";
+  const buttonPadding = isMobile ? "py-[12px] px-[20px]" : "py-[15px] px-[33px]";
+  const buttonFontSize = isMobile ? "text-[14px]" : "text-[16px]";
+  
   return (
-    <div className="relative w-[428px] box-border flex flex-col items-center gap-[10px] bg-[#E4E4E4] py-[26px] px-0 rounded-[10px] border border-solid border-[rgba(115,115,115,0.5)] shadow-[10px_10px_15px_rgba(0,0,0,0.5)] h-[490px]">
-      <div className="w-[398px] px-[15px]">
+    <div className={`relative w-full box-border flex flex-col items-center gap-[10px] bg-[#E4E4E4] ${formPadding} rounded-[10px] border border-solid border-[rgba(115,115,115,0.5)] shadow-[5px_5px_15px_rgba(0,0,0,0.5)] md:shadow-[10px_10px_15px_rgba(0,0,0,0.5)] ${formHeight}`}>
+      <div className="w-full px-[15px]">
         <div className="flex items-center justify-center gap-[10px] mb-[5px]">
-          <Heart className="text-[#B1C9C3]" size={24} />
-          <div className="font-poppins font-semibold text-[22px] leading-[33px] text-[#737373] h-[14px] flex items-center">
+          <Heart className="text-[#B1C9C3]" size={isMobile ? 20 : 24} />
+          <div className={`font-poppins font-semibold ${titleSize} text-[#737373] flex items-center`}>
             Faça o seu cadastro
           </div>
         </div>
-        <div className="font-poppins text-[14px] leading-[22px] text-[#737373] text-center mb-[20px] h-[14px]">
+        <div className={`font-poppins ${subtitleSize} text-[#737373] text-center mb-[15px] md:mb-[20px]`}>
           Preencha com seus dados para fazer o cadastro
         </div>
 
         <form onSubmit={handleSubmit} className="w-full flex flex-col items-center">
-          <div className="w-[346px] mx-auto">
+          <div className="w-full max-w-[346px] mx-auto">
             <FormInput
               label="Nome"
               placeholder="Coloque aqui o nome"
@@ -85,18 +97,20 @@ export const RegistrationForm: React.FC = () => {
               value={formData.confirmPassword}
             />
           </div>
+        
+          <div className={`w-full flex justify-center ${buttonMargin}`}>
+            <button
+              type="submit"
+              className={`w-full max-w-[378px] ${buttonPadding} bg-[#BFA76F] rounded-[5px]`}
+              onClick={(e) => handleSubmit(e)}
+            >
+              <span className={`font-poppins font-bold ${buttonFontSize} leading-[24px] text-[#EFEFEF] uppercase`}>
+                ENVIAR MEUS DADOS
+              </span>
+            </button>
+          </div>
         </form>
       </div>
-      
-      <button
-        type="submit"
-        className="absolute w-[378px] py-[15px] px-[33px] bg-[#BFA76F] rounded-[5px] left-1/2 transform -translate-x-1/2 top-[389.55px]"
-        onClick={(e) => handleSubmit(e)}
-      >
-        <span className="font-poppins font-bold text-[16px] leading-[24px] text-[#EFEFEF] uppercase">
-          ENVIAR MEUS DADOS
-        </span>
-      </button>
     </div>
   );
 };
