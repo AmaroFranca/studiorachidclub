@@ -17,8 +17,8 @@ export const BackgroundText: React.FC<BackgroundTextProps> = ({
 
   return (
     <div
-      className={`font-poppins font-bold text-[180px] text-[rgba(255,255,255,0.08)] absolute whitespace-nowrap tracking-[-6px] ${positionClasses[position]}`}
-      style={{ letterSpacing: "-6px" }}
+      className={`font-poppins font-bold text-[180px] text-[rgba(255,255,255,0.08)] absolute whitespace-nowrap ${positionClasses[position]}`}
+      style={{ letterSpacing: "-0.05em" }}
     >
       {text}
     </div>
