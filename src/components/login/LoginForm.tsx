@@ -1,8 +1,11 @@
 
 import React, { useState } from "react";
-import { Heart } from "lucide-react";
+import { Heart, EyeOff, Eye } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { FormInput } from "@/components/registration/FormInput";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { toast } from "sonner";
 
 export const LoginForm: React.FC = () => {
   const isMobile = useIsMobile();
@@ -11,6 +14,19 @@ export const LoginForm: React.FC = () => {
     email: "",
     password: "",
   });
+  
+  const [errors, setErrors] = useState({
+    email: "",
+    password: "",
+  });
+  
+  const [showPassword, setShowPassword] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const validateEmail = (email: string) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -18,20 +34,80 @@ export const LoginForm: React.FC = () => {
       ...prev,
       [name]: value,
     }));
+    
+    // Clear error when typing
+    if (errors[name as keyof typeof errors]) {
+      setErrors(prev => ({
+        ...prev,
+        [name]: ""
+      }));
+    }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const validateForm = () => {
+    const newErrors = {
+      email: "",
+      password: ""
+    };
+    let isValid = true;
+
+    if (!formData.email) {
+      newErrors.email = "E-mail é obrigatório";
+      isValid = false;
+    } else if (!validateEmail(formData.email)) {
+      newErrors.email = "E-mail inválido";
+      isValid = false;
+    }
+
+    if (!formData.password) {
+      newErrors.password = "Senha é obrigatória";
+      isValid = false;
+    } else if (formData.password.length < 6) {
+      newErrors.password = "Senha deve ter pelo menos 6 caracteres";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Login submitted:", formData);
+    
+    if (!validateForm()) return;
+    
+    setIsSubmitting(true);
+    
+    try {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Success message
+      toast.success("Login realizado com sucesso", {
+        description: "Você será redirecionado em instantes."
+      });
+      
+      // Reset form
+      setFormData({
+        email: "",
+        password: ""
+      });
+    } catch (error) {
+      toast.error("Erro ao realizar login", {
+        description: "Verifique suas credenciais e tente novamente."
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  // Ajustes responsivos
+  // Responsive adjustments
   const formPadding = isMobile ? "py-[20px] px-[15px]" : "py-[25px] px-0";
   const formHeight = isMobile ? "min-h-[280px]" : "min-h-[318px]";
   const titleSize = isMobile ? "text-[18px] leading-[27px]" : "text-[22px] leading-[33px]";
   const subtitleSize = isMobile ? "text-[12px] leading-[18px]" : "text-[14px] leading-[22px]";
   const buttonMargin = isMobile ? "mt-[15px]" : "mt-[30px]";
-  const buttonPadding = isMobile ? "py-[12px] px-[20px]" : "py-[15px] px-[33px]";
+  const buttonPadding = isMobile ? "py-[12px]" : "py-[15px]";
   const buttonFontSize = isMobile ? "text-[14px]" : "text-[16px]";
   
   return (
@@ -48,36 +124,72 @@ export const LoginForm: React.FC = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="w-full flex flex-col items-center">
-          <div className="w-full max-w-[346px] mx-auto">
-            <FormInput
-              label="E-mail"
-              placeholder="Coloque aqui o seu melhor e-mail"
-              type="email"
-              name="email"
-              onChange={handleChange}
-              value={formData.email}
-            />
+          <div className="w-full max-w-[346px] mx-auto space-y-4">
+            <div className="space-y-1">
+              <Label 
+                htmlFor="email" 
+                className="font-poppins font-semibold text-[12px] leading-[18px] text-[#737373]"
+              >
+                E-mail
+              </Label>
+              <div className="relative">
+                <Input
+                  id="email"
+                  placeholder="Coloque aqui o seu melhor e-mail"
+                  type="email"
+                  name="email"
+                  onChange={handleChange}
+                  value={formData.email}
+                  className="h-[38px] text-sm font-poppins border-[rgba(115,115,115,0.5)] focus-visible:ring-[#B1C9C3]"
+                  aria-invalid={!!errors.email}
+                />
+                {errors.email && (
+                  <p className="text-red-500 text-[10px] mt-1">{errors.email}</p>
+                )}
+              </div>
+            </div>
 
-            <FormInput
-              label="Senha"
-              placeholder="Insira uma senha"
-              type="password"
-              name="password"
-              onChange={handleChange}
-              value={formData.password}
-            />
+            <div className="space-y-1">
+              <Label 
+                htmlFor="password" 
+                className="font-poppins font-semibold text-[12px] leading-[18px] text-[#737373]"
+              >
+                Senha
+              </Label>
+              <div className="relative">
+                <Input
+                  id="password"
+                  placeholder="Insira uma senha"
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  onChange={handleChange}
+                  value={formData.password}
+                  className="h-[38px] text-sm font-poppins border-[rgba(115,115,115,0.5)] pr-10 focus-visible:ring-[#B1C9C3]"
+                  aria-invalid={!!errors.password}
+                />
+                <button 
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                  aria-label={showPassword ? "Esconder senha" : "Mostrar senha"}
+                >
+                  {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                </button>
+                {errors.password && (
+                  <p className="text-red-500 text-[10px] mt-1">{errors.password}</p>
+                )}
+              </div>
+            </div>
           </div>
         
           <div className={`w-full flex justify-center ${buttonMargin}`}>
-            <button
+            <Button
               type="submit"
-              className={`w-full max-w-[378px] ${buttonPadding} bg-[#BFA76F] rounded-[5px]`}
-              onClick={(e) => handleSubmit(e)}
+              className={`w-full max-w-[378px] ${buttonPadding} font-poppins font-bold ${buttonFontSize} leading-[24px] text-[#EFEFEF] uppercase bg-[#BFA76F] hover:bg-[#A89057] rounded-[5px]`}
+              disabled={isSubmitting}
             >
-              <span className={`font-poppins font-bold ${buttonFontSize} leading-[24px] text-[#EFEFEF] uppercase`}>
-                ENVIAR MEUS DADOS
-              </span>
-            </button>
+              {isSubmitting ? "Enviando..." : "Enviar meus dados"}
+            </Button>
           </div>
         </form>
       </div>
