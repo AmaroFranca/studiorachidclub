@@ -10,11 +10,11 @@ const Dashboard: React.FC = () => {
   return <SidebarProvider defaultOpen={true}>
       <div className="flex min-h-screen w-full">
         <Sidebar className="border-r bg-[#D9D9D9]">
-          <SidebarHeader className="flex items-center py-4">
+          <SidebarHeader className="flex items-center py-4 bg-[#d9d9d9]">
             <h1 className="text-xl font-semibold px-6 text-[#737373]">Studio Rachid</h1>
           </SidebarHeader>
           
-          <SidebarContent className="bg-[D9D9D9]">
+          <SidebarContent className="bg-[D9D9D9] bg-[#d9d9d9]">
             <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton isActive={true} className="bg-[#B1C9C3] rounded-md text-[#737373]">
@@ -53,7 +53,7 @@ const Dashboard: React.FC = () => {
             </SidebarMenu>
           </SidebarContent>
           
-          <SidebarFooter className="mt-auto">
+          <SidebarFooter className="mt-auto bg-[#d9d9d9]">
             <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton className="text-[#737373]">
