@@ -10,42 +10,42 @@ const Dashboard: React.FC = () => {
   return <SidebarProvider defaultOpen={true}>
       <div className="flex min-h-screen w-full">
         <Sidebar className="border-r bg-[#D9D9D9]">
-          <SidebarHeader className="flex items-center py-4 bg-[#d9d9d9]">
-            <h1 className="text-xl font-semibold px-6 text-[#737373]">Studio Rachid</h1>
+          <SidebarHeader className="flex items-center bg-[#d9d9d9] py-[30px] px-0 mx-0">
+            <h1 className="text-xl font-semibold text-[#737373] text-left px-0 mx-0">Studio Rachid</h1>
           </SidebarHeader>
           
           <SidebarContent className="bg-[D9D9D9] bg-[#d9d9d9]">
             <SidebarMenu>
               <SidebarMenuItem>
-                <SidebarMenuButton isActive={true} className="bg-[#F2FCE2] rounded-md text-[#737373]">
+                <SidebarMenuButton isActive={true} className="rounded-md text-[#737373] bg-[#b1c9c3] px-[15px]">
                   <LayoutDashboard className="text-[#BFA76F]" />
                   <span>Painel</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               
               <SidebarMenuItem>
-                <SidebarMenuButton className="text-[#737373]">
+                <SidebarMenuButton className="text-[#737373] px-[14px]">
                   <Gift className="text-[#BFA76F]" />
                   <span>Recompensas</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               
               <SidebarMenuItem>
-                <SidebarMenuButton className="text-[#737373]">
+                <SidebarMenuButton className="text-[#737373] px-[15px]">
                   <Users className="text-[#BFA76F]" />
                   <span>Indicados</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               
               <SidebarMenuItem>
-                <SidebarMenuButton className="text-[#737373]">
+                <SidebarMenuButton className="text-[#737373] px-[15px]">
                   <CircleDollarSign className="text-[#BFA76F]" />
                   <span>Resgates</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               
               <SidebarMenuItem>
-                <SidebarMenuButton className="text-[#737373]">
+                <SidebarMenuButton className="text-[#737373] px-[15px]">
                   <List className="text-[#BFA76F]" />
                   <span>Regras</span>
                 </SidebarMenuButton>
@@ -53,17 +53,17 @@ const Dashboard: React.FC = () => {
             </SidebarMenu>
           </SidebarContent>
           
-          <SidebarFooter className="mt-auto bg-[#d9d9d9]">
+          <SidebarFooter className="mt-auto bg-[#d9d9d9] py-[50px]">
             <SidebarMenu>
               <SidebarMenuItem>
-                <SidebarMenuButton className="text-[#737373]">
+                <SidebarMenuButton className="text-[#737373] px-[15px]">
                   <Settings className="text-[#BFA76F]" />
                   <span>Configurações</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               
               <SidebarMenuItem>
-                <SidebarMenuButton className="text-[#737373]">
+                <SidebarMenuButton className="text-[#737373] px-[15px]">
                   <MessageSquare className="text-[#BFA76F]" />
                   <span>Suporte</span>
                 </SidebarMenuButton>
