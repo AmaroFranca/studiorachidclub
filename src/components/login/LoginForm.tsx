@@ -135,14 +135,18 @@ export const LoginForm: React.FC = () => {
               <div className="relative">
                 <Input
                   id="email"
-                  placeholder="Coloque aqui o seu melhor e-mail"
                   type="email"
                   name="email"
-                  onChange={handleChange}
                   value={formData.email}
-                  className="h-[38px] text-sm font-poppins border-[rgba(115,115,115,0.5)] focus-visible:ring-[#B1C9C3]"
+                  onChange={handleChange}
+                  className={`h-[38px] text-sm font-poppins border-[rgba(115,115,115,0.5)] focus-visible:ring-[#B1C9C3] px-[11px] py-0 bg-transparent`}
                   aria-invalid={!!errors.email}
                 />
+                {!formData.email && (
+                  <div className="absolute left-[11px] top-[50%] transform -translate-y-1/2 font-poppins font-normal text-[12px] md:text-[10px] leading-[15px] text-[rgba(115,115,115,0.5)]">
+                    Coloque aqui o seu melhor e-mail
+                  </div>
+                )}
                 {errors.email && (
                   <p className="text-red-500 text-[10px] mt-1">{errors.email}</p>
                 )}
@@ -159,18 +163,22 @@ export const LoginForm: React.FC = () => {
               <div className="relative">
                 <Input
                   id="password"
-                  placeholder="Insira uma senha"
                   type={showPassword ? "text" : "password"}
                   name="password"
-                  onChange={handleChange}
                   value={formData.password}
-                  className="h-[38px] text-sm font-poppins border-[rgba(115,115,115,0.5)] pr-10 focus-visible:ring-[#B1C9C3]"
+                  onChange={handleChange}
+                  className="h-[38px] text-sm font-poppins border-[rgba(115,115,115,0.5)] pr-10 focus-visible:ring-[#B1C9C3] px-[11px] py-0 bg-transparent"
                   aria-invalid={!!errors.password}
                 />
+                {!formData.password && (
+                  <div className="absolute left-[11px] top-[50%] transform -translate-y-1/2 font-poppins font-normal text-[12px] md:text-[10px] leading-[15px] text-[rgba(115,115,115,0.5)]">
+                    Insira uma senha
+                  </div>
+                )}
                 <button 
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#737373] hover:text-[#4b4b4b]"
                   aria-label={showPassword ? "Esconder senha" : "Mostrar senha"}
                 >
                   {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}

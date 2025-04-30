@@ -2,12 +2,10 @@
 import React from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 export const ForgotPasswordLink: React.FC = () => {
   const isMobile = useIsMobile();
-  const navigate = useNavigate();
   
   const fontSize = isMobile ? "text-[10px] leading-[15px]" : "text-[12px] leading-[18px]";
   
