@@ -135,7 +135,7 @@ const Dashboard: React.FC = () => {
                     </div>
                   </div>
                   
-                  <Button className="w-full bg-[#B1C9C3] hover:bg-[#9fb9b2] text-[#737373] font-semibold flex gap-2 items-center justify-center">
+                  <Button className="w-full bg-[#B1C9C3] hover:bg-[#9fb9b2] text-[#737373] font-semibold flex gap-2 items-center justify-center py-0 px-0 mx-0 my-[5px]">
                     <Gift className="text-[#BFA76F]" />
                     Veja Todos os Prêmios e Resgate
                   </Button>
