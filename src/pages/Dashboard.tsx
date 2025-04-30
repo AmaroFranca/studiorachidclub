@@ -93,7 +93,7 @@ const Dashboard: React.FC = () => {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="w-[201px] bg-[#EFEFEF] border border-[rgba(115,115,115,0.5)] shadow-[10px_10px_15px_#737373] rounded-[10px] p-[5px_9px] flex flex-col gap-[10px]">
                     <DropdownMenuItem className="flex cursor-pointer items-center gap-2 text-[#737373] py-1 rounded-md bg-[#b1c9c3]">
-                      <Settings className="h-5 w-5 text-[#B1C9C3]" />
+                      <Settings className="h-5 w-5 text-[#BFA76F]" />
                       <span>Configurações</span>
                     </DropdownMenuItem>
                     <DropdownMenuItem className="flex cursor-pointer items-center gap-2 text-[#737373] py-1 rounded-md hover:bg-[#F2FCE2] focus:bg-[#F2FCE2]">
