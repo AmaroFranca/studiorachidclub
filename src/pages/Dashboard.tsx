@@ -1,23 +1,31 @@
+
 import React from "react";
-import { LayoutDashboard, Gift, Users, CircleDollarSign, List, Settings, MessageSquare, Heart, ArrowRight, CircleCheck } from "lucide-react";
-import { SidebarProvider, Sidebar, SidebarHeader, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarFooter } from "@/components/ui/sidebar";
+import { LayoutDashboard, Gift, Users, CircleDollarSign, List, Settings, MessageSquare, Heart, ArrowRight, CircleCheck, Menu } from "lucide-react";
+import { SidebarProvider, Sidebar, SidebarHeader, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarFooter, SidebarTrigger } from "@/components/ui/sidebar";
 import { Progress } from "@/components/ui/progress";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+
 const Dashboard: React.FC = () => {
   const currentDate = new Date();
   const formattedDate = `${currentDate.getDate()} de ${getMonthName(currentDate.getMonth())} de ${currentDate.getFullYear()}`;
+  
   return <SidebarProvider defaultOpen={true}>
       <div className="flex min-h-screen w-full">
         <Sidebar className="border-r bg-[#D9D9D9]">
-          <SidebarHeader className="flex items-center bg-[#d9d9d9] py-[30px] px-0 mx-0">
-            <h1 className="text-xl font-semibold text-[#737373] text-left px-0 mx-0">Studio Rachid</h1>
+          <SidebarHeader className="flex items-center justify-between bg-[#d9d9d9] py-[30px] px-4 mx-0">
+            <div className="flex items-center gap-2">
+              <h1 className="text-xl font-semibold text-[#737373] text-left">Studio Rachid</h1>
+              <SidebarTrigger className="h-2 w-2 p-0">
+                <Menu size={8} className="text-[#BFA76F]" />
+              </SidebarTrigger>
+            </div>
           </SidebarHeader>
           
           <SidebarContent className="bg-[D9D9D9] bg-[#d9d9d9]">
             <SidebarMenu>
               <SidebarMenuItem>
-                <SidebarMenuButton isActive={true} className="rounded-md text-[#737373] bg-[#b1c9c3] px-[15px]">
+                <SidebarMenuButton isActive={true} className="rounded-md text-[#737373] bg-[#F2FCE2] px-[15px]">
                   <LayoutDashboard className="text-[#BFA76F]" />
                   <span>Painel</span>
                 </SidebarMenuButton>
@@ -185,4 +193,5 @@ function getMonthName(month: number): string {
   const months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
   return months[month];
 }
+
 export default Dashboard;
