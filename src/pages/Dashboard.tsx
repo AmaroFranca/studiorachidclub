@@ -13,7 +13,7 @@ const Dashboard: React.FC = () => {
           <SidebarHeader className="flex items-center justify-between bg-[#d9d9d9] py-[30px] px-4 mx-0">
             <div className="flex items-center gap-2">
               <h1 className="text-xl font-semibold text-[#737373] text-left">Studio Rachid</h1>
-              <SidebarTrigger className="h-5 w-16 p-0 bg-[#173017]/0 text-slate-500 text-[BFA76F]">
+              <SidebarTrigger className="h-5 w-16 p-0 bg-[#173017]/0 text-[BFA76F] text-[#bfa76f]">
                 <Menu size={8} className="text-[#BFA76F]" />
               </SidebarTrigger>
             </div>
