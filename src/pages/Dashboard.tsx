@@ -130,7 +130,7 @@ const Dashboard: React.FC = () => {
                       <img src="/lovable-uploads/516e33cb-2a54-4e13-abcc-5bde39c07191.png" alt="Copo Térmico" className="w-28 h-28 object-cover rounded shadow-md" />
                       <div className="px-0 py-[31px]">
                         <h3 className="font-semibold text-[#737373] text-left">Copo Térmico 1,2L</h3>
-                        <p className="text-[#737373] font-semibold">Faltam: xxx pontos</p>
+                        <p className="font-semibold text-[#bfa76f]">Faltam: xxx pontos</p>
                       </div>
                     </div>
                   </div>
