@@ -126,10 +126,10 @@ const Dashboard: React.FC = () => {
                   
                   {/* Prize section */}
                   <div className="border border-[rgba(115,115,115,0.5)] rounded p-4 mb-6">
-                    <div className="flex gap-5">
+                    <div className="flex gap-5 py-0 my-0">
                       <img src="/lovable-uploads/516e33cb-2a54-4e13-abcc-5bde39c07191.png" alt="Copo Térmico" className="w-28 h-28 object-cover rounded shadow-md" />
-                      <div>
-                        <h3 className="font-semibold text-[#737373]">Copo Térmico 1,2L</h3>
+                      <div className="px-0 py-[31px]">
+                        <h3 className="font-semibold text-[#737373] text-left">Copo Térmico 1,2L</h3>
                         <p className="text-[#737373] font-semibold">Faltam: xxx pontos</p>
                       </div>
                     </div>
