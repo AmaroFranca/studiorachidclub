@@ -1,0 +1,222 @@
+
+import React from "react";
+import { 
+  LayoutDashboard, 
+  Gift, 
+  Users, 
+  CircleDollarSign, 
+  List, 
+  Settings, 
+  MessageSquare,
+  Heart,
+  ArrowRight,
+  CircleCheck
+} from "lucide-react";
+import { 
+  SidebarProvider, 
+  Sidebar, 
+  SidebarHeader, 
+  SidebarContent, 
+  SidebarMenu, 
+  SidebarMenuItem, 
+  SidebarMenuButton,
+  SidebarFooter
+} from "@/components/ui/sidebar";
+import { Progress } from "@/components/ui/progress";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+
+const Dashboard: React.FC = () => {
+  const currentDate = new Date();
+  const formattedDate = `${currentDate.getDate()} de ${getMonthName(currentDate.getMonth())} de ${currentDate.getFullYear()}`;
+  
+  return (
+    <SidebarProvider defaultOpen={true}>
+      <div className="flex min-h-screen w-full">
+        <Sidebar className="border-r bg-[#D9D9D9]">
+          <SidebarHeader className="flex items-center py-4">
+            <h1 className="text-xl font-semibold px-6 text-[#737373]">Studio Rachid</h1>
+          </SidebarHeader>
+          
+          <SidebarContent>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton isActive={true} className="bg-[#B1C9C3] rounded-md text-[#737373]">
+                  <LayoutDashboard className="text-[#BFA76F]" />
+                  <span>Painel</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              
+              <SidebarMenuItem>
+                <SidebarMenuButton className="text-[#737373]">
+                  <Gift className="text-[#BFA76F]" />
+                  <span>Recompensas</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              
+              <SidebarMenuItem>
+                <SidebarMenuButton className="text-[#737373]">
+                  <Users className="text-[#BFA76F]" />
+                  <span>Indicados</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              
+              <SidebarMenuItem>
+                <SidebarMenuButton className="text-[#737373]">
+                  <CircleDollarSign className="text-[#BFA76F]" />
+                  <span>Resgates</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              
+              <SidebarMenuItem>
+                <SidebarMenuButton className="text-[#737373]">
+                  <List className="text-[#BFA76F]" />
+                  <span>Regras</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarContent>
+          
+          <SidebarFooter className="mt-auto">
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton className="text-[#737373]">
+                  <Settings className="text-[#BFA76F]" />
+                  <span>Configurações</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              
+              <SidebarMenuItem>
+                <SidebarMenuButton className="text-[#737373]">
+                  <MessageSquare className="text-[#BFA76F]" />
+                  <span>Suporte</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarFooter>
+        </Sidebar>
+        
+        <main className="flex-1 bg-[#EFEFEF] p-6">
+          <div className="max-w-7xl mx-auto">
+            {/* Header */}
+            <div className="flex justify-between items-center mb-10">
+              <h2 className="text-2xl font-semibold text-[#737373]">Olá, Amaro</h2>
+              <div className="flex items-center gap-4">
+                <span className="text-sm text-[#737373]">{formattedDate}</span>
+                <div className="w-8 h-8 rounded-full bg-[#BFA76F] flex items-center justify-center text-white">
+                  A
+                </div>
+              </div>
+            </div>
+            
+            {/* Page Title */}
+            <div className="text-center mb-12">
+              <h3 className="text-2xl font-normal text-[#737373]">Programa de indicação</h3>
+              <h1 className="text-4xl font-bold text-[#737373]">Studio Rachid</h1>
+            </div>
+            
+            {/* Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Stats Card */}
+              <Card className="bg-[#D9D9D9] shadow-[10px_10px_15px_#737373] rounded-lg border-none">
+                <CardContent className="p-6">
+                  <div className="border border-[rgba(115,115,115,0.5)] rounded p-4 mb-6">
+                    <div className="flex justify-between items-center mb-2">
+                      <div className="flex items-center">
+                        <h3 className="font-semibold text-lg text-[#737373]">Sua Pontuação</h3>
+                        <CircleDollarSign className="ml-2 text-[#BFA76F] h-5 w-5" />
+                      </div>
+                      <span className="font-semibold text-xl text-[#737373]">270</span>
+                    </div>
+                    
+                    <Progress value={27} className="bg-[#737373] h-7 rounded">
+                      <div className="bg-[#B1C9C3] h-full rounded" />
+                    </Progress>
+                    
+                    <div className="flex justify-between text-xs mt-1 text-[#737373]">
+                      <span>0</span>
+                      <span>270</span>
+                      <span>1000</span>
+                    </div>
+                    
+                    <div className="flex justify-between items-center mt-4">
+                      <div className="flex items-center">
+                        <h3 className="font-semibold text-lg text-[#737373]">Indicados</h3>
+                        <Users className="ml-2 text-[#BFA76F] h-5 w-5" />
+                      </div>
+                      <span className="font-semibold text-xl text-[#737373]">3</span>
+                    </div>
+                  </div>
+                  
+                  {/* Prize section */}
+                  <div className="border border-[rgba(115,115,115,0.5)] rounded p-4 mb-6">
+                    <div className="flex gap-5">
+                      <img 
+                        src="/lovable-uploads/516e33cb-2a54-4e13-abcc-5bde39c07191.png" 
+                        alt="Copo Térmico" 
+                        className="w-28 h-28 object-cover rounded shadow-md" 
+                      />
+                      <div>
+                        <h3 className="font-semibold text-[#737373]">Copo Térmico 1,2L</h3>
+                        <p className="text-[#737373] font-semibold">Faltam: xxx pontos</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <Button className="w-full bg-[#B1C9C3] hover:bg-[#9fb9b2] text-[#737373] font-semibold flex gap-2 items-center justify-center">
+                    <Gift className="text-[#BFA76F]" />
+                    Veja Todos os Prêmios e Resgate
+                  </Button>
+                </CardContent>
+              </Card>
+              
+              {/* Indication Card */}
+              <Card className="bg-gradient-to-br from-[#B1C9C3] to-black shadow-[10px_10px_15px_#737373] rounded-lg border-none">
+                <CardContent className="p-6 text-white">
+                  <div className="border border-white/60 rounded-lg p-4 mb-6">
+                    <div className="flex items-center mb-4">
+                      <Heart className="text-[#BFA76F] mr-2" />
+                      <h3 className="font-semibold text-xl">Indique e Ganhe</h3>
+                    </div>
+                    
+                    <h2 className="text-xl font-semibold mb-4">Indique alguém especial e ganhem juntos.</h2>
+                    
+                    <p className="mb-4">
+                      Pontos pra você. Presente pra quem você indica.
+                    </p>
+                    <p className="mb-4">
+                      Você pode ganhar de 20 a 250 pontos por cada indicação e a pessoa indicada 
+                      ganha um presente especial da clínica - um Checkup Digital e desconto na 
+                      primeira profilaxia.
+                    </p>
+                    
+                    <div className="flex items-center text-xs">
+                      <ArrowRight className="h-3 w-3 text-[#BFA76F] mr-1" />
+                      <span>Veja as regras do programa</span>
+                    </div>
+                  </div>
+                  
+                  <Button className="w-full bg-[#BFA76F] hover:bg-[#a99058] text-white font-bold">
+                    QUERO INDICAR AGORA!
+                  </Button>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </main>
+      </div>
+    </SidebarProvider>
+  );
+};
+
+// Helper function to get month name
+function getMonthName(month: number): string {
+  const months = [
+    'Janeiro', 'Fevereiro', 'Março', 'Abril', 
+    'Maio', 'Junho', 'Julho', 'Agosto', 
+    'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+  ];
+  return months[month];
+}
+
+export default Dashboard;
