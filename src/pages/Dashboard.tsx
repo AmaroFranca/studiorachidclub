@@ -1,3 +1,4 @@
+
 import React from "react";
 import { LayoutDashboard, Gift, Users, CircleDollarSign, List, Settings, MessageSquare, Heart, ArrowRight, CircleCheck, Menu, LogOut } from "lucide-react";
 import { SidebarProvider, Sidebar, SidebarHeader, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarFooter, SidebarTrigger } from "@/components/ui/sidebar";
@@ -5,9 +6,11 @@ import { Progress } from "@/components/ui/progress";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+
 const Dashboard: React.FC = () => {
   const currentDate = new Date();
   const formattedDate = `${currentDate.getDate()} de ${getMonthName(currentDate.getMonth())} de ${currentDate.getFullYear()}`;
+  
   return <SidebarProvider defaultOpen={true}>
       <div className="flex min-h-screen w-full">
         <Sidebar className="border-r bg-[#D9D9D9]">
@@ -30,28 +33,28 @@ const Dashboard: React.FC = () => {
               </SidebarMenuItem>
               
               <SidebarMenuItem>
-                <SidebarMenuButton className="text-[#737373] px-[14px]">
+                <SidebarMenuButton className="text-[#737373] px-[14px] hover:bg-[#B1C9C3] focus:bg-[#B1C9C3]">
                   <Gift className="text-[#BFA76F]" />
                   <span>Recompensas</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               
               <SidebarMenuItem>
-                <SidebarMenuButton className="text-[#737373] px-[15px]">
+                <SidebarMenuButton className="text-[#737373] px-[15px] hover:bg-[#B1C9C3] focus:bg-[#B1C9C3]">
                   <Users className="text-[#BFA76F]" />
                   <span>Indicados</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               
               <SidebarMenuItem>
-                <SidebarMenuButton className="text-[#737373] px-[15px]">
+                <SidebarMenuButton className="text-[#737373] px-[15px] hover:bg-[#B1C9C3] focus:bg-[#B1C9C3]">
                   <CircleDollarSign className="text-[#BFA76F]" />
                   <span>Resgates</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               
               <SidebarMenuItem>
-                <SidebarMenuButton className="text-[#737373] px-[15px]">
+                <SidebarMenuButton className="text-[#737373] px-[15px] hover:bg-[#B1C9C3] focus:bg-[#B1C9C3]">
                   <List className="text-[#BFA76F]" />
                   <span>Regras</span>
                 </SidebarMenuButton>
@@ -62,14 +65,14 @@ const Dashboard: React.FC = () => {
           <SidebarFooter className="mt-auto bg-[#d9d9d9] py-[50px]">
             <SidebarMenu>
               <SidebarMenuItem>
-                <SidebarMenuButton className="text-[#737373] px-[15px]">
+                <SidebarMenuButton className="text-[#737373] px-[15px] hover:bg-[#B1C9C3] focus:bg-[#B1C9C3]">
                   <Settings className="text-[#BFA76F]" />
                   <span>Configurações</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               
               <SidebarMenuItem>
-                <SidebarMenuButton className="text-[#737373] px-[15px]">
+                <SidebarMenuButton className="text-[#737373] px-[15px] hover:bg-[#B1C9C3] focus:bg-[#B1C9C3]">
                   <MessageSquare className="text-[#BFA76F]" />
                   <span>Suporte</span>
                 </SidebarMenuButton>
@@ -92,15 +95,15 @@ const Dashboard: React.FC = () => {
                     </div>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="w-[201px] bg-[#EFEFEF] border border-[rgba(115,115,115,0.5)] shadow-[10px_10px_15px_#737373] rounded-[10px] p-[5px_9px] flex flex-col gap-[10px]">
-                    <DropdownMenuItem className="flex cursor-pointer items-center gap-2 text-[#737373] py-1 rounded-md bg-[#b1c9c3]">
+                    <DropdownMenuItem className="flex items-center gap-2 text-[#737373] py-1 rounded-md hover:bg-[#B1C9C3] focus:bg-[#B1C9C3]">
                       <Settings className="h-5 w-5 text-[#BFA76F]" />
                       <span>Configurações</span>
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="flex cursor-pointer items-center gap-2 text-[#737373] py-1 rounded-md bg-[#b1c9c3]">
+                    <DropdownMenuItem className="flex items-center gap-2 text-[#737373] py-1 rounded-md hover:bg-[#B1C9C3] focus:bg-[#B1C9C3]">
                       <MessageSquare className="h-5 w-5 text-[#BFA76F]" />
                       <span>Suporte</span>
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="flex cursor-pointer items-center gap-2 text-[#737373] py-1 rounded-md hover:bg-[#F2FCE2] focus:bg-[#F2FCE2]">
+                    <DropdownMenuItem className="flex items-center gap-2 text-[#737373] py-1 rounded-md hover:bg-[#B1C9C3] focus:bg-[#B1C9C3]">
                       <LogOut className="h-5 w-5 text-[#BFA76F]" />
                       <span>Sair</span>
                     </DropdownMenuItem>
@@ -209,4 +212,5 @@ function getMonthName(month: number): string {
   const months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
   return months[month];
 }
+
 export default Dashboard;
