@@ -96,7 +96,7 @@ const Dashboard: React.FC = () => {
                       <Settings className="h-5 w-5 text-[#BFA76F]" />
                       <span>Configurações</span>
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="flex cursor-pointer items-center gap-2 text-[#737373] py-1 rounded-md hover:bg-[#F2FCE2] focus:bg-[#F2FCE2]">
+                    <DropdownMenuItem className="flex cursor-pointer items-center gap-2 text-[#737373] py-1 rounded-md bg-[#b1c9c3]">
                       <MessageSquare className="h-5 w-5 text-[#BFA76F]" />
                       <span>Suporte</span>
                     </DropdownMenuItem>
