@@ -1,9 +1,17 @@
+
 import React from "react";
-import { LayoutDashboard, Gift, Users, CircleDollarSign, List, Settings, MessageSquare, Heart, ArrowRight, CircleCheck, Menu } from "lucide-react";
+import { LayoutDashboard, Gift, Users, CircleDollarSign, List, Settings, MessageSquare, Heart, ArrowRight, CircleCheck, Menu, LogOut } from "lucide-react";
 import { SidebarProvider, Sidebar, SidebarHeader, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarFooter, SidebarTrigger } from "@/components/ui/sidebar";
 import { Progress } from "@/components/ui/progress";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { 
+  DropdownMenu, 
+  DropdownMenuContent, 
+  DropdownMenuItem, 
+  DropdownMenuTrigger 
+} from "@/components/ui/dropdown-menu";
+
 const Dashboard: React.FC = () => {
   const currentDate = new Date();
   const formattedDate = `${currentDate.getDate()} de ${getMonthName(currentDate.getMonth())} de ${currentDate.getFullYear()}`;
@@ -84,9 +92,29 @@ const Dashboard: React.FC = () => {
               <h2 className="text-2xl font-semibold text-[#737373]">Olá, Amaro</h2>
               <div className="flex items-center gap-4">
                 <span className="text-sm text-[#737373]">{formattedDate}</span>
-                <div className="w-8 h-8 rounded-full bg-[#BFA76F] flex items-center justify-center text-white">
-                  A
-                </div>
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="focus:outline-none">
+                    <div className="w-8 h-8 rounded-full bg-[#BFA76F] flex items-center justify-center text-white cursor-pointer">
+                      A
+                    </div>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent 
+                    className="w-[201px] bg-[#EFEFEF] border border-[rgba(115,115,115,0.5)] shadow-[10px_10px_15px_#737373] rounded-[10px] p-[5px_9px] flex flex-col gap-[10px]"
+                  >
+                    <DropdownMenuItem className="flex cursor-pointer items-center gap-2 text-[#737373] py-1 rounded-md hover:bg-[#F2FCE2] focus:bg-[#F2FCE2]">
+                      <Settings className="h-5 w-5 text-[#B1C9C3]" />
+                      <span>Configurações</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="flex cursor-pointer items-center gap-2 text-[#737373] py-1 rounded-md hover:bg-[#F2FCE2] focus:bg-[#F2FCE2]">
+                      <MessageSquare className="h-5 w-5 text-[#BFA76F]" />
+                      <span>Suporte</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="flex cursor-pointer items-center gap-2 text-[#737373] py-1 rounded-md hover:bg-[#F2FCE2] focus:bg-[#F2FCE2]">
+                      <LogOut className="h-5 w-5 text-[#BFA76F]" />
+                      <span>Sair</span>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
             </div>
             
