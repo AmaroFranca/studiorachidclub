@@ -147,7 +147,7 @@ const Dashboard: React.FC = () => {
                 <CardContent className="p-6 text-white">
                   <div className="border border-white/60 rounded-lg p-4 mb-6">
                     <div className="flex items-center mb-4">
-                      <Heart className="text-[#BFA76F] mr-2" />
+                      <Heart className="text-[#BFA76F] mr-2 " />
                       <h3 className="font-semibold text-xl text-center">Indique e Ganhe</h3>
                     </div>
                     
