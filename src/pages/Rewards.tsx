@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import { ArrowLeft, Users, CircleDollarSign, List, Settings, MessageSquare, Gift, Heart, Menu } from "lucide-react";
+import { ArrowLeft, Users, CircleDollarSign, List, Settings, MessageSquare, Gift, Menu, LockOpen, Lock } from "lucide-react";
 import { SidebarProvider, Sidebar, SidebarHeader, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarFooter } from "@/components/ui/sidebar";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
@@ -40,16 +40,16 @@ const Rewards: React.FC = () => {
                 </SidebarMenuButton>
               </SidebarMenuItem>
               
-              {/* Submenu buttons for Recompensas */}
+              {/* Submenu buttons for Recompensas - now both are #BFA76F by default */}
               <div className="pl-10 flex flex-col gap-2 mt-2">
                 <button 
-                  className={`text-left text-sm font-medium ${activeMenu === "premios" ? "text-[#737373]" : "text-[#BFA76F]"} hover:text-[#737373] transition-colors`}
+                  className={`text-left text-sm font-medium text-[#BFA76F] hover:text-[#737373] transition-colors`}
                   onClick={() => setActiveMenu("premios")}
                 >
                   Prêmios
                 </button>
                 <button 
-                  className={`text-left text-sm font-medium ${activeMenu === "experiencias" ? "text-[#737373]" : "text-[#BFA76F]"} hover:text-[#737373] transition-colors`}
+                  className={`text-left text-sm font-medium text-[#BFA76F] hover:text-[#737373] transition-colors`}
                   onClick={() => setActiveMenu("experiencias")}
                 >
                   Experiências
@@ -132,16 +132,16 @@ const Rewards: React.FC = () => {
                   <CardContent className="p-6 space-y-4">
                     <div className="overflow-hidden rounded-lg">
                       <img 
-                        src="/lovable-uploads/586ff9b7-85cc-46c3-9874-40ae561c0a50.png" 
+                        src="/lovable-uploads/e42401d8-7e5c-438f-91d6-fd4258971e1a.png" 
                         alt="Amazon Echo" 
                         className="w-full h-80 object-cover rounded-lg"
                       />
                     </div>
-                    <div className="space-y-3">
+                    <div className="space-y-3 text-left">
                       <div className="flex justify-between items-center">
                         <h3 className="font-semibold text-lg text-[#737373]">Prêmios</h3>
                         <div className="flex items-center gap-1">
-                          <div className="w-2 h-2.5 bg-[#BFA76F]"></div>
+                          <LockOpen className="w-4 h-4 text-[#BFA76F]" />
                           <span className="text-xs text-[#BFA76F]">Desbloqueados</span>
                         </div>
                       </div>
@@ -162,11 +162,11 @@ const Rewards: React.FC = () => {
                         className="w-full h-80 object-cover rounded-lg grayscale"
                       />
                     </div>
-                    <div className="space-y-3">
+                    <div className="space-y-3 text-left">
                       <div className="flex justify-between items-center">
                         <h3 className="font-semibold text-lg text-[#737373]">Studio Rachid Experience</h3>
                         <div className="flex items-center gap-1">
-                          <div className="w-2 h-2.5 bg-[#BFA76F]"></div>
+                          <Lock className="w-4 h-4 text-[#BFA76F]" />
                           <span className="text-xs text-[#BFA76F]">Bloqueados</span>
                         </div>
                       </div>
