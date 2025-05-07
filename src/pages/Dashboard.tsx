@@ -1,3 +1,4 @@
+
 import React from "react";
 import { LayoutDashboard, Gift, Users, CircleDollarSign, List, Settings, MessageSquare, Heart, ArrowRight, Menu } from "lucide-react";
 import { SidebarProvider, Sidebar, SidebarHeader, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarFooter } from "@/components/ui/sidebar";
@@ -164,9 +165,9 @@ const Dashboard: React.FC = () => {
                       primeira profilaxia.
                     </p>
                     
-                    <div className="flex items-center text-xs">
-                      <ArrowRight className="h-3 w-3 text-[#BFA76F] mr-1" />
-                      <span>Veja as regras do programa</span>
+                    <div className="flex items-center text-sm">
+                      <ArrowRight className="h-5 w-5 text-[#BFA76F] mr-2" />
+                      <span className="text-sm">Veja as regras do programa</span>
                     </div>
                   </div>
                   
