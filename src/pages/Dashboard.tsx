@@ -7,22 +7,22 @@ import { ScoreCard } from "@/components/dashboard/ScoreCard";
 import { ReferralCard } from "@/components/dashboard/ReferralCard";
 import { formatDate } from "@/components/dashboard/DateFormatter";
 import { BackgroundText } from "@/components/registration/BackgroundText";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const Dashboard: React.FC = () => {
   const currentDate = new Date();
   const formattedDate = formatDate(currentDate);
+  const isMobile = useIsMobile();
   
   return (
-    <div 
-      className="min-h-screen w-full overflow-hidden"
+    <div className="flex flex-col items-center justify-center relative w-full min-h-screen mx-auto py-[5vh] px-[5vw] overflow-hidden" 
       style={{
         background: `linear-gradient(247deg, #B1C9C3 0%, #000 100%)`
-      }}
-    >
+      }}>
       <BackgroundText text="Rachid" position="bottomLeft" />
       <BackgroundText text="Studio" position="topRight" />
       
-      <SidebarProvider defaultOpen={true}>
+      <SidebarProvider defaultOpen={!isMobile}>
         <div className="flex min-h-screen w-full relative">
           <Sidebar className="border-r bg-[#D9D9D9] relative z-10">
             <DashboardSidebar />
