@@ -1,17 +1,13 @@
-
 import React from "react";
 import { LayoutDashboard, Gift, Users, CircleDollarSign, List, Settings, MessageSquare, Heart, ArrowRight, Menu } from "lucide-react";
 import { SidebarProvider, Sidebar, SidebarHeader, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarFooter } from "@/components/ui/sidebar";
 import { Progress } from "@/components/ui/progress";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-
 const Dashboard: React.FC = () => {
   const currentDate = new Date();
   const formattedDate = `${currentDate.getDate()} de ${getMonthName(currentDate.getMonth())} de ${currentDate.getFullYear()}`;
-  
-  return (
-    <SidebarProvider defaultOpen={true}>
+  return <SidebarProvider defaultOpen={true}>
       <div className="flex min-h-screen w-full">
         <Sidebar className="border-r bg-[#D9D9D9]">
           <SidebarHeader className="flex items-center justify-between bg-[#d9d9d9] py-[30px] px-4 mx-0">
@@ -24,7 +20,7 @@ const Dashboard: React.FC = () => {
           <SidebarContent className="bg-[D9D9D9] bg-[#d9d9d9]">
             <SidebarMenu>
               <SidebarMenuItem>
-                <SidebarMenuButton className="rounded-md text-[#737373] hover:bg-[#F2FCE2] px-[15px]">
+                <SidebarMenuButton className="rounded-md text-[#737373] px-[15px] bg-[#b1c9c3]">
                   <LayoutDashboard className="text-[#BFA76F]" />
                   <span>Painel</span>
                 </SidebarMenuButton>
@@ -182,8 +178,7 @@ const Dashboard: React.FC = () => {
           </div>
         </main>
       </div>
-    </SidebarProvider>
-  );
+    </SidebarProvider>;
 };
 
 // Helper function to get month name
@@ -191,5 +186,4 @@ function getMonthName(month: number): string {
   const months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
   return months[month];
 }
-
 export default Dashboard;
