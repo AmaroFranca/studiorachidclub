@@ -25,15 +25,15 @@ export const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ formattedDate 
         <DropdownMenuContent 
           className="bg-[#EFEFEF] border border-[rgba(115,115,115,0.5)] shadow-[10px_10px_15px_#737373] rounded-[10px] w-[201px] p-[5px_9px]"
         >
-          <DropdownMenuItem className="flex items-center gap-2 text-[#737373] rounded-md px-[15px] hover:bg-[#B1C9C3] cursor-pointer transition-colors">
+          <DropdownMenuItem className="flex items-center gap-2 text-[#737373] text-sm rounded-md px-[15px] hover:bg-[#B1C9C3] cursor-pointer transition-colors">
             <Settings className="text-[#BFA76F]" />
             <span>Configurações</span>
           </DropdownMenuItem>
-          <DropdownMenuItem className="flex items-center gap-2 text-[#737373] rounded-md px-[15px] hover:bg-[#B1C9C3] cursor-pointer transition-colors">
+          <DropdownMenuItem className="flex items-center gap-2 text-[#737373] text-sm rounded-md px-[15px] hover:bg-[#B1C9C3] cursor-pointer transition-colors">
             <MessageSquare className="text-[#BFA76F]" />
             <span>Suporte</span>
           </DropdownMenuItem>
-          <DropdownMenuItem className="flex items-center gap-2 text-[#737373] rounded-md px-[15px] hover:bg-[#B1C9C3] cursor-pointer transition-colors">
+          <DropdownMenuItem className="flex items-center gap-2 text-[#737373] text-sm rounded-md px-[15px] hover:bg-[#B1C9C3] cursor-pointer transition-colors">
             <LogOut className="text-[#BFA76F]" />
             <span>Sair</span>
           </DropdownMenuItem>
