@@ -5,7 +5,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 const Index: React.FC = () => {
   const isMobile = useIsMobile();
   return <div className="flex flex-col items-center justify-center relative w-full min-h-screen mx-auto py-[5vh] px-[5vw] overflow-hidden" style={{
-    background: `linear-gradient(247deg, #B1C9C3 0%, #000 100%)`
+    background: `linear-gradient(247deg, #000 0%, #B1C9C3 0%)`
   }}>
       <BackgroundText text="Rachid" position="bottomLeft" />
       <BackgroundText text="Studio" position="topRight" />
