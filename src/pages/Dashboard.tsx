@@ -1,4 +1,3 @@
-
 import React from "react";
 import { LayoutDashboard, Gift, Users, CircleDollarSign, List, Settings, MessageSquare, Heart, ArrowRight, Menu } from "lucide-react";
 import { SidebarProvider, Sidebar, SidebarHeader, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarFooter } from "@/components/ui/sidebar";
@@ -78,8 +77,7 @@ const Dashboard: React.FC = () => {
         </Sidebar>
         
         <main className="flex-1 bg-[#EFEFEF] p-6">
-          <div className="max-w-7xl mx-auto">
-            {/* Header */}
+          <div className="max-w-5xl mx-auto">
             <div className="flex justify-between items-center mb-10">
               <h2 className="text-2xl font-semibold text-[#737373]">Olá, Amaro</h2>
               <div className="flex items-center gap-4">
@@ -90,15 +88,12 @@ const Dashboard: React.FC = () => {
               </div>
             </div>
             
-            {/* Page Title */}
             <div className="text-center mb-12">
               <h1 className="text-4xl font-bold text-[#737373]">Studio Rachid Club</h1>
             </div>
             
-            {/* Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Stats Card */}
-              <Card className="bg-[#D9D9D9] shadow-[10px_10px_15px_#737373] rounded-lg border-none">
+            <div className="flex flex-col md:flex-row gap-6 justify-center">
+              <Card className="bg-[#D9D9D9] shadow-[10px_10px_15px_#737373] rounded-lg border-none w-full md:w-[450px] max-w-full">
                 <CardContent className="p-6">
                   <div className="border border-[rgba(115,115,115,0.5)] rounded p-4 mb-6">
                     <div className="flex justify-between items-center mb-2">
@@ -127,7 +122,6 @@ const Dashboard: React.FC = () => {
                     </div>
                   </div>
                   
-                  {/* Prize section */}
                   <div className="border border-[rgba(115,115,115,0.5)] rounded p-4 mb-6 py-[10px]">
                     <div className="flex gap-5 py-0 my-0">
                       <img alt="Copo Térmico" className="w-40 h-40 object-cover rounded shadow-md" src="/lovable-uploads/18579148-cc6d-439b-b115-3d26c0b4a45a.png" />
@@ -145,8 +139,7 @@ const Dashboard: React.FC = () => {
                 </CardContent>
               </Card>
               
-              {/* Indication Card */}
-              <Card className="bg-gradient-to-br from-[#B1C9C3] to-black shadow-[10px_10px_15px_#737373] rounded-lg border-none">
+              <Card className="bg-gradient-to-br from-[#B1C9C3] to-black shadow-[10px_10px_15px_#737373] rounded-lg border-none w-full md:w-[450px] max-w-full">
                 <CardContent className="p-6 text-white">
                   <div className="border border-white/60 rounded-lg p-4 mb-6">
                     <div className="flex items-center mb-4">
