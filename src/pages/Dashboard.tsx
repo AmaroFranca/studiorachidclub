@@ -1,10 +1,10 @@
-
 import React from "react";
 import { LayoutDashboard, Gift, Users, CircleDollarSign, List, Settings, MessageSquare, Heart, ArrowRight, Menu } from "lucide-react";
 import { SidebarProvider, Sidebar, SidebarHeader, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarFooter } from "@/components/ui/sidebar";
 import { Progress } from "@/components/ui/progress";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+
 const Dashboard: React.FC = () => {
   const currentDate = new Date();
   const formattedDate = `${currentDate.getDate()} de ${getMonthName(currentDate.getMonth())} de ${currentDate.getFullYear()}`;
@@ -164,8 +164,8 @@ const Dashboard: React.FC = () => {
                       primeira profilaxia.
                     </p>
                     
-                    <div className="flex items-center text-xs">
-                      <ArrowRight className="h-3 w-3 text-[#BFA76F] mr-1" />
+                    <div className="flex items-center text-xs justify-start">
+                      <ArrowRight className="h-4 w-4 text-[#BFA76F] mr-1" />
                       <span>Veja as regras do programa</span>
                     </div>
                   </div>
