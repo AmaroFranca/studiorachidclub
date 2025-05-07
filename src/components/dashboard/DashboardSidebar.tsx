@@ -9,7 +9,8 @@ import {
   SidebarMenuItem, 
   SidebarMenuButton,
   SidebarFooter,
-  SidebarTrigger
+  SidebarTrigger,
+  useSidebar
 } from "@/components/ui/sidebar";
 
 interface DashboardSidebarProps {
@@ -17,10 +18,13 @@ interface DashboardSidebarProps {
 }
 
 const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ defaultOpen = true }) => {
+  const { state } = useSidebar();
+  const isCollapsed = state === "collapsed";
+  
   return (
     <>
       {/* This is the floating toggle button that will remain visible when sidebar is collapsed */}
-      <div className="fixed top-4 left-4 z-20 md:hidden">
+      <div className={`fixed top-4 left-4 z-20 ${isCollapsed ? 'block' : 'hidden'}`}>
         <SidebarTrigger className="bg-[#d9d9d9] text-[#BFA76F] hover:bg-[#B1C9C3] rounded-md shadow-md">
           <Menu className="text-[#BFA76F]" />
         </SidebarTrigger>
