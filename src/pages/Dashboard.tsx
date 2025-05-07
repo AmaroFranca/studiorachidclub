@@ -1,56 +1,58 @@
+
 import React from "react";
-import { LayoutDashboard, Gift, Users, CircleDollarSign, List, Settings, MessageSquare, Heart, ArrowRight, CircleCheck, Menu } from "lucide-react";
-import { SidebarProvider, Sidebar, SidebarHeader, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarFooter, SidebarTrigger } from "@/components/ui/sidebar";
+import { LayoutDashboard, Gift, Users, CircleDollarSign, List, Settings, MessageSquare, Heart, ArrowRight, Menu } from "lucide-react";
+import { SidebarProvider, Sidebar, SidebarHeader, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarFooter } from "@/components/ui/sidebar";
 import { Progress } from "@/components/ui/progress";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+
 const Dashboard: React.FC = () => {
   const currentDate = new Date();
   const formattedDate = `${currentDate.getDate()} de ${getMonthName(currentDate.getMonth())} de ${currentDate.getFullYear()}`;
-  return <SidebarProvider defaultOpen={true}>
+  
+  return (
+    <SidebarProvider defaultOpen={true}>
       <div className="flex min-h-screen w-full">
         <Sidebar className="border-r bg-[#D9D9D9]">
           <SidebarHeader className="flex items-center justify-between bg-[#d9d9d9] py-[30px] px-4 mx-0">
             <div className="flex items-center gap-2">
               <h1 className="text-xl font-semibold text-[#737373] text-left">Studio Rachid</h1>
-              <SidebarTrigger className="h-2 w-2 p-0">
-                <Menu size={8} className="text-[#BFA76F]" />
-              </SidebarTrigger>
+              {/* Removido o ícone de recolher menu */}
             </div>
           </SidebarHeader>
           
           <SidebarContent className="bg-[D9D9D9] bg-[#d9d9d9]">
             <SidebarMenu>
               <SidebarMenuItem>
-                <SidebarMenuButton isActive={true} className="rounded-md text-[#737373] bg-[#F2FCE2] px-[15px]">
+                <SidebarMenuButton className="rounded-md text-[#737373] hover:bg-[#F2FCE2] px-[15px]">
                   <LayoutDashboard className="text-[#BFA76F]" />
                   <span>Painel</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               
               <SidebarMenuItem>
-                <SidebarMenuButton className="text-[#737373] px-[14px]">
+                <SidebarMenuButton className="text-[#737373] hover:bg-[#F2FCE2] px-[15px]">
                   <Gift className="text-[#BFA76F]" />
                   <span>Recompensas</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               
               <SidebarMenuItem>
-                <SidebarMenuButton className="text-[#737373] px-[15px]">
+                <SidebarMenuButton className="text-[#737373] hover:bg-[#F2FCE2] px-[15px]">
                   <Users className="text-[#BFA76F]" />
                   <span>Indicados</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               
               <SidebarMenuItem>
-                <SidebarMenuButton className="text-[#737373] px-[15px]">
+                <SidebarMenuButton className="text-[#737373] hover:bg-[#F2FCE2] px-[15px]">
                   <CircleDollarSign className="text-[#BFA76F]" />
                   <span>Resgates</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               
               <SidebarMenuItem>
-                <SidebarMenuButton className="text-[#737373] px-[15px]">
+                <SidebarMenuButton className="text-[#737373] hover:bg-[#F2FCE2] px-[15px]">
                   <List className="text-[#BFA76F]" />
                   <span>Regras</span>
                 </SidebarMenuButton>
@@ -61,14 +63,14 @@ const Dashboard: React.FC = () => {
           <SidebarFooter className="mt-auto bg-[#d9d9d9] py-[50px]">
             <SidebarMenu>
               <SidebarMenuItem>
-                <SidebarMenuButton className="text-[#737373] px-[15px]">
+                <SidebarMenuButton className="text-[#737373] hover:bg-[#F2FCE2] px-[15px]">
                   <Settings className="text-[#BFA76F]" />
                   <span>Configurações</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               
               <SidebarMenuItem>
-                <SidebarMenuButton className="text-[#737373] px-[15px]">
+                <SidebarMenuButton className="text-[#737373] hover:bg-[#F2FCE2] px-[15px]">
                   <MessageSquare className="text-[#BFA76F]" />
                   <span>Suporte</span>
                 </SidebarMenuButton>
@@ -92,7 +94,6 @@ const Dashboard: React.FC = () => {
             
             {/* Page Title */}
             <div className="text-center mb-12">
-              
               <h1 className="text-4xl font-bold text-[#737373]">Studio Rachid Club</h1>
             </div>
             
@@ -116,7 +117,6 @@ const Dashboard: React.FC = () => {
                     
                     <div className="flex justify-between text-xs mt-1 text-[#737373]">
                       <span>0</span>
-                      
                       <span>1000</span>
                     </div>
                     
@@ -140,7 +140,7 @@ const Dashboard: React.FC = () => {
                     </div>
                   </div>
                   
-                  <Button className="w-full bg-[#B1C9C3] hover:bg-[#9fb9b2] text-[#737373] font-semibold flex gap-2 items-center justify-center py-0 px-0 mx-0 my-[5px]">
+                  <Button className="w-full bg-[#B1C9C3] hover:bg-[#9fb9b2] text-[#737373] font-semibold flex gap-2 items-center justify-center py-3 px-4 mx-0 my-[5px]">
                     <Gift className="text-[#BFA76F]" />
                     Veja Todos os Prêmios e Resgate
                   </Button>
@@ -173,7 +173,7 @@ const Dashboard: React.FC = () => {
                     </div>
                   </div>
                   
-                  <Button className="w-full bg-[#BFA76F] hover:bg-[#a99058] text-white font-bold">
+                  <Button className="w-full bg-[#BFA76F] hover:bg-[#a99058] text-white font-bold py-3 px-4">
                     QUERO INDICAR AGORA!
                   </Button>
                 </CardContent>
@@ -182,7 +182,8 @@ const Dashboard: React.FC = () => {
           </div>
         </main>
       </div>
-    </SidebarProvider>;
+    </SidebarProvider>
+  );
 };
 
 // Helper function to get month name
@@ -190,4 +191,5 @@ function getMonthName(month: number): string {
   const months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
   return months[month];
 }
+
 export default Dashboard;
