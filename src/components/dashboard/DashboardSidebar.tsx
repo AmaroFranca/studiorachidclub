@@ -27,7 +27,10 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = () => {
       <SidebarContent className="bg-[D9D9D9] bg-[#d9d9d9]">
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton disabled={true} className="rounded-md text-[#737373] px-[15px] hover:bg-[#B1C9C3] focus:bg-[#B1C9C3]">
+            <SidebarMenuButton 
+              disabled={true} 
+              className="rounded-md text-[#737373] px-[15px] hover:bg-[#B1C9C3] focus:bg-[#B1C9C3] disabled:opacity-100"
+            >
               <LayoutDashboard className="text-[#BFA76F]" />
               <span>Painel</span>
             </SidebarMenuButton>
