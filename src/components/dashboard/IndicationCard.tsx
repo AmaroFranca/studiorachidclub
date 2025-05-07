@@ -1,20 +1,17 @@
-
 import React from "react";
 import { Heart, ArrowRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-
 const IndicationCard: React.FC = () => {
-  return (
-    <Card className="bg-gradient-to-br from-[#B1C9C3] to-black shadow-[10px_10px_15px_#737373] rounded-lg border-none">
+  return <Card className="bg-gradient-to-br from-[#B1C9C3] to-black shadow-[10px_10px_15px_#737373] rounded-lg border-none">
       <CardContent className="p-6 text-white">
         <div className="border border-white/60 rounded-lg p-4 mb-6">
           <div className="flex items-center mb-4">
-            <Heart className="text-[#BFA76F] mr-2 " />
-            <h3 className="font-semibold text-xl text-center">Indique e Ganhe</h3>
+            <Heart className="text-[#BFA76F] mr-2" />
+            <h3 className="font-semibold text-center text-2xl">Indique e Ganhe</h3>
           </div>
           
-          <h2 className="text-xl font-semibold mb-4 text-left">Indique alguém especial e ganhem juntos.</h2>
+          <h2 className="font-semibold mb-4 text-left text-2xl">Indique alguém especial e ganhem juntos.</h2>
           
           <p className="mb-4 text-left">
             Pontos pra você. Presente pra quem você indica.
@@ -35,8 +32,6 @@ const IndicationCard: React.FC = () => {
           QUERO INDICAR AGORA!
         </Button>
       </CardContent>
-    </Card>
-  );
+    </Card>;
 };
-
 export default IndicationCard;
