@@ -1,11 +1,9 @@
-
 import React from "react";
 import { LayoutDashboard, Gift, Users, CircleDollarSign, List, Settings, MessageSquare, Heart, ArrowRight, Menu } from "lucide-react";
 import { SidebarProvider, Sidebar, SidebarHeader, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarFooter } from "@/components/ui/sidebar";
 import { Progress } from "@/components/ui/progress";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-
 const Dashboard: React.FC = () => {
   const currentDate = new Date();
   const formattedDate = `${currentDate.getDate()} de ${getMonthName(currentDate.getMonth())} de ${currentDate.getFullYear()}`;
@@ -84,9 +82,7 @@ const Dashboard: React.FC = () => {
               <h2 className="text-2xl font-semibold text-[#737373]">Olá, Amaro</h2>
               <div className="flex items-center gap-4">
                 <span className="text-sm text-[#737373]">{formattedDate}</span>
-                <div className="w-8 h-8 rounded-full bg-[#BFA76F] flex items-center justify-center text-white">
-                  A
-                </div>
+                
               </div>
             </div>
             
