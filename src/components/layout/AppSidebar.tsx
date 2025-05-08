@@ -1,7 +1,6 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
-import { Users, CircleDollarSign, List, Settings, MessageSquare, Gift, Menu } from "lucide-react";
+import { Users, CircleDollarSign, List, Settings, MessageSquare, Gift, LayoutDashboard } from "lucide-react";
 import { SidebarHeader, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarFooter } from "@/components/ui/sidebar";
 
 interface AppSidebarProps {
@@ -38,7 +37,7 @@ const AppSidebar: React.FC<AppSidebarProps> = ({ activeSection }) => {
           </SidebarMenuItem>
           
           {(activeSection === "rewards" || activeSection === "prizes" || activeSection === "experiences") && (
-            <div className="flex flex-col gap-2 mt-2 pl-[15px] ml-6">
+            <div className="flex flex-col gap-2 mt-2 pl-[50px]">
               <Link to="/prizes">
                 <button 
                   className={`text-left text-sm font-medium ${activeSection === "prizes" ? "text-[#737373]" : "text-[#BFA76F]"} hover:text-[#737373] transition-colors`}
@@ -106,7 +105,7 @@ const AppSidebar: React.FC<AppSidebarProps> = ({ activeSection }) => {
 
 // Helper component for dashboard icon
 const LayoutDashboard = ({ className }: { className?: string }) => {
-  return <div className={className}><Menu /></div>;
+  return <div className={className}><LayoutDashboard /></div>;
 };
 
 export default AppSidebar;
