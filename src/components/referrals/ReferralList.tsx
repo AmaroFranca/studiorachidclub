@@ -12,11 +12,12 @@ interface Referral {
 
 interface ReferralListProps {
   referrals: Referral[];
+  blurred?: boolean;
 }
 
-const ReferralList: React.FC<ReferralListProps> = ({ referrals }) => {
+const ReferralList: React.FC<ReferralListProps> = ({ referrals, blurred = false }) => {
   return (
-    <div className="mb-8 flex-1">
+    <div className={`mb-8 flex-1 ${blurred ? 'filter blur-sm transition-all' : ''}`}>
       {referrals.map((referral) => (
         <ReferralCard key={referral.id} referral={referral} />
       ))}
