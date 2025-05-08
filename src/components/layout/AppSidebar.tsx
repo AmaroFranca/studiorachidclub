@@ -30,7 +30,7 @@ const AppSidebar: React.FC<AppSidebarProps> = ({ activeSection }) => {
           
           <SidebarMenuItem>
             <Link to="/rewards">
-              <SidebarMenuButton className={`text-[#737373] px-[15px] rounded-md ${activeSection === "rewards" || activeSection === "prizes" || activeSection === "experiences" ? "bg-[#B1C9C3]" : "hover:bg-[#B1C9C3]"}`}>
+              <SidebarMenuButton className={`text-[#737373] px-[15px] rounded-md ${activeSection === "rewards" || activeSection === "prizes" || activeSection === "experiences" ? "bg-[#B1C9C3] hover:bg-[#B1C9C3]" : "hover:bg-[#B1C9C3]"}`}>
                 <Gift className="text-[#BFA76F]" />
                 <span>Recompensas</span>
               </SidebarMenuButton>
@@ -38,7 +38,7 @@ const AppSidebar: React.FC<AppSidebarProps> = ({ activeSection }) => {
           </SidebarMenuItem>
           
           {(activeSection === "rewards" || activeSection === "prizes" || activeSection === "experiences") && (
-            <div className="pl-10 flex flex-col gap-2 mt-2">
+            <div className="pl-6 flex flex-col gap-2 mt-2">
               <Link to="/prizes">
                 <button 
                   className={`text-left text-sm font-medium ${activeSection === "prizes" ? "text-[#737373]" : "text-[#BFA76F]"} hover:text-[#737373] transition-colors`}
