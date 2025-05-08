@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import { ArrowLeft, Filter, Plus, Check, ArrowRight } from "lucide-react";
+import { ArrowLeft, Filter, Plus, Check, User } from "lucide-react";
 import { SidebarProvider, Sidebar } from "@/components/ui/sidebar";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
@@ -8,6 +8,13 @@ import AppSidebar from "@/components/layout/AppSidebar";
 import { getFormattedDate } from "@/utils/dateUtils";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Calendar } from "@/components/ui/calendar";
+import { 
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { format } from "date-fns";
 
 interface Referral {
   id: number;
@@ -20,6 +27,7 @@ interface Referral {
 const Referrals: React.FC = () => {
   const formattedDate = getFormattedDate();
   const [currentPage, setCurrentPage] = useState(1);
+  const [date, setDate] = useState<Date | undefined>(undefined);
   
   const mockReferrals: Referral[] = [
     {
@@ -43,7 +51,6 @@ const Referrals: React.FC = () => {
       collectedGift: true,
       becamePatient: false
     },
-    // Adding more mock data to demonstrate pagination
     {
       id: 4,
       name: "Carlos Oliveira",
@@ -96,7 +103,7 @@ const Referrals: React.FC = () => {
   ];
 
   // Pagination logic
-  const itemsPerPage = 10;
+  const itemsPerPage = 3; // Changed from 10 to 3 as requested
   const pageCount = Math.ceil(mockReferrals.length / itemsPerPage);
   const paginatedReferrals = mockReferrals.slice(
     (currentPage - 1) * itemsPerPage,
@@ -127,22 +134,34 @@ const Referrals: React.FC = () => {
             
             {/* Summary and Actions */}
             <div className="mb-10">
-              <h1 className="text-2xl font-semibold text-[#737373] mb-4">Pessoas Indicadas</h1>
+              <h1 className="text-2xl font-semibold text-[#737373] mb-4 text-left">Pessoas Indicadas</h1>
               
-              <div className="flex flex-col md:flex-row justify-between md:items-center bg-[#EFEFEF] mb-8">
-                <div className="mb-4 md:mb-0">
-                  <h2 className="text-xl font-semibold text-[#737373]">
+              <div className="flex flex-col md:flex-row justify-between md:items-start bg-[#EFEFEF] mb-8">
+                <div className="mb-4 md:mb-0 text-left">
+                  <h2 className="text-xl font-semibold text-[#737373] text-left">
                     Total de <span className="text-[#BFA76F]">03</span> indicações Realizadas
                   </h2>
-                  <p className="text-base font-semibold text-[#737373]">
+                  <p className="text-base font-semibold text-[#737373] text-left">
                     Total de Pontos: <span className="text-[#BFA76F]">270</span> pontos
                   </p>
                   
                   <div className="mt-4">
-                    <button className="flex items-center gap-2 px-4 py-2 border border-[#737373]/50 rounded-md text-[#737373] font-semibold">
-                      <Filter className="h-4 w-4 text-[#BFA76F]" />
-                      <span>Filtro</span>
-                    </button>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <button className="flex items-center gap-2 px-4 py-2 border border-[#737373]/50 rounded-md text-[#737373] font-semibold">
+                          <Filter className="h-4 w-4 text-[#BFA76F]" />
+                          <span>Filtro</span>
+                        </button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-4">
+                        <Calendar
+                          mode="single"
+                          selected={date}
+                          onSelect={setDate}
+                          className="rounded-md border pointer-events-auto"
+                        />
+                      </PopoverContent>
+                    </Popover>
                   </div>
                 </div>
                 
@@ -165,14 +184,15 @@ const Referrals: React.FC = () => {
                   <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <div className="flex items-center gap-4">
                       <div className="bg-[#B1C9C3] h-10 w-10 rounded-full flex items-center justify-center text-[#737373]">
-                        {/* User icon placeholder */}
+                        <User size={20} className="text-[#737373]" />
                       </div>
                       <h3 className="text-lg font-semibold text-[#737373]">{referral.name}</h3>
                     </div>
                     
                     <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
-                      <div className="text-xs font-semibold text-[#737373]">
-                        Indicado (a) em:<br />{referral.referralDate}
+                      <div className="text-xs font-semibold">
+                        <span className="text-[#737373]">Indicado (a) em:</span><br />
+                        <span className="text-[#BFA76F]">{referral.referralDate}</span>
                       </div>
                       
                       <div className="flex items-center gap-6">
@@ -183,7 +203,7 @@ const Referrals: React.FC = () => {
                           </div>
                           <div className="h-6 w-6 relative border-2 border-[#BFA76F] rounded">
                             {referral.collectedGift && (
-                              <Check className="h-5 w-5 absolute text-[#B1C9C3]" />
+                              <Check className="h-5 w-5 absolute text-[#B1C9C3] stroke-[3]" />
                             )}
                           </div>
                         </div>
@@ -195,7 +215,7 @@ const Referrals: React.FC = () => {
                           </div>
                           <div className="h-6 w-6 relative border-2 border-[#BFA76F] rounded">
                             {referral.becamePatient && (
-                              <Check className="h-5 w-5 absolute text-[#B1C9C3]" />
+                              <Check className="h-5 w-5 absolute text-[#B1C9C3] stroke-[3]" />
                             )}
                           </div>
                         </div>

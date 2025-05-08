@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Users, CircleDollarSign, List, Settings, MessageSquare, Gift, LayoutDashboard } from "lucide-react";
 import { SidebarHeader, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarFooter } from "@/components/ui/sidebar";
 
@@ -11,6 +11,9 @@ interface AppSidebarProps {
 const AppSidebar: React.FC<AppSidebarProps> = ({
   activeSection
 }) => {
+  const location = useLocation();
+  const currentPath = location.pathname;
+  
   return <>
       <SidebarHeader className="flex items-center justify-between bg-[#d9d9d9] py-[30px] px-4 mx-0">
         <div className="flex items-center gap-2">
@@ -53,7 +56,7 @@ const AppSidebar: React.FC<AppSidebarProps> = ({
           
           <SidebarMenuItem>
             <Link to="/referrals">
-              <SidebarMenuButton className={`text-[#737373] hover:bg-[#B1C9C3] px-[15px] ${activeSection === "referrals" ? "bg-[#B1C9C3]" : ""}`}>
+              <SidebarMenuButton className={`text-[#737373] hover:bg-[#B1C9C3] px-[15px] ${activeSection === "referrals" || currentPath === "/referrals" ? "bg-[#B1C9C3]" : ""}`}>
                 <Users className="text-[#BFA76F]" />
                 <span>Indicados</span>
               </SidebarMenuButton>
