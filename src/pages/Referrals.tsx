@@ -2,19 +2,24 @@
 import React, { useState } from "react";
 import { ArrowLeft, Filter, Plus, Check, User } from "lucide-react";
 import { SidebarProvider, Sidebar } from "@/components/ui/sidebar";
-import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 import AppSidebar from "@/components/layout/AppSidebar";
 import { getFormattedDate } from "@/utils/dateUtils";
-import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Calendar } from "@/components/ui/calendar";
 import { 
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { format } from "date-fns";
+import { Calendar } from "@/components/ui/calendar";
+import { useIsMobile } from "@/hooks/use-mobile";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 
 interface Referral {
   id: number;
@@ -28,6 +33,7 @@ const Referrals: React.FC = () => {
   const formattedDate = getFormattedDate();
   const [currentPage, setCurrentPage] = useState(1);
   const [date, setDate] = useState<Date | undefined>(undefined);
+  const isMobile = useIsMobile();
   
   const mockReferrals: Referral[] = [
     {
@@ -103,12 +109,14 @@ const Referrals: React.FC = () => {
   ];
 
   // Pagination logic
-  const itemsPerPage = 3; // Changed from 10 to 3 as requested
+  const itemsPerPage = isMobile ? 10 : 5;
   const pageCount = Math.ceil(mockReferrals.length / itemsPerPage);
   const paginatedReferrals = mockReferrals.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
+
+  const totalReferrals = mockReferrals.length;
 
   return (
     <SidebarProvider defaultOpen={true}>
@@ -117,8 +125,8 @@ const Referrals: React.FC = () => {
           <AppSidebar activeSection="referrals" />
         </Sidebar>
         
-        <main className="flex-1 bg-[#EFEFEF] p-6">
-          <div className="max-w-7xl mx-auto">
+        <main className="flex-1 bg-[#EFEFEF] p-6 flex flex-col">
+          <div className="max-w-7xl mx-auto w-full flex-1 flex flex-col">
             {/* Header */}
             <div className="flex justify-between items-center mb-8">
               <div className="flex items-center gap-2">
@@ -139,7 +147,7 @@ const Referrals: React.FC = () => {
               <div className="flex flex-col md:flex-row justify-between md:items-start bg-[#EFEFEF] mb-8">
                 <div className="mb-4 md:mb-0 text-left">
                   <h2 className="text-xl font-semibold text-[#737373] text-left">
-                    Total de <span className="text-[#BFA76F]">03</span> indicações Realizadas
+                    Total de <span className="text-[#BFA76F]">{totalReferrals.toString().padStart(2, '0')}</span> indicações Realizadas
                   </h2>
                   <p className="text-base font-semibold text-[#737373] text-left">
                     Total de Pontos: <span className="text-[#BFA76F]">270</span> pontos
@@ -175,7 +183,7 @@ const Referrals: React.FC = () => {
             </div>
             
             {/* Referral List */}
-            <div className="mb-8">
+            <div className="mb-8 flex-1">
               {paginatedReferrals.map((referral) => (
                 <div 
                   key={referral.id}
@@ -226,26 +234,52 @@ const Referrals: React.FC = () => {
               ))}
             </div>
             
-            {/* Pagination */}
-            {pageCount > 1 && (
-              <div className="flex justify-center items-center gap-2 mt-8">
-                <button 
-                  className="px-2 py-1 text-[#737373] font-bold"
-                  onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                  disabled={currentPage === 1}
-                >
-                  &lt;&lt;
-                </button>
-                <span className="text-[#737373] font-bold">{currentPage}</span>
-                <button 
-                  className="px-2 py-1 text-[#737373] font-bold"
-                  onClick={() => setCurrentPage(prev => Math.min(prev + 1, pageCount))}
-                  disabled={currentPage === pageCount}
-                >
-                  &gt;&gt;
-                </button>
-              </div>
-            )}
+            {/* Pagination - moved to footer */}
+            <footer className="mt-auto py-4">
+              {pageCount > 1 && (
+                <Pagination>
+                  <PaginationContent>
+                    <PaginationItem>
+                      <PaginationPrevious 
+                        href="#" 
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setCurrentPage(prev => Math.max(prev - 1, 1));
+                        }}
+                        className={`${currentPage === 1 ? 'pointer-events-none opacity-50' : ''} text-[#737373]`}
+                      />
+                    </PaginationItem>
+                    
+                    {Array.from({ length: pageCount }).map((_, index) => (
+                      <PaginationItem key={index}>
+                        <PaginationLink
+                          href="#"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setCurrentPage(index + 1);
+                          }}
+                          isActive={currentPage === index + 1}
+                          className="text-[#737373] font-bold"
+                        >
+                          {index + 1}
+                        </PaginationLink>
+                      </PaginationItem>
+                    ))}
+                    
+                    <PaginationItem>
+                      <PaginationNext 
+                        href="#" 
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setCurrentPage(prev => Math.min(prev + 1, pageCount));
+                        }}
+                        className={`${currentPage === pageCount ? 'pointer-events-none opacity-50' : ''} text-[#737373]`}
+                      />
+                    </PaginationItem>
+                  </PaginationContent>
+                </Pagination>
+              )}
+            </footer>
           </div>
         </main>
       </div>
