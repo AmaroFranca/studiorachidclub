@@ -1,10 +1,13 @@
+
 import React from "react";
 import { Link } from "react-router-dom";
 import { Users, CircleDollarSign, List, Settings, MessageSquare, Gift, LayoutDashboard } from "lucide-react";
 import { SidebarHeader, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarFooter } from "@/components/ui/sidebar";
+
 interface AppSidebarProps {
   activeSection?: "dashboard" | "rewards" | "prizes" | "experiences";
 }
+
 const AppSidebar: React.FC<AppSidebarProps> = ({
   activeSection
 }) => {
@@ -105,4 +108,5 @@ const DashboardIcon = ({
 }) => {
   return <div className={className}><LayoutDashboard /></div>;
 };
+
 export default AppSidebar;
