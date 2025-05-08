@@ -38,7 +38,7 @@ const AppSidebar: React.FC<AppSidebarProps> = ({ activeSection }) => {
           </SidebarMenuItem>
           
           {(activeSection === "rewards" || activeSection === "prizes" || activeSection === "experiences") && (
-            <div className="pl-6 flex flex-col gap-2 mt-2">
+            <div className="flex flex-col gap-2 mt-2 pl-[15px] ml-6">
               <Link to="/prizes">
                 <button 
                   className={`text-left text-sm font-medium ${activeSection === "prizes" ? "text-[#737373]" : "text-[#BFA76F]"} hover:text-[#737373] transition-colors`}
