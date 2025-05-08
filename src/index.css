@@ -102,7 +102,7 @@
   }
 
   /* Dialog backdrop blur effect */
-  [data-state="open"] ~ .bg-black\\/80 {
+  [data-state="open"] ~ .bg-black\/80 {
     @apply backdrop-blur-sm;
   }
 

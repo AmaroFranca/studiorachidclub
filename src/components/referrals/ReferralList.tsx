@@ -17,10 +17,16 @@ interface ReferralListProps {
 
 const ReferralList: React.FC<ReferralListProps> = ({ referrals, blurred = false }) => {
   return (
-    <div className={`mb-8 flex-1 ${blurred ? 'filter blur-sm transition-all' : ''}`}>
-      {referrals.map((referral) => (
-        <ReferralCard key={referral.id} referral={referral} />
-      ))}
+    <div className={`mb-8 flex-1 ${blurred ? 'filter blur-sm transition-all blur-on-dialog' : ''}`}>
+      {referrals.length === 0 ? (
+        <div className="py-10 text-center text-[#737373]">
+          <p>Nenhuma indicação encontrada.</p>
+        </div>
+      ) : (
+        referrals.map((referral) => (
+          <ReferralCard key={referral.id} referral={referral} />
+        ))
+      )}
     </div>
   );
 };

@@ -4,6 +4,7 @@ import { Plus } from "lucide-react";
 import ReferralFilter from "./ReferralFilter";
 import ReferralFormDialog from "./ReferralFormDialog";
 import ReferralSuccessDialog from "./ReferralSuccessDialog";
+import { useToast } from "@/hooks/use-toast";
 
 interface ReferralSummaryProps {
   totalReferrals: number;
@@ -16,6 +17,7 @@ const ReferralSummary: React.FC<ReferralSummaryProps> = ({
   date, 
   setDate 
 }) => {
+  const { toast } = useToast();
   const [formDialogOpen, setFormDialogOpen] = useState(false);
   const [successDialogOpen, setSuccessDialogOpen] = useState(false);
   
@@ -24,8 +26,15 @@ const ReferralSummary: React.FC<ReferralSummaryProps> = ({
   };
   
   const handleFormSubmit = () => {
+    // In a real app, this would send the data to a server
+    // For now, just close the form dialog and open the success dialog
     setFormDialogOpen(false);
     setSuccessDialogOpen(true);
+    
+    toast({
+      title: "Indicação enviada com sucesso!",
+      description: "Sua indicação foi registrada.",
+    });
   };
 
   return (
@@ -33,7 +42,7 @@ const ReferralSummary: React.FC<ReferralSummaryProps> = ({
       <div className="mb-10">
         <h1 className="text-2xl font-semibold text-[#737373] mb-4 text-left">Pessoas Indicadas</h1>
         
-        <div className="flex flex-col md:flex-row justify-between md:items-start bg-[#EFEFEF] mb-8">
+        <div className="flex flex-col md:flex-row justify-between md:items-start bg-[#EFEFEF] p-4 rounded-lg mb-8">
           <div className="mb-4 md:mb-0 text-left">
             <h2 className="text-xl font-semibold text-[#737373] text-left">
               Total de <span className="text-[#BFA76F]">{totalReferrals.toString().padStart(2, '0')}</span> indicações Realizadas
@@ -59,13 +68,14 @@ const ReferralSummary: React.FC<ReferralSummaryProps> = ({
         </div>
       </div>
 
-      {/* Dialogs */}
+      {/* Referral Form Dialog */}
       <ReferralFormDialog 
         open={formDialogOpen} 
         onOpenChange={setFormDialogOpen}
         onSubmit={handleFormSubmit}  
       />
       
+      {/* Success Dialog */}
       <ReferralSuccessDialog 
         open={successDialogOpen} 
         onOpenChange={setSuccessDialogOpen} 
