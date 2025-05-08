@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Heart, Check } from "lucide-react";
 import { 
   Dialog,
@@ -43,9 +43,21 @@ const ReferralSuccessDialog: React.FC<ReferralSuccessDialogProps> = ({
       });
   };
 
+  // When dialog opens/closes, dispatch a custom event to notify the app
+  useEffect(() => {
+    if (open) {
+      document.dispatchEvent(new CustomEvent('dialog-state-change', { detail: { open: true } }));
+    }
+    return () => {
+      if (open) {
+        document.dispatchEvent(new CustomEvent('dialog-state-change', { detail: { open: false } }));
+      }
+    };
+  }, [open]);
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[428px] bg-[#E4E4E4] border border-[rgba(115,115,115,0.5)] rounded-[10px] shadow-[10px_10px_15px_#737373] p-[26px_0px] flex flex-col items-center overflow-y-auto max-h-[90vh]">
+      <DialogContent className="w-[428px] bg-[#E4E4E4] border border-[rgba(115,115,115,0.5)] rounded-[10px] shadow-[10px_10px_15px_#737373] p-[26px_0px] flex flex-col items-center overflow-y-auto max-h-[90vh] z-50">
         <div className="w-[398px] border border-[rgba(115,115,115,0.5)] rounded-[10px] p-[20px_15px] flex flex-col items-center">
           <div className="w-full flex flex-col items-start gap-[40px]">
             <div className="w-full flex flex-col items-start gap-[15px]">

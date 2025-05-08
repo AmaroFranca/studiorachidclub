@@ -10,7 +10,7 @@ import ReferralPagination from "@/components/referrals/ReferralPagination";
 import { mockReferrals } from "@/utils/referralData";
 import type { Referral } from "@/utils/referralData";
 
-// Add a CSS class to the body when a dialog is open to enforce the blur effect
+// Add a CSS class to specific elements when a dialog is open to enforce the blur effect
 const applyGlobalBlur = (shouldBlur: boolean) => {
   if (shouldBlur) {
     document.body.classList.add('dialog-open');
@@ -82,36 +82,42 @@ const Referrals: React.FC = () => {
   return (
     <SidebarProvider defaultOpen={true}>
       <div className="flex min-h-screen w-full">
-        <Sidebar className="border-r bg-[#D9D9D9]">
+        {/* Sidebar - Not affected by blur */}
+        <Sidebar className="border-r bg-[#D9D9D9] z-10">
           <AppSidebar activeSection="referrals" />
         </Sidebar>
         
         <main className="flex-1 bg-[#EFEFEF] p-6 flex flex-col">
           <div className="max-w-7xl mx-auto w-full flex-1 flex flex-col">
-            {/* Header */}
-            <ReferralHeader />
+            {/* Header - Not affected by blur */}
+            <div className="z-10 relative">
+              <ReferralHeader />
+            </div>
             
-            {/* Summary and Actions */}
-            <ReferralSummary
-              totalReferrals={totalReferrals}
-              date={date}
-              setDate={setDate}
-            />
-            
-            {/* Referral List */}
-            <ReferralList 
-              referrals={paginatedReferrals} 
-              blurred={isDialogOpen}
-            />
-            
-            {/* Pagination - in footer */}
-            <footer className={`mt-auto py-4 ${isDialogOpen ? 'filter blur-sm' : ''}`}>
-              <ReferralPagination
-                currentPage={currentPage}
-                pageCount={pageCount}
-                setCurrentPage={setCurrentPage}
+            {/* Content area - Affected by blur */}
+            <div className="flex-1 flex flex-col blur-on-dialog">
+              {/* Summary and Actions */}
+              <ReferralSummary
+                totalReferrals={totalReferrals}
+                date={date}
+                setDate={setDate}
               />
-            </footer>
+              
+              {/* Referral List */}
+              <ReferralList 
+                referrals={paginatedReferrals} 
+                blurred={isDialogOpen}
+              />
+              
+              {/* Pagination - in footer */}
+              <footer className="mt-auto py-4">
+                <ReferralPagination
+                  currentPage={currentPage}
+                  pageCount={pageCount}
+                  setCurrentPage={setCurrentPage}
+                />
+              </footer>
+            </div>
           </div>
         </main>
       </div>

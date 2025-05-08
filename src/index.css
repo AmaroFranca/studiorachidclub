@@ -101,14 +101,18 @@
     font-family: 'Poppins', sans-serif;
   }
 
-  /* Dialog backdrop blur effect */
+  /* Dialog backdrop with semi-transparency and blur */
   [data-state="open"] ~ .bg-black\/80 {
-    @apply backdrop-blur-sm;
+    @apply bg-black/50 backdrop-blur-sm;
   }
 
-  /* Apply blur to content when dialog is open */
+  /* Apply blur only to content marked with blur-on-dialog class when dialog is open */
+  .blur-on-dialog {
+    @apply transition-all duration-200;
+  }
+  
   body.dialog-open .blur-on-dialog {
-    @apply filter blur-sm transition-all;
+    @apply filter blur-sm;
   }
 }
 
