@@ -1,13 +1,14 @@
 
 import React, { useState } from "react";
-import { ArrowLeft, Users, CircleDollarSign, List, Settings, MessageSquare, Gift, Menu, LockOpen, Lock } from "lucide-react";
-import { SidebarProvider, Sidebar, SidebarHeader, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarFooter } from "@/components/ui/sidebar";
+import { ArrowLeft, LockOpen, Lock } from "lucide-react";
+import { SidebarProvider, Sidebar } from "@/components/ui/sidebar";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
+import AppSidebar from "@/components/layout/AppSidebar";
+import { getFormattedDate } from "@/utils/dateUtils";
 
 const Rewards: React.FC = () => {
-  const currentDate = new Date();
-  const formattedDate = `${currentDate.getDate()} de ${getMonthName(currentDate.getMonth())} de ${currentDate.getFullYear()}`;
+  const formattedDate = getFormattedDate();
   
   // State for active submenu buttons
   const [activeMenu, setActiveMenu] = useState<string>("premios");
@@ -16,93 +17,7 @@ const Rewards: React.FC = () => {
     <SidebarProvider defaultOpen={true}>
       <div className="flex min-h-screen w-full">
         <Sidebar className="border-r bg-[#D9D9D9]">
-          <SidebarHeader className="flex items-center justify-between bg-[#d9d9d9] py-[30px] px-4 mx-0">
-            <div className="flex items-center gap-2">
-              <h1 className="text-xl font-semibold text-[#737373] text-left">Studio Rachid</h1>
-            </div>
-          </SidebarHeader>
-          
-          <SidebarContent className="bg-[D9D9D9] bg-[#d9d9d9]">
-            <SidebarMenu>
-              <SidebarMenuItem>
-                <Link to="/dashboard">
-                  <SidebarMenuButton className="rounded-md text-[#737373] px-[15px] hover:bg-[#B1C9C3]">
-                    <LayoutDashboard className="text-[#BFA76F]" />
-                    <span>Painel</span>
-                  </SidebarMenuButton>
-                </Link>
-              </SidebarMenuItem>
-              
-              <SidebarMenuItem>
-                <SidebarMenuButton className="text-[#737373] bg-[#B1C9C3] px-[15px] rounded-md">
-                  <Gift className="text-[#BFA76F]" />
-                  <span>Recompensas</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              
-              {/* Submenu buttons for Recompensas - now both are #BFA76F by default */}
-              <div className="pl-10 flex flex-col gap-2 mt-2">
-                <Link to="/prizes">
-                  <button 
-                    className="text-left text-sm font-medium text-[#BFA76F] hover:text-[#737373] transition-colors"
-                  >
-                    Prêmios
-                  </button>
-                </Link>
-                <button 
-                  className="text-left text-sm font-medium text-[#BFA76F] hover:text-[#737373] transition-colors"
-                  onClick={() => setActiveMenu("experiencias")}
-                >
-                  Experiências
-                </button>
-              </div>
-              
-              <SidebarMenuItem>
-                <Link to="#">
-                  <SidebarMenuButton className="text-[#737373] hover:bg-[#B1C9C3] px-[15px]">
-                    <Users className="text-[#BFA76F]" />
-                    <span>Indicados</span>
-                  </SidebarMenuButton>
-                </Link>
-              </SidebarMenuItem>
-              
-              <SidebarMenuItem>
-                <Link to="#">
-                  <SidebarMenuButton className="text-[#737373] hover:bg-[#B1C9C3] px-[15px]">
-                    <CircleDollarSign className="text-[#BFA76F]" />
-                    <span>Resgates</span>
-                  </SidebarMenuButton>
-                </Link>
-              </SidebarMenuItem>
-              
-              <SidebarMenuItem>
-                <Link to="#">
-                  <SidebarMenuButton className="text-[#737373] hover:bg-[#B1C9C3] px-[15px]">
-                    <List className="text-[#BFA76F]" />
-                    <span>Regras</span>
-                  </SidebarMenuButton>
-                </Link>
-              </SidebarMenuItem>
-            </SidebarMenu>
-          </SidebarContent>
-          
-          <SidebarFooter className="mt-auto bg-[#d9d9d9] py-[50px]">
-            <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton className="text-[#737373] hover:bg-[#B1C9C3] px-[15px]">
-                  <Settings className="text-[#BFA76F]" />
-                  <span>Configurações</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              
-              <SidebarMenuItem>
-                <SidebarMenuButton className="text-[#737373] hover:bg-[#B1C9C3] px-[15px]">
-                  <MessageSquare className="text-[#BFA76F]" />
-                  <span>Suporte</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            </SidebarMenu>
-          </SidebarFooter>
+          <AppSidebar activeSection="rewards" />
         </Sidebar>
         
         <main className="flex-1 bg-[#EFEFEF] p-6">
@@ -134,7 +49,7 @@ const Rewards: React.FC = () => {
                     <CardContent className="p-6 space-y-4">
                       <div className="overflow-hidden rounded-lg">
                         <img 
-                          src="/lovable-uploads/e42401d8-7e5c-438f-91d6-fd4258971e1a.png" 
+                          src="/lovable-uploads/8ee045bc-a834-4510-8ac3-548896e0a4ca.png" 
                           alt="Amazon Echo" 
                           className="w-full h-80 object-cover rounded-lg"
                         />
@@ -184,17 +99,6 @@ const Rewards: React.FC = () => {
       </div>
     </SidebarProvider>
   );
-};
-
-// Helper function to get month name
-function getMonthName(month: number): string {
-  const months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
-  return months[month];
-}
-
-// Missing component import
-const LayoutDashboard = ({ className }: { className?: string }) => {
-  return <div className={className}><Menu /></div>;
 };
 
 export default Rewards;
