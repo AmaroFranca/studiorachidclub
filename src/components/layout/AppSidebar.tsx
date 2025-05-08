@@ -38,19 +38,21 @@ const AppSidebar: React.FC<AppSidebarProps> = ({ activeSection }) => {
           </SidebarMenuItem>
           
           {(activeSection === "rewards" || activeSection === "prizes" || activeSection === "experiences") && (
-            <div className="flex flex-col gap-2 mt-2 pl-[50px]">
+            <div className="flex flex-col gap-2 mt-2">
               <Link to="/prizes">
-                <button 
-                  className={`text-left text-sm font-medium ${activeSection === "prizes" ? "text-[#737373]" : "text-[#BFA76F]"} hover:text-[#737373] transition-colors`}
+                <SidebarMenuButton 
+                  className={`text-left text-sm font-medium pl-[44px] ${activeSection === "prizes" ? "text-[#737373] bg-[#B1C9C3]" : "text-[#BFA76F] hover:bg-[#B1C9C3]"} hover:text-[#737373] transition-colors rounded-md`}
                 >
-                  Prêmios
-                </button>
+                  <span>Prêmios</span>
+                </SidebarMenuButton>
               </Link>
-              <button 
-                className="text-left text-sm font-medium text-[#BFA76F] hover:text-[#737373] transition-colors"
-              >
-                Experiências
-              </button>
+              <Link to="/experiences">
+                <SidebarMenuButton 
+                  className={`text-left text-sm font-medium pl-[44px] ${activeSection === "experiences" ? "text-[#737373] bg-[#B1C9C3]" : "text-[#BFA76F] hover:bg-[#B1C9C3]"} hover:text-[#737373] transition-colors rounded-md`}
+                >
+                  <span>Experiências</span>
+                </SidebarMenuButton>
+              </Link>
             </div>
           )}
           
