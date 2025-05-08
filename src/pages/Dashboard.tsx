@@ -41,10 +41,12 @@ const Dashboard: React.FC = () => {
               </SidebarMenuItem>
               
               <SidebarMenuItem>
-                <SidebarMenuButton className="text-[#737373] hover:bg-[#B1C9C3] px-[15px]">
-                  <Users className="text-[#BFA76F]" />
-                  <span>Indicados</span>
-                </SidebarMenuButton>
+                <Link to="/referrals">
+                  <SidebarMenuButton className="text-[#737373] hover:bg-[#B1C9C3] px-[15px]">
+                    <Users className="text-[#BFA76F]" />
+                    <span>Indicados</span>
+                  </SidebarMenuButton>
+                </Link>
               </SidebarMenuItem>
               
               <SidebarMenuItem>
@@ -176,9 +178,11 @@ const Dashboard: React.FC = () => {
                     </div>
                   </div>
                   
-                  <Button className="w-full bg-[#BFA76F] hover:bg-[#a99058] text-white font-bold py-3 px-4">
-                    QUERO INDICAR AGORA!
-                  </Button>
+                  <Link to="/referrals">
+                    <Button className="w-full bg-[#BFA76F] hover:bg-[#a99058] text-white font-bold py-3 px-4">
+                      QUERO INDICAR AGORA!
+                    </Button>
+                  </Link>
                 </CardContent>
               </Card>
             </div>
