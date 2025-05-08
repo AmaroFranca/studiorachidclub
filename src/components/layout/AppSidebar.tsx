@@ -1,16 +1,14 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import { Users, CircleDollarSign, List, Settings, MessageSquare, Gift, LayoutDashboard } from "lucide-react";
 import { SidebarHeader, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarFooter } from "@/components/ui/sidebar";
-
 interface AppSidebarProps {
   activeSection?: "dashboard" | "rewards" | "prizes" | "experiences";
 }
-
-const AppSidebar: React.FC<AppSidebarProps> = ({ activeSection }) => {
-  return (
-    <>
+const AppSidebar: React.FC<AppSidebarProps> = ({
+  activeSection
+}) => {
+  return <>
       <SidebarHeader className="flex items-center justify-between bg-[#d9d9d9] py-[30px] px-4 mx-0">
         <div className="flex items-center gap-2">
           <h1 className="text-xl font-semibold text-[#737373] text-left">Studio Rachid</h1>
@@ -37,24 +35,18 @@ const AppSidebar: React.FC<AppSidebarProps> = ({ activeSection }) => {
             </Link>
           </SidebarMenuItem>
           
-          {(activeSection === "rewards" || activeSection === "prizes" || activeSection === "experiences") && (
-            <div className="flex flex-col gap-2 mt-2">
+          {(activeSection === "rewards" || activeSection === "prizes" || activeSection === "experiences") && <div className="flex flex-col gap-2 mt-2 bg-transparent">
               <Link to="/prizes">
-                <SidebarMenuButton 
-                  className={`text-left text-sm font-medium pl-[44px] ${activeSection === "prizes" ? "text-[#737373]" : "text-[#BFA76F]"} hover:text-[#737373] transition-colors rounded-md`}
-                >
+                <SidebarMenuButton className={`text-left text-sm font-medium pl-[44px] ${activeSection === "prizes" ? "text-[#737373]" : "text-[#BFA76F]"} hover:text-[#737373] transition-colors rounded-md`}>
                   <span>Prêmios</span>
                 </SidebarMenuButton>
               </Link>
               <Link to="/experiences">
-                <SidebarMenuButton 
-                  className={`text-left text-sm font-medium pl-[44px] ${activeSection === "experiences" ? "text-[#737373]" : "text-[#BFA76F]"} hover:text-[#737373] transition-colors rounded-md`}
-                >
+                <SidebarMenuButton className={`text-left text-sm font-medium pl-[44px] ${activeSection === "experiences" ? "text-[#737373]" : "text-[#BFA76F]"} hover:text-[#737373] transition-colors rounded-md`}>
                   <span>Experiências</span>
                 </SidebarMenuButton>
               </Link>
-            </div>
-          )}
+            </div>}
           
           <SidebarMenuItem>
             <Link to="#">
@@ -102,13 +94,15 @@ const AppSidebar: React.FC<AppSidebarProps> = ({ activeSection }) => {
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>
-    </>
-  );
+    </>;
 };
 
 // Helper component for dashboard icon - renamed to avoid conflict with imported component
-const DashboardIcon = ({ className }: { className?: string }) => {
+const DashboardIcon = ({
+  className
+}: {
+  className?: string;
+}) => {
   return <div className={className}><LayoutDashboard /></div>;
 };
-
 export default AppSidebar;
