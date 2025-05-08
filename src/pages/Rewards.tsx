@@ -42,14 +42,15 @@ const Rewards: React.FC = () => {
               
               {/* Submenu buttons for Recompensas - now both are #BFA76F by default */}
               <div className="pl-10 flex flex-col gap-2 mt-2">
+                <Link to="/prizes">
+                  <button 
+                    className="text-left text-sm font-medium text-[#BFA76F] hover:text-[#737373] transition-colors"
+                  >
+                    Prêmios
+                  </button>
+                </Link>
                 <button 
-                  className={`text-left text-sm font-medium text-[#BFA76F] hover:text-[#737373] transition-colors`}
-                  onClick={() => setActiveMenu("premios")}
-                >
-                  Prêmios
-                </button>
-                <button 
-                  className={`text-left text-sm font-medium text-[#BFA76F] hover:text-[#737373] transition-colors`}
+                  className="text-left text-sm font-medium text-[#BFA76F] hover:text-[#737373] transition-colors"
                   onClick={() => setActiveMenu("experiencias")}
                 >
                   Experiências
@@ -128,27 +129,29 @@ const Rewards: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Prêmios Card */}
               <div className="p-2">
-                <Card className="bg-[#D9D9D9] shadow-[10px_10px_15px_#737373] rounded-lg border-none cursor-pointer hover:scale-[1.02] transition-transform">
-                  <CardContent className="p-6 space-y-4">
-                    <div className="overflow-hidden rounded-lg">
-                      <img 
-                        src="/lovable-uploads/e42401d8-7e5c-438f-91d6-fd4258971e1a.png" 
-                        alt="Amazon Echo" 
-                        className="w-full h-80 object-cover rounded-lg"
-                      />
-                    </div>
-                    <div className="space-y-3 text-left">
-                      <div className="flex justify-between items-center">
-                        <h3 className="font-semibold text-lg text-[#737373]">Prêmios</h3>
-                        <div className="flex items-center gap-1">
-                          <LockOpen className="w-4 h-4 text-[#BFA76F]" />
-                          <span className="text-xs text-[#BFA76F]">Desbloqueados</span>
-                        </div>
+                <Link to="/prizes">
+                  <Card className="bg-[#D9D9D9] shadow-[10px_10px_15px_#737373] rounded-lg border-none cursor-pointer hover:scale-[1.02] transition-transform">
+                    <CardContent className="p-6 space-y-4">
+                      <div className="overflow-hidden rounded-lg">
+                        <img 
+                          src="/lovable-uploads/e42401d8-7e5c-438f-91d6-fd4258971e1a.png" 
+                          alt="Amazon Echo" 
+                          className="w-full h-80 object-cover rounded-lg"
+                        />
                       </div>
-                      <p className="text-[#737373]">Troque seus pontos por itens selecionados.</p>
-                    </div>
-                  </CardContent>
-                </Card>
+                      <div className="space-y-3 text-left">
+                        <div className="flex justify-between items-center">
+                          <h3 className="font-semibold text-lg text-[#737373]">Prêmios</h3>
+                          <div className="flex items-center gap-1">
+                            <LockOpen className="w-4 h-4 text-[#BFA76F]" />
+                            <span className="text-xs text-[#BFA76F]">Desbloqueados</span>
+                          </div>
+                        </div>
+                        <p className="text-[#737373]">Troque seus pontos por itens selecionados.</p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </Link>
               </div>
 
               {/* Experiências Card */}
