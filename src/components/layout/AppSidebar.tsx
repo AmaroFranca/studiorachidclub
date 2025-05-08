@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Link } from "react-router-dom";
 import { Users, CircleDollarSign, List, Settings, MessageSquare, Gift, LayoutDashboard } from "lucide-react";
@@ -21,7 +22,7 @@ const AppSidebar: React.FC<AppSidebarProps> = ({ activeSection }) => {
           <SidebarMenuItem>
             <Link to="/dashboard">
               <SidebarMenuButton className={`rounded-md text-[#737373] px-[15px] ${activeSection === "dashboard" ? "bg-[#B1C9C3]" : "hover:bg-[#B1C9C3]"}`}>
-                <LayoutDashboard className="text-[#BFA76F]" />
+                <DashboardIcon className="text-[#BFA76F]" />
                 <span>Painel</span>
               </SidebarMenuButton>
             </Link>
@@ -103,8 +104,8 @@ const AppSidebar: React.FC<AppSidebarProps> = ({ activeSection }) => {
   );
 };
 
-// Helper component for dashboard icon
-const LayoutDashboard = ({ className }: { className?: string }) => {
+// Helper component for dashboard icon - renamed to avoid conflict with imported component
+const DashboardIcon = ({ className }: { className?: string }) => {
   return <div className={className}><LayoutDashboard /></div>;
 };
 
