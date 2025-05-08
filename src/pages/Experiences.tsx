@@ -16,33 +16,33 @@ interface Experience {
   remainingPoints: number;
 }
 
-// Sample data for experiences
+// Updated data for experiences with correct image paths
 const experiences: Experience[] = [
   {
     id: 1, 
     name: "Jantar Romântico", 
-    image: "/lovable-uploads/725aafbb-7d9b-4169-9571-1ffec9b4cbfc.png",
+    image: "/lovable-uploads/58ca1406-12b0-40f7-99e4-3e95399aba2d.png", // Updated image path for Jantar Romântico
     points: 1200,
     remainingPoints: 930
   },
   {
     id: 2, 
     name: "Day SPA", 
-    image: "/lovable-uploads/a26f2756-a870-4948-9e68-e60e987d56f6.png",
+    image: "/lovable-uploads/311d5302-7995-40d9-be5f-7e133f56ee02.png", // Updated image path for Day SPA
     points: 1500,
     remainingPoints: 1230
   },
   {
     id: 3, 
     name: "Sessão de Botox", 
-    image: "/lovable-uploads/5cbdd0c4-dc11-4a49-8cdf-814f246bbb75.png",
+    image: "/lovable-uploads/6c3d02cd-a2bb-4342-b029-77943282812d.png", // Updated image path for Sessão de Botox
     points: 1800,
     remainingPoints: 1530
   },
   {
     id: 4, 
     name: "Day Use Premium Casal", 
-    image: "/lovable-uploads/f0c97a94-a561-49ca-a0eb-55797b7cb6c2.png",
+    image: "/lovable-uploads/25a966a8-5d2d-4a7f-984e-f09c50bcddac.png", // Updated image path for Day Use Premium Casal
     points: 2000,
     remainingPoints: 1730
   }
