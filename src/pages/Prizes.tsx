@@ -126,10 +126,10 @@ const Prizes: React.FC = () => {
             {/* Prize Cards Grid - 2 rows of 3 cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
               {/* Prize Card 1 - Copo 500ml */}
-              <Card className="flex h-32 bg-[#D9D9D9] opacity-[0.49] shadow-[10px_10px_15px_#737373] rounded-lg border-none overflow-hidden">
+              <Card className="flex h-32 bg-[#D9D9D9] shadow-[10px_10px_15px_#737373] rounded-lg border-none overflow-hidden">
                 <div className="w-[132px] h-full">
                   <img 
-                    src="/lovable-uploads/6fdddf3d-0540-4292-9aab-dff7154f4ef8.png"
+                    src="/lovable-uploads/1d7f27da-bcf5-4547-9b79-2a6d1f4865ea.png"
                     alt="Copo Térmico 500ml" 
                     className="w-full h-full object-cover"
                   />
@@ -139,17 +139,17 @@ const Prizes: React.FC = () => {
                     <LockOpen className="w-4 h-4 text-[#BFA76F] mr-1" />
                     <span className="text-xs font-medium text-[#BFA76F]">Desbloqueado</span>
                   </div>
-                  <h3 className="font-semibold text-sm text-[#737373]">Copo Térmico inox c/ tampa 500 ml</h3>
-                  <p className="font-bold text-sm text-[#BFA76F] mt-1">100 pontos</p>
-                  <p className="font-semibold text-xs text-[#737373] mt-1">Resgatar</p>
+                  <h3 className="font-semibold text-sm text-[#737373] text-left">Copo Térmico inox c/ tampa 500 ml</h3>
+                  <p className="font-bold text-sm text-[#BFA76F] mt-1 text-left">100 pontos</p>
+                  <p className="font-semibold text-xs text-[#737373] mt-1 text-left">Resgatar</p>
                 </div>
               </Card>
               
               {/* Prize Card 2 - Copo 1,2L */}
-              <Card className="flex h-32 bg-[#D9D9D9] opacity-[0.49] shadow-[10px_10px_15px_#737373] rounded-lg border-none overflow-hidden">
+              <Card className="flex h-32 bg-[#D9D9D9] shadow-[10px_10px_15px_#737373] rounded-lg border-none overflow-hidden">
                 <div className="w-[132px] h-full">
                   <img 
-                    src="/lovable-uploads/25800c0f-51d2-459e-9795-f2d798ee3643.png"
+                    src="/lovable-uploads/b6d09a9c-6e5c-4d2f-ac1e-fcf6ceaeefbd.png"
                     alt="Copo Térmico 1,2L" 
                     className="w-full h-full object-cover"
                   />
@@ -159,17 +159,17 @@ const Prizes: React.FC = () => {
                     <LockOpen className="w-4 h-4 text-[#BFA76F] mr-1" />
                     <span className="text-xs font-medium text-[#BFA76F]">Desbloqueado</span>
                   </div>
-                  <h3 className="font-semibold text-sm text-[#737373]">Copo Térmico 1,2L</h3>
-                  <p className="font-bold text-sm text-[#BFA76F] mt-1">150 pontos</p>
-                  <p className="font-semibold text-xs text-[#737373] mt-1">Resgatar</p>
+                  <h3 className="font-semibold text-sm text-[#737373] text-left">Copo Térmico 1,2L</h3>
+                  <p className="font-bold text-sm text-[#BFA76F] mt-1 text-left">150 pontos</p>
+                  <p className="font-semibold text-xs text-[#737373] mt-1 text-left">Resgatar</p>
                 </div>
               </Card>
               
               {/* Prize Card 3 - Cinemark */}
-              <Card className="flex h-32 bg-[#D9D9D9] opacity-[0.49] shadow-[10px_10px_15px_#737373] rounded-lg border-none overflow-hidden">
+              <Card className="flex h-32 bg-[#D9D9D9] shadow-[10px_10px_15px_#737373] rounded-lg border-none overflow-hidden">
                 <div className="w-[132px] h-full">
                   <img 
-                    src="/lovable-uploads/0de1f266-e1d5-4c62-934b-a49f03c61f3d.png"
+                    src="/lovable-uploads/0cae2b39-8129-4da7-8c68-a0a2342d5bf5.png"
                     alt="Ingressos Cinemark" 
                     className="w-full h-full object-cover"
                   />
@@ -179,17 +179,17 @@ const Prizes: React.FC = () => {
                     <LockOpen className="w-4 h-4 text-[#BFA76F] mr-1" />
                     <span className="text-xs font-medium text-[#BFA76F]">Desbloqueado</span>
                   </div>
-                  <h3 className="font-semibold text-sm text-[#737373]">2 Ingressos para o Cinema</h3>
-                  <p className="font-bold text-sm text-[#BFA76F] mt-1">200 pontos</p>
-                  <p className="font-semibold text-xs text-[#737373] mt-1">Resgatar</p>
+                  <h3 className="font-semibold text-sm text-[#737373] text-left">2 Ingressos para o Cinema</h3>
+                  <p className="font-bold text-sm text-[#BFA76F] mt-1 text-left">200 pontos</p>
+                  <p className="font-semibold text-xs text-[#737373] mt-1 text-left">Resgatar</p>
                 </div>
               </Card>
               
               {/* Prize Card 4 - Outback */}
-              <Card className="flex h-32 bg-[#D9D9D9] opacity-[0.49] shadow-[10px_10px_15px_#737373] rounded-lg border-none overflow-hidden">
+              <Card className="flex h-32 bg-[#D9D9D9] shadow-[10px_10px_15px_#737373] rounded-lg border-none overflow-hidden">
                 <div className="w-[132px] h-full">
                   <img 
-                    src="/lovable-uploads/bc7090ea-d4f8-4887-bbba-86c80e14bf5f.png"
+                    src="/lovable-uploads/df66f7b5-06d3-42d3-89ff-19622d6b8f8f.png"
                     alt="Gift Card Outback" 
                     className="w-full h-full object-cover"
                   />
@@ -199,17 +199,17 @@ const Prizes: React.FC = () => {
                     <LockOpen className="w-4 h-4 text-[#BFA76F] mr-1" />
                     <span className="text-xs font-medium text-[#BFA76F]">Desbloqueado</span>
                   </div>
-                  <h3 className="font-semibold text-sm text-[#737373]">Gift Card Outback</h3>
-                  <p className="font-bold text-sm text-[#BFA76F] mt-1">400 pontos</p>
-                  <p className="font-semibold text-xs text-[#737373] mt-1">Faltam: 130 pontos</p>
+                  <h3 className="font-semibold text-sm text-[#737373] text-left">Gift Card Outback</h3>
+                  <p className="font-bold text-sm text-[#BFA76F] mt-1 text-left">400 pontos</p>
+                  <p className="font-semibold text-xs text-[#737373] mt-1 text-left">Faltam: 130 pontos</p>
                 </div>
               </Card>
               
               {/* Prize Card 5 - Escova */}
-              <Card className="flex h-32 bg-[#D9D9D9] opacity-[0.49] shadow-[10px_10px_15px_#737373] rounded-lg border-none overflow-hidden">
+              <Card className="flex h-32 bg-[#D9D9D9] shadow-[10px_10px_15px_#737373] rounded-lg border-none overflow-hidden">
                 <div className="w-[132px] h-full">
                   <img 
-                    src="/lovable-uploads/1db10d74-c9cf-4004-a400-4adbf1170730.png"
+                    src="/lovable-uploads/0c6054b2-ce8f-4db3-8229-b5fa253ccce7.png"
                     alt="Escova Elétrica" 
                     className="w-full h-full object-cover"
                   />
@@ -219,17 +219,17 @@ const Prizes: React.FC = () => {
                     <LockOpen className="w-4 h-4 text-[#BFA76F] mr-1" />
                     <span className="text-xs font-medium text-[#BFA76F]">Desbloqueado</span>
                   </div>
-                  <h3 className="font-semibold text-sm text-[#737373]">Escova Elétrica Philips Sonic Pro 50</h3>
-                  <p className="font-bold text-sm text-[#BFA76F] mt-1">750 pontos</p>
-                  <p className="font-semibold text-xs text-[#737373] mt-1">Faltam: 480 pontos</p>
+                  <h3 className="font-semibold text-sm text-[#737373] text-left">Escova Elétrica Philips Sonic Pro 50</h3>
+                  <p className="font-bold text-sm text-[#BFA76F] mt-1 text-left">750 pontos</p>
+                  <p className="font-semibold text-xs text-[#737373] mt-1 text-left">Faltam: 480 pontos</p>
                 </div>
               </Card>
               
               {/* Prize Card 6 - Alexa */}
-              <Card className="flex h-32 bg-[#D9D9D9] opacity-[0.49] shadow-[10px_10px_15px_#737373] rounded-lg border-none overflow-hidden">
+              <Card className="flex h-32 bg-[#D9D9D9] shadow-[10px_10px_15px_#737373] rounded-lg border-none overflow-hidden">
                 <div className="w-[132px] h-full">
                   <img 
-                    src="/lovable-uploads/0ed170c5-22c7-4b3c-a88e-2f79745f508f.png"
+                    src="/lovable-uploads/8ee045bc-a834-4510-8ac3-548896e0a4ca.png"
                     alt="Alexa Echo Dot" 
                     className="w-full h-full object-cover"
                   />
@@ -239,9 +239,9 @@ const Prizes: React.FC = () => {
                     <LockOpen className="w-4 h-4 text-[#BFA76F] mr-1" />
                     <span className="text-xs font-medium text-[#BFA76F]">Desbloqueado</span>
                   </div>
-                  <h3 className="font-semibold text-sm text-[#737373]">Alexa Echo Dot</h3>
-                  <p className="font-bold text-sm text-[#BFA76F] mt-1">900 pontos</p>
-                  <p className="font-semibold text-xs text-[#737373] mt-1">Faltam: 630 pontos</p>
+                  <h3 className="font-semibold text-sm text-[#737373] text-left">Alexa Echo Dot</h3>
+                  <p className="font-bold text-sm text-[#BFA76F] mt-1 text-left">900 pontos</p>
+                  <p className="font-semibold text-xs text-[#737373] mt-1 text-left">Faltam: 630 pontos</p>
                 </div>
               </Card>
             </div>
