@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { SidebarProvider, Sidebar } from "@/components/ui/sidebar";
 import { useIsMobile } from "@/hooks/use-mobile";
 import AppSidebar from "@/components/layout/AppSidebar";
@@ -8,6 +8,7 @@ import ReferralSummary from "@/components/referrals/ReferralSummary";
 import ReferralList from "@/components/referrals/ReferralList";
 import ReferralPagination from "@/components/referrals/ReferralPagination";
 import { mockReferrals } from "@/utils/referralData";
+import { isDateWithinDays } from "@/utils/dateUtils";
 import type { Referral } from "@/utils/referralData";
 
 // Add a CSS class to specific elements when a dialog is open to enforce the blur effect
@@ -21,19 +22,34 @@ const applyGlobalBlur = (shouldBlur: boolean) => {
 
 const Referrals: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [date, setDate] = useState<Date | undefined>(undefined);
+  const [filterDays, setFilterDays] = useState<number | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const isMobile = useIsMobile();
   
+  // Filter referrals based on selected period
+  const filteredReferrals = useMemo(() => {
+    if (!filterDays) return mockReferrals;
+    
+    return mockReferrals.filter(referral => 
+      isDateWithinDays(referral.referralDate, filterDays)
+    );
+  }, [filterDays]);
+
   // Pagination logic
   const itemsPerPage = isMobile ? 10 : 5;
-  const pageCount = Math.ceil(mockReferrals.length / itemsPerPage);
-  const paginatedReferrals = mockReferrals.slice(
+  const pageCount = Math.ceil(filteredReferrals.length / itemsPerPage);
+  
+  // Reset to first page when filter changes
+  React.useEffect(() => {
+    setCurrentPage(1);
+  }, [filterDays]);
+
+  const paginatedReferrals = filteredReferrals.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
 
-  const totalReferrals = mockReferrals.length;
+  const totalReferrals = filteredReferrals.length;
 
   // Add event listeners for dialog state
   React.useEffect(() => {
@@ -99,8 +115,8 @@ const Referrals: React.FC = () => {
               {/* Summary and Actions */}
               <ReferralSummary
                 totalReferrals={totalReferrals}
-                date={date}
-                setDate={setDate}
+                filterDays={filterDays}
+                setFilterDays={setFilterDays}
               />
               
               {/* Referral List */}

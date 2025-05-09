@@ -8,14 +8,14 @@ import { useToast } from "@/hooks/use-toast";
 
 interface ReferralSummaryProps {
   totalReferrals: number;
-  date: Date | undefined;
-  setDate: (date: Date | undefined) => void;
+  filterDays: number | null;
+  setFilterDays: (days: number | null) => void;
 }
 
 const ReferralSummary: React.FC<ReferralSummaryProps> = ({ 
   totalReferrals, 
-  date, 
-  setDate 
+  filterDays, 
+  setFilterDays
 }) => {
   const { toast } = useToast();
   const [formDialogOpen, setFormDialogOpen] = useState(false);
@@ -52,7 +52,7 @@ const ReferralSummary: React.FC<ReferralSummaryProps> = ({
             </p>
             
             <div className="mt-4">
-              <ReferralFilter date={date} setDate={setDate} />
+              <ReferralFilter filterDays={filterDays} setFilterDays={setFilterDays} />
             </div>
           </div>
           
