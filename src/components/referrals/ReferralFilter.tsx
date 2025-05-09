@@ -13,14 +13,15 @@ import {
 interface ReferralFilterProps {
   filterDays: number | null;
   setFilterDays: (days: number | null) => void;
+  totalReferrals: number;
 }
 
-const ReferralFilter: React.FC<ReferralFilterProps> = ({ filterDays, setFilterDays }) => {
-  // Filter periods in days (7, 14, 28, 30*1, 30*2, 30*3, 30*6, 30*12)
+const ReferralFilter: React.FC<ReferralFilterProps> = ({ filterDays, setFilterDays, totalReferrals }) => {
+  // Filter periods in days (7, 14, 30*1, 30*2, 30*3, 30*6, 30*12)
   const filterOptions = [
     { label: "7 dias", value: "7", days: 7 },
     { label: "14 dias", value: "14", days: 14 },
-    { label: "28 dias", value: "28", days: 28 },
+    // Removed 28 days option as it was too similar to 1 month
     { label: "1 mês", value: "30", days: 30 },
     { label: "2 meses", value: "60", days: 60 },
     { label: "3 meses", value: "90", days: 90 },
@@ -84,7 +85,7 @@ const ReferralFilter: React.FC<ReferralFilterProps> = ({ filterDays, setFilterDa
       
       {filterDays !== null && (
         <div className="text-xs text-[#737373] font-medium mt-1">
-          Filtrado por: {getSelectedFilterLabel()}
+          Filtrado por: {getSelectedFilterLabel()} ({totalReferrals} indicados)
         </div>
       )}
     </div>

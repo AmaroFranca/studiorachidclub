@@ -52,7 +52,11 @@ const ReferralSummary: React.FC<ReferralSummaryProps> = ({
             </p>
             
             <div className="mt-4">
-              <ReferralFilter filterDays={filterDays} setFilterDays={setFilterDays} />
+              <ReferralFilter 
+                filterDays={filterDays} 
+                setFilterDays={setFilterDays} 
+                totalReferrals={totalReferrals} 
+              />
             </div>
           </div>
           
