@@ -51,7 +51,7 @@ const ReferralFilter: React.FC<ReferralFilterProps> = ({ filterDays, setFilterDa
           onValueChange={handleValueChange}
         >
           <SelectTrigger 
-            className="w-full px-4 py-2 flex items-center gap-2 border border-[#737373]/50 rounded-md text-[#737373] font-semibold bg-white"
+            className="w-auto px-[15px] py-2 flex items-center gap-2 border border-[#737373]/50 rounded-md text-[#737373] font-semibold bg-white"
           >
             <Filter className="h-4 w-4 text-[#BFA76F]" />
             <SelectValue placeholder="Filtro" />
