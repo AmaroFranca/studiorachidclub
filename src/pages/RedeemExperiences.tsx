@@ -102,20 +102,29 @@ const RedeemExperiences: React.FC = () => {
             
             {/* Main Information Row */}
             <div className="flex flex-row items-center justify-between w-full mb-8" style={{gap: "177px"}}>
-              {/* Left Side: Title & Count */}
+              {/* Left Side: Title & Count - Updated format */}
               <div className="flex flex-col">
                 <h1 className="text-4xl font-bold text-[#737373] text-left">Resgate de Experiências</h1>
-                <p className="text-xl text-[#737373] mt-2">{experiences.length} Experiências</p>
+                <p className="text-xl text-[#737373] mt-2 text-left">Total de Experiências: {experiences.length}</p>
               </div>
               
-              {/* Right Side: Calculator & Button */}
+              {/* Right Side: Calculator & Button - Updated styling */}
               <div className="flex flex-col">
-                {/* Points Calculator */}
+                {/* Points Calculator - Updated with right-aligned values */}
                 <div className="bg-white p-4 rounded-md w-full mb-4">
-                  <p className="text-[#737373] font-medium">Pontos disponíveis: <span className="text-[#BFA76F] font-bold">{userPoints}</span></p>
-                  <p className="text-[#737373] font-medium">Pontos selecionados: <span className="text-red-500 font-bold">-{totalSelectedPoints}</span></p>
+                  <div className="flex justify-between">
+                    <p className="text-[#737373] font-medium">Pontos disponíveis:</p>
+                    <span className="text-[#BFA76F] font-bold">{userPoints}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <p className="text-[#737373] font-medium">Pontos selecionados:</p>
+                    <span className="text-[#737373] font-bold">-{totalSelectedPoints}</span>
+                  </div>
                   <hr className="my-2" />
-                  <p className="text-[#737373] font-medium">Saldo de pontos: <span className="text-[#BFA76F] font-bold">{remainingPoints}</span></p>
+                  <div className="flex justify-between">
+                    <p className="text-[#737373] font-medium">Saldo de pontos:</p>
+                    <span className="text-[#BFA76F] font-bold">{remainingPoints}</span>
+                  </div>
                 </div>
                 
                 {/* Redeem Button */}
