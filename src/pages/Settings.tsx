@@ -7,7 +7,7 @@ import { FormInput } from "@/components/registration/FormInput";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 
 const Settings = () => {
@@ -65,16 +65,12 @@ const Settings = () => {
     ? "flex flex-col w-full min-h-screen bg-[#EFEFEF]" 
     : "flex w-full min-h-screen bg-[#EFEFEF]";
   
-  const contentContainerClasses = isMobile
-    ? "w-full p-4"
-    : "w-full max-w-[930px] p-6 ml-[250px]";
-
   return (
     <SidebarProvider>
       <div className={mainContainerClasses}>
         <AppSidebar activeSection="settings" />
         
-        <div className={contentContainerClasses}>
+        <div className={isMobile ? "w-full p-4" : "w-full max-w-[930px] p-6 ml-[250px]"}>
           <div className="flex justify-between items-center mb-[30px]">
             <div className="flex items-center gap-2">
               <Link to="/dashboard" className="flex items-center gap-2 text-[#737373]">
@@ -86,7 +82,6 @@ const Settings = () => {
             <div className="flex items-center gap-4">
               <span className="text-[#737373] text-sm">{formattedDate}</span>
               <Avatar className="w-[30px] h-[30px]">
-                <AvatarImage src="" />
                 <AvatarFallback className="bg-[#BFA76F] text-white">
                   {formData.name.substring(0, 2).toUpperCase()}
                 </AvatarFallback>
@@ -97,18 +92,6 @@ const Settings = () => {
           <h1 className="text-2xl font-semibold text-[#737373] mb-[40px]">Configurações</h1>
           
           <div className="max-w-[437px]">
-            <div className="flex flex-col items-center mb-[30px]">
-              <Avatar className="w-[82px] h-[82px] mb-3">
-                <AvatarImage src="" />
-                <AvatarFallback className="bg-[#BFA76F] text-white text-xl">
-                  {formData.name.substring(0, 2).toUpperCase()}
-                </AvatarFallback>
-              </Avatar>
-              <button className="text-sm font-semibold text-[#737373]">
-                Alterar
-              </button>
-            </div>
-            
             <form onSubmit={handleSave} className="space-y-5">
               <div>
                 <FormInput
