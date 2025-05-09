@@ -63,6 +63,9 @@ const RedeemPrizes: React.FC = () => {
   const [selectedPrizes, setSelectedPrizes] = useState<number[]>([]);
   const userPoints = 270; // Fixed user points for now
   
+  // Calculate available prizes based on user points
+  const availablePrizes = prizes.filter(prize => userPoints >= prize.points).length;
+  
   const handleSelectChange = (id: number, selected: boolean) => {
     if (selected) {
       setSelectedPrizes([...selectedPrizes, id]);
@@ -114,16 +117,16 @@ const RedeemPrizes: React.FC = () => {
             
             {/* Main Information Row */}
             <div className="flex flex-row items-center justify-between w-full mb-8" style={{gap: "177px"}}>
-              {/* Left Side: Title & Count - Updated format */}
+              {/* Left Side: Title & Count - Updated to show available prizes */}
               <div className="flex flex-col">
                 <h1 className="text-4xl font-bold text-[#737373] text-left">Resgate de Prêmios</h1>
-                <p className="text-xl text-[#737373] mt-2 text-left">Total de Prêmios: {prizes.length}</p>
+                <p className="text-xl text-[#737373] mt-2 text-left">Total de Prêmios: {availablePrizes}</p>
               </div>
               
-              {/* Right Side: Calculator & Button - Updated styling */}
+              {/* Right Side: Calculator & Button - Widened calculator box */}
               <div className="flex flex-col">
-                {/* Points Calculator - Updated with right-aligned values */}
-                <div className="bg-white p-4 rounded-md w-full mb-4">
+                {/* Points Calculator - Widened with more padding */}
+                <div className="bg-white p-4 px-8 rounded-md w-full mb-4 min-w-[280px]">
                   <div className="flex justify-between">
                     <p className="text-[#737373] font-medium">Pontos disponíveis:</p>
                     <span className="text-[#BFA76F] font-bold">{userPoints}</span>
