@@ -88,6 +88,7 @@ const RedeemPrizes: React.FC = () => {
   
   const totalSelectedPoints = calculateTotalPoints();
   const canRedeem = selectedPrizes.length > 0 && totalSelectedPoints <= userPoints;
+  const remainingPoints = userPoints - totalSelectedPoints;
   
   return (
     <SidebarProvider defaultOpen={true}>
@@ -111,30 +112,29 @@ const RedeemPrizes: React.FC = () => {
               </div>
             </div>
             
-            {/* Page Title */}
-            <div className="text-center mb-6">
-              <h1 className="text-4xl font-bold text-[#737373]">Resgate de Prêmios</h1>
-            </div>
-            
-            {/* Points Summary */}
-            <div className="flex justify-between items-center mb-8 bg-[#D9D9D9] p-4 rounded-md">
-              <div>
-                <p className="text-[#737373] font-medium">Pontos disponíveis: <span className="text-[#BFA76F] font-bold">{userPoints}</span></p>
-                <p className="text-[#737373] font-medium">Pontos selecionados: <span className="text-[#BFA76F] font-bold">{totalSelectedPoints}</span></p>
+            {/* Main Information Row */}
+            <div className="flex flex-row items-center justify-between w-full mb-8" style={{gap: "177px"}}>
+              {/* Left Side: Title & Count */}
+              <div className="flex flex-col">
+                <h1 className="text-4xl font-bold text-[#737373] text-left">Resgate de Prêmios</h1>
+                <p className="text-xl text-[#737373] mt-2">{prizes.length} Prêmios</p>
               </div>
-              <div>
-                <Link to="/redeem-experiences">
-                  <Button 
-                    variant="outline" 
-                    className="mr-4 border-[#BFA76F] text-[#737373] hover:text-[#737373] hover:bg-[#BFA76F]/10"
-                  >
-                    Ver Experiências
-                  </Button>
-                </Link>
+              
+              {/* Right Side: Calculator & Button */}
+              <div className="flex flex-col">
+                {/* Points Calculator */}
+                <div className="bg-white p-4 rounded-md w-full mb-4">
+                  <p className="text-[#737373] font-medium">Pontos disponíveis: <span className="text-[#BFA76F] font-bold">{userPoints}</span></p>
+                  <p className="text-[#737373] font-medium">Pontos selecionados: <span className="text-red-500 font-bold">-{totalSelectedPoints}</span></p>
+                  <hr className="my-2" />
+                  <p className="text-[#737373] font-medium">Saldo de pontos: <span className="text-[#BFA76F] font-bold">{remainingPoints}</span></p>
+                </div>
+                
+                {/* Redeem Button */}
                 <Button 
                   disabled={!canRedeem} 
                   onClick={handleRedeem}
-                  className="bg-[#BFA76F] hover:bg-[#BFA76F]/90 text-white"
+                  className="bg-[#BFA76F] hover:bg-[#BFA76F]/90 text-white w-full py-3"
                 >
                   RESGATAR AGORA!
                 </Button>
@@ -156,24 +156,6 @@ const RedeemPrizes: React.FC = () => {
                 />
               ))}
             </div>
-            
-            {/* Footer Action */}
-            {selectedPrizes.length > 0 && (
-              <div className="mt-8 text-center">
-                <Button 
-                  onClick={handleRedeem}
-                  disabled={!canRedeem}
-                  className="bg-[#BFA76F] hover:bg-[#BFA76F]/90 text-white px-8 py-6 text-lg"
-                >
-                  RESGATAR AGORA!
-                </Button>
-                {!canRedeem && (
-                  <p className="text-red-500 mt-2">
-                    Pontos insuficientes para realizar o resgate
-                  </p>
-                )}
-              </div>
-            )}
           </div>
         </main>
       </div>

@@ -72,6 +72,19 @@ const AppSidebar: React.FC<AppSidebarProps> = ({
             </Link>
           </SidebarMenuItem>
           
+          {(activeSection === "redeem") && <div className="flex flex-col gap-2 mt-2 bg-transparent">
+              <Link to="/redeem-prizes">
+                <SidebarMenuButton className={`text-left text-sm font-medium pl-[44px] ${currentPath === "/redeem-prizes" ? "text-[#737373]" : "text-[#BFA76F]"} hover:text-[#737373] transition-colors rounded-md`}>
+                  <span>Prêmios</span>
+                </SidebarMenuButton>
+              </Link>
+              <Link to="/redeem-experiences">
+                <SidebarMenuButton className={`text-left text-sm font-medium pl-[44px] ${currentPath === "/redeem-experiences" ? "text-[#737373]" : "text-[#BFA76F]"} hover:text-[#737373] transition-colors rounded-md`}>
+                  <span>Experiências</span>
+                </SidebarMenuButton>
+              </Link>
+            </div>}
+          
           <SidebarMenuItem>
             <Link to="#">
               <SidebarMenuButton className="text-[#737373] hover:bg-[#B1C9C3] px-[15px]">
