@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo } from "react";
 import { SidebarProvider, Sidebar } from "@/components/ui/sidebar";
 import { useIsMobile } from "@/hooks/use-mobile";
