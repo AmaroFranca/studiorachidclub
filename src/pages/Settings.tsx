@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import { ArrowLeft, User } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import AppSidebar from "@/components/layout/AppSidebar";
 import { FormInput } from "@/components/registration/FormInput";
@@ -8,6 +8,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 
 const Settings = () => {
   const isMobile = useIsMobile();
@@ -61,7 +62,7 @@ const Settings = () => {
 
   // Adjust styles based on mobile/desktop
   const mainContainerClasses = isMobile 
-    ? "flex flex-col w-full min-h-screen bg-[#EFEFEF] px-4 py-6" 
+    ? "flex flex-col w-full min-h-screen bg-[#EFEFEF]" 
     : "flex w-full min-h-screen bg-[#EFEFEF]";
   
   const contentContainerClasses = isMobile
@@ -69,110 +70,112 @@ const Settings = () => {
     : "w-full max-w-[930px] p-6 ml-[250px]";
 
   return (
-    <div className={mainContainerClasses}>
-      <AppSidebar activeSection="dashboard" />
-      
-      <div className={contentContainerClasses}>
-        <div className="flex justify-between items-center mb-[30px]">
-          <div className="flex items-center gap-2">
-            <Link to="/dashboard" className="flex items-center gap-2 text-[#737373]">
-              <ArrowLeft className="text-[#BFA76F]" size={24} />
-              <span className="font-semibold text-xl md:text-2xl">Voltar</span>
-            </Link>
+    <SidebarProvider>
+      <div className={mainContainerClasses}>
+        <AppSidebar activeSection="settings" />
+        
+        <div className={contentContainerClasses}>
+          <div className="flex justify-between items-center mb-[30px]">
+            <div className="flex items-center gap-2">
+              <Link to="/dashboard" className="flex items-center gap-2 text-[#737373]">
+                <ArrowLeft className="text-[#BFA76F]" size={24} />
+                <span className="font-semibold text-xl md:text-2xl">Voltar</span>
+              </Link>
+            </div>
+            
+            <div className="flex items-center gap-4">
+              <span className="text-[#737373] text-sm">{formattedDate}</span>
+              <Avatar className="w-[30px] h-[30px]">
+                <AvatarImage src="" />
+                <AvatarFallback className="bg-[#BFA76F] text-white">
+                  {formData.name.substring(0, 2).toUpperCase()}
+                </AvatarFallback>
+              </Avatar>
+            </div>
           </div>
           
-          <div className="flex items-center gap-4">
-            <span className="text-[#737373] text-sm">{formattedDate}</span>
-            <Avatar className="w-[30px] h-[30px]">
-              <AvatarImage src="" />
-              <AvatarFallback className="bg-[#BFA76F] text-white">
-                {formData.name.substring(0, 2).toUpperCase()}
-              </AvatarFallback>
-            </Avatar>
-          </div>
-        </div>
-        
-        <h1 className="text-2xl font-semibold text-[#737373] mb-[40px]">Configurações</h1>
-        
-        <div className="max-w-[437px]">
-          <div className="flex flex-col items-center mb-[30px]">
-            <Avatar className="w-[82px] h-[82px] mb-3">
-              <AvatarImage src="" />
-              <AvatarFallback className="bg-[#BFA76F] text-white text-xl">
-                {formData.name.substring(0, 2).toUpperCase()}
-              </AvatarFallback>
-            </Avatar>
-            <button className="text-sm font-semibold text-[#737373]">
-              Alterar
-            </button>
-          </div>
+          <h1 className="text-2xl font-semibold text-[#737373] mb-[40px]">Configurações</h1>
           
-          <form onSubmit={handleSave} className="space-y-5">
-            <div>
-              <FormInput
-                label="Alterar nome e sobrenome"
-                placeholder="Nome completo"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-              />
+          <div className="max-w-[437px]">
+            <div className="flex flex-col items-center mb-[30px]">
+              <Avatar className="w-[82px] h-[82px] mb-3">
+                <AvatarImage src="" />
+                <AvatarFallback className="bg-[#BFA76F] text-white text-xl">
+                  {formData.name.substring(0, 2).toUpperCase()}
+                </AvatarFallback>
+              </Avatar>
+              <button className="text-sm font-semibold text-[#737373]">
+                Alterar
+              </button>
             </div>
             
-            <div>
-              <FormInput
-                label="Trocar número de telefone"
-                placeholder="Coloque aqui no número com DDD"
-                name="phone"
-                value={formData.phone}
-                onChange={handleChange}
-              />
-            </div>
-            
-            <div>
-              <FormInput
-                label="Adicionar e-mail"
-                placeholder="Coloque seu melhor e-mail"
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-              />
-            </div>
-            
-            <div>
-              <FormInput
-                label="Alterar senha"
-                placeholder="Nova senha"
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-              />
-            </div>
-            
-            <div>
-              <FormInput
-                label="Confirmar nova senha"
-                placeholder="Confirme sua nova senha"
-                type="password"
-                name="confirmPassword"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-              />
-            </div>
-            
-            <div className="pt-4">
-              <Button
-                type="submit"
-                className="w-full bg-[#BFA76F] hover:bg-[#A89050] text-[#EFEFEF] font-bold text-base py-3"
-              >
-                SALVAR
-              </Button>
-            </div>
-          </form>
+            <form onSubmit={handleSave} className="space-y-5">
+              <div>
+                <FormInput
+                  label="Alterar nome e sobrenome"
+                  placeholder="Nome completo"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                />
+              </div>
+              
+              <div>
+                <FormInput
+                  label="Trocar número de telefone"
+                  placeholder="Coloque aqui no número com DDD"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                />
+              </div>
+              
+              <div>
+                <FormInput
+                  label="Adicionar e-mail"
+                  placeholder="Coloque seu melhor e-mail"
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                />
+              </div>
+              
+              <div>
+                <FormInput
+                  label="Alterar senha"
+                  placeholder="Nova senha"
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                />
+              </div>
+              
+              <div>
+                <FormInput
+                  label="Confirmar nova senha"
+                  placeholder="Confirme sua nova senha"
+                  type="password"
+                  name="confirmPassword"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                />
+              </div>
+              
+              <div className="pt-4">
+                <Button
+                  type="submit"
+                  className="w-full bg-[#BFA76F] hover:bg-[#A89050] text-[#EFEFEF] font-bold text-base py-3"
+                >
+                  SALVAR
+                </Button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+    </SidebarProvider>
   );
 };
 
