@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -9,46 +8,48 @@ import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { SidebarProvider } from "@/components/ui/sidebar";
-
 const Settings = () => {
   const isMobile = useIsMobile();
-  const { toast } = useToast();
+  const {
+    toast
+  } = useToast();
   const [formData, setFormData] = useState({
     name: "João da Silva",
     phone: "(11) 98765-4321",
     email: "joao.silva@email.com",
     password: "",
-    confirmPassword: "",
+    confirmPassword: ""
   });
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
+    const {
+      name,
+      value
+    } = e.target;
+    setFormData(prev => ({
       ...prev,
-      [name]: value,
+      [name]: value
     }));
   };
-
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Validate passwords match
     if (formData.password && formData.password !== formData.confirmPassword) {
       toast({
         title: "Erro",
         description: "As senhas não coincidem",
-        variant: "destructive",
+        variant: "destructive"
       });
       return;
     }
-    
+
     // Here would go API call to update user data
     console.log("Saving user data:", formData);
-    
+
     // Show success message
     toast({
       title: "Sucesso!",
-      description: "Suas configurações foram salvas com sucesso.",
+      description: "Suas configurações foram salvas com sucesso."
     });
   };
 
@@ -61,12 +62,8 @@ const Settings = () => {
   }).format(today);
 
   // Adjust styles based on mobile/desktop
-  const mainContainerClasses = isMobile 
-    ? "flex flex-col w-full min-h-screen bg-[#EFEFEF]" 
-    : "flex w-full min-h-screen bg-[#EFEFEF]";
-  
-  return (
-    <SidebarProvider>
+  const mainContainerClasses = isMobile ? "flex flex-col w-full min-h-screen bg-[#EFEFEF]" : "flex w-full min-h-screen bg-[#EFEFEF]";
+  return <SidebarProvider>
       <div className={mainContainerClasses}>
         <AppSidebar activeSection="settings" />
         
@@ -82,9 +79,7 @@ const Settings = () => {
             <div className="flex items-center gap-4">
               <span className="text-[#737373] text-sm">{formattedDate}</span>
               <Avatar className="w-[30px] h-[30px]">
-                <AvatarFallback className="bg-[#BFA76F] text-white">
-                  {formData.name.substring(0, 2).toUpperCase()}
-                </AvatarFallback>
+                
               </Avatar>
             </div>
           </div>
@@ -94,63 +89,27 @@ const Settings = () => {
           <div className="max-w-[437px]">
             <form onSubmit={handleSave} className="space-y-5">
               <div>
-                <FormInput
-                  label="Alterar nome e sobrenome"
-                  placeholder="Nome completo"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                />
+                <FormInput label="Alterar nome e sobrenome" placeholder="Nome completo" name="name" value={formData.name} onChange={handleChange} />
               </div>
               
               <div>
-                <FormInput
-                  label="Trocar número de telefone"
-                  placeholder="Coloque aqui no número com DDD"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                />
+                <FormInput label="Trocar número de telefone" placeholder="Coloque aqui no número com DDD" name="phone" value={formData.phone} onChange={handleChange} />
               </div>
               
               <div>
-                <FormInput
-                  label="Adicionar e-mail"
-                  placeholder="Coloque seu melhor e-mail"
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                />
+                <FormInput label="Adicionar e-mail" placeholder="Coloque seu melhor e-mail" type="email" name="email" value={formData.email} onChange={handleChange} />
               </div>
               
               <div>
-                <FormInput
-                  label="Alterar senha"
-                  placeholder="Nova senha"
-                  type="password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                />
+                <FormInput label="Alterar senha" placeholder="Nova senha" type="password" name="password" value={formData.password} onChange={handleChange} />
               </div>
               
               <div>
-                <FormInput
-                  label="Confirmar nova senha"
-                  placeholder="Confirme sua nova senha"
-                  type="password"
-                  name="confirmPassword"
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                />
+                <FormInput label="Confirmar nova senha" placeholder="Confirme sua nova senha" type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} />
               </div>
               
               <div className="pt-4">
-                <Button
-                  type="submit"
-                  className="w-full bg-[#BFA76F] hover:bg-[#A89050] text-[#EFEFEF] font-bold text-base py-3"
-                >
+                <Button type="submit" className="w-full bg-[#BFA76F] hover:bg-[#A89050] text-[#EFEFEF] font-bold text-base py-3">
                   SALVAR
                 </Button>
               </div>
@@ -158,8 +117,6 @@ const Settings = () => {
           </div>
         </div>
       </div>
-    </SidebarProvider>
-  );
+    </SidebarProvider>;
 };
-
 export default Settings;
