@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, User, Settings as SettingsIcon, MessageSquare } from "lucide-react";
 import { Link } from "react-router-dom";
 import AppSidebar from "@/components/layout/AppSidebar";
 import { FormInput } from "@/components/registration/FormInput";
@@ -75,7 +75,7 @@ const Settings = () => {
                 </Link>
               </div>
               
-              <div>
+              <div className="flex items-center gap-6">
                 <span className="text-[#737373] text-sm">{formattedDate}</span>
               </div>
             </div>
@@ -86,10 +86,18 @@ const Settings = () => {
             {/* Form */}
             <div className="max-w-[437px]">
               <form onSubmit={handleSave} className="space-y-5">
+                {/* Avatar Section */}
+                <div className="flex flex-col items-center mb-8">
+                  <div className="w-[82px] h-[82px] rounded-full bg-[#BFA76F] flex items-center justify-center mb-3">
+                    <User size={45} className="text-white" />
+                  </div>
+                  <span className="text-[#737373] text-sm font-semibold">Alterar</span>
+                </div>
+                
                 <div>
                   <FormInput 
                     label="Alterar nome e sobrenome" 
-                    placeholder="Nome completo" 
+                    placeholder="Coloque aqui o nome" 
                     name="name" 
                     value={formData.name} 
                     onChange={handleChange} 
@@ -120,7 +128,7 @@ const Settings = () => {
                 <div>
                   <FormInput 
                     label="Alterar senha" 
-                    placeholder="Nova senha" 
+                    placeholder="Coloque aqui o nome" 
                     type="password" 
                     name="password" 
                     value={formData.password} 
@@ -131,7 +139,7 @@ const Settings = () => {
                 <div>
                   <FormInput 
                     label="Confirmar nova senha" 
-                    placeholder="Confirme sua nova senha" 
+                    placeholder="Coloque aqui no número com DDD" 
                     type="password" 
                     name="confirmPassword" 
                     value={formData.confirmPassword} 
@@ -142,9 +150,9 @@ const Settings = () => {
                 <div className="pt-4">
                   <Button 
                     type="submit" 
-                    className="w-full bg-[#BFA76F] hover:bg-[#A89050] text-[#EFEFEF] font-bold text-base py-3"
+                    className="w-full bg-[#BFA76F] hover:bg-[#A89050] text-[#EFEFEF] font-bold text-base py-3 uppercase shadow-md"
                   >
-                    SALVAR
+                    Salvar
                   </Button>
                 </div>
               </form>
