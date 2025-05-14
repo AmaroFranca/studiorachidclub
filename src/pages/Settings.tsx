@@ -35,7 +35,7 @@ const Settings: React.FC = () => {
   };
 
   return (
-    <SidebarProvider>
+    <SidebarProvider defaultOpen={true}>
       <div className="flex h-screen w-full bg-[#EFEFEF]">
         <AppSidebar activeSection="settings" />
         
