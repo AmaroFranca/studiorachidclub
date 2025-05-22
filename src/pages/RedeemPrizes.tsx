@@ -210,7 +210,7 @@ const RedeemPrizes: React.FC = () => {
       
       {/* Updated Confirmation Dialog to match standard styling */}
       <Dialog open={showConfirmation} onOpenChange={setShowConfirmation}>
-        <DialogContent className="bg-[#E4E4E4] p-6 max-w-[428px]">
+        <DialogContent className="bg-[#E4E4E4] border border-[#737373]/50 shadow-[10px_10px_15px_#737373] rounded-[10px] p-6 max-w-[428px] flex flex-col gap-6">
           <DialogHeader className="flex items-start gap-2">
             <div className="flex items-center gap-2">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-[#BFA76F]">

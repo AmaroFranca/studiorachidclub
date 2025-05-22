@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -107,6 +106,12 @@
     background-color: rgba(0, 0, 0, 0.5); /* This replaces bg-black/50 */
   }
 
+  /* Enhanced backdrop blur for dialogs */
+  .dialog-backdrop {
+    @apply backdrop-blur-sm;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
   /* Apply blur only to content marked with blur-on-dialog class when dialog is open */
   .blur-on-dialog {
     @apply transition-all duration-200;
@@ -114,6 +119,13 @@
   
   body.dialog-open .blur-on-dialog {
     @apply filter blur-sm;
+  }
+  
+  /* Make sure main content gets blurred when dialog is open */
+  body.dialog-open main, 
+  body.dialog-open .sidebar,
+  body.dialog-open header {
+    @apply filter blur-sm transition-all duration-200;
   }
 }
 
