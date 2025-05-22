@@ -1,8 +1,9 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Users, CircleDollarSign, List, Settings, MessageSquare, Gift, LayoutDashboard } from "lucide-react";
 import { SidebarHeader, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarFooter } from "@/components/ui/sidebar";
+import { SettingsDialog } from "@/components/settings/SettingsDialog";
 
 interface AppSidebarProps {
   activeSection?: "dashboard" | "rewards" | "prizes" | "experiences" | "referrals" | "redeem";
@@ -13,8 +14,11 @@ const AppSidebar: React.FC<AppSidebarProps> = ({
 }) => {
   const location = useLocation();
   const currentPath = location.pathname;
+  const [settingsOpen, setSettingsOpen] = useState(false);
   
   return <>
+      <SettingsDialog open={settingsOpen} onOpenChange={setSettingsOpen} />
+      
       <SidebarHeader className="flex items-center justify-between bg-[#d9d9d9] py-[30px] px-4 mx-0">
         <div className="flex items-center gap-2">
           <h1 className="text-xl font-semibold text-[#737373] text-left">Studio Rachid</h1>
@@ -99,12 +103,13 @@ const AppSidebar: React.FC<AppSidebarProps> = ({
       <SidebarFooter className="mt-auto bg-[#d9d9d9] py-[50px]">
         <SidebarMenu>
           <SidebarMenuItem>
-            <Link to="#">
-              <SidebarMenuButton className="text-[#737373] hover:bg-[#B1C9C3] px-[15px]">
-                <Settings className="text-[#BFA76F]" />
-                <span>Configurações</span>
-              </SidebarMenuButton>
-            </Link>
+            <SidebarMenuButton 
+              className="text-[#737373] hover:bg-[#B1C9C3] px-[15px]"
+              onClick={() => setSettingsOpen(true)}
+            >
+              <Settings className="text-[#BFA76F]" />
+              <span>Configurações</span>
+            </SidebarMenuButton>
           </SidebarMenuItem>
           
           <SidebarMenuItem>
