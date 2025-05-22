@@ -15,8 +15,8 @@ const PrizeCard: React.FC<PrizeCardProps> = ({ image, name, points, userPoints =
   const pointsRemaining = points - userPoints;
   
   return (
-    <Card className="flex h-32 bg-[#D9D9D9] shadow-[10px_10px_15px_#737373] rounded-lg border-none overflow-hidden cursor-pointer hover:scale-[1.02] transition-transform">
-      <div className="w-[132px] h-full">
+    <Card className="flex h-32 bg-[#D9D9D9] shadow-[10px_10px_15px_#737373] rounded-lg border-none overflow-hidden cursor-pointer hover:scale-[1.02] transition-transform max-w-md w-full mx-auto">
+      <div className="w-[132px] h-full flex-shrink-0">
         <img 
           src={image}
           alt={name} 
@@ -28,7 +28,7 @@ const PrizeCard: React.FC<PrizeCardProps> = ({ image, name, points, userPoints =
           <LockOpen className="w-4 h-4 text-[#BFA76F] mr-1" />
           <span className="text-xs font-medium text-[#BFA76F]">Desbloqueado</span>
         </div>
-        <h3 className="font-semibold text-sm text-[#737373] text-left">{name}</h3>
+        <h3 className="font-semibold text-sm text-[#737373] text-left line-clamp-1">{name}</h3>
         <p className="font-bold text-sm text-[#BFA76F] mt-1 text-left">{points} pontos</p>
         <p className="font-semibold text-xs text-[#737373] mt-1 text-left">
           {canRedeem ? "Resgatar" : (

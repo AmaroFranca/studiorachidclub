@@ -16,16 +16,16 @@ interface ReferralCardProps {
 
 const ReferralCard: React.FC<ReferralCardProps> = ({ referral }) => {
   return (
-    <div className="mb-4 bg-[#D9D9D9]/50 rounded-lg shadow-[10px_10px_15px_#737373] p-4">
+    <div className="mb-4 bg-[#D9D9D9]/50 rounded-lg shadow-[10px_10px_15px_#737373] p-4 w-full max-w-3xl">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div className="flex items-center gap-4">
-          <div className="bg-[#B1C9C3] h-10 w-10 rounded-full flex items-center justify-center text-[#737373]">
+          <div className="bg-[#B1C9C3] h-10 w-10 rounded-full flex items-center justify-center text-[#737373] flex-shrink-0">
             <User size={20} className="text-[#737373]" />
           </div>
           <h3 className="text-lg font-semibold text-[#737373]">{referral.name}</h3>
         </div>
         
-        <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
+        <div className="flex flex-col md:flex-row items-start md:items-center gap-6 w-full md:w-auto">
           <div className="text-xs font-semibold">
             <span className="text-[#737373]">Indicado (a) em:</span><br />
             <span className="text-[#BFA76F]">{referral.referralDate}</span>

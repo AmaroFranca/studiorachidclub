@@ -117,6 +117,21 @@
   }
 }
 
+/* Container styles for consistent layout */
+.content-container {
+  @apply w-full max-w-7xl mx-auto px-4 sm:px-6;
+}
+
+.card-container {
+  @apply grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3;
+}
+
+/* Card base style for consistent sizing */
+.card-fixed {
+  @apply w-full max-w-md mx-auto;
+  height: 128px;
+}
+
 #root {
   width: 100%;
   margin: 0;
