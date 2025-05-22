@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -100,9 +101,9 @@
     font-family: 'Poppins', sans-serif;
   }
 
-  /* Dialog backdrop styling - consistent across all dialogs */
-  .bg-black\/50 {
-    @apply backdrop-blur-sm;
+  /* Dialog backdrop with semi-transparency and blur */
+  [data-state="open"] ~ .bg-black\/80 {
+    @apply bg-black/50 backdrop-blur-sm;
   }
 
   /* Apply blur only to content marked with blur-on-dialog class when dialog is open */

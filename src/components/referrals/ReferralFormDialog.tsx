@@ -7,7 +7,6 @@ import {
   DialogContent,
   DialogHeader,
 } from "@/components/ui/dialog";
-import { BlurDialogOverlay } from "@/components/ui/custom-dialog";
 import { 
   Form, 
   FormField, 
@@ -79,7 +78,6 @@ const ReferralFormDialog: React.FC<ReferralFormDialogProps> = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <BlurDialogOverlay />
       <DialogContent className="w-[428px] bg-[#E4E4E4] border border-[rgba(115,115,115,0.5)] rounded-[10px] shadow-[10px_10px_15px_#737373] p-[26px_0px] flex flex-col items-center overflow-y-auto max-h-[90vh] z-50">
         <div className="w-[398px] border border-[rgba(115,115,115,0.5)] rounded-[10px] p-[20px_15px] flex flex-col items-center">
           <div className="w-full flex flex-col items-center gap-[15px] mb-[30px]">
@@ -172,6 +170,6 @@ const ReferralFormDialog: React.FC<ReferralFormDialogProps> = ({
       </DialogContent>
     </Dialog>
   );
-}
+};
 
 export default ReferralFormDialog;
