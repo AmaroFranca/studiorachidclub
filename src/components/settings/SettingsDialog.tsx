@@ -1,11 +1,11 @@
 
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogOverlay } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { cn } from "@/lib/utils";
+import { BlurDialogOverlay } from "@/components/ui/custom-dialog";
 
 type SettingsFormData = {
   name: string;
@@ -19,22 +19,6 @@ interface SettingsDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
-
-// Custom DialogOverlay with blur effect
-const BlurDialogOverlay = React.forwardRef<
-  React.ElementRef<typeof DialogOverlay>,
-  React.ComponentPropsWithoutRef<typeof DialogOverlay>
->(({ className, ...props }, ref) => (
-  <DialogOverlay
-    ref={ref}
-    className={cn(
-      "fixed inset-0 z-40 bg-black/50 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
-      className
-    )}
-    {...props}
-  />
-));
-BlurDialogOverlay.displayName = "BlurDialogOverlay";
 
 export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
   const { register, handleSubmit, formState: { errors } } = useForm<SettingsFormData>({
@@ -58,13 +42,16 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
     // Add/remove class to body when dialog opens/closes
     if (open) {
       document.body.classList.add('dialog-open');
+      document.dispatchEvent(new CustomEvent('dialog-state-change', { detail: { open: true } }));
     } else {
       document.body.classList.remove('dialog-open');
+      document.dispatchEvent(new CustomEvent('dialog-state-change', { detail: { open: false } }));
     }
     
     // Cleanup on unmount
     return () => {
       document.body.classList.remove('dialog-open');
+      document.dispatchEvent(new CustomEvent('dialog-state-change', { detail: { open: false } }));
     };
   }, [open]);
 
