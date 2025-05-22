@@ -1,28 +1,14 @@
 
 import React, { useState, useEffect } from "react";
-import { ArrowLeft } from "lucide-react";
 import { SidebarProvider, Sidebar } from "@/components/ui/sidebar";
-import { Link } from "react-router-dom";
-import RedeemPrizeCard from "@/components/redeem/RedeemPrizeCard";
-import AppSidebar from "@/components/layout/AppSidebar";
-import { getFormattedDate } from "@/utils/dateUtils";
-import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-
-// Prize data structure
-interface Prize {
-  id: number;
-  name: string;
-  image: string;
-  points: number;
-}
+import { getFormattedDate } from "@/utils/dateUtils";
+import AppSidebar from "@/components/layout/AppSidebar";
+import { Prize } from "@/types/prize";
+import RedeemPrizesHeader from "@/components/redeem/RedeemPrizesHeader";
+import RedeemPrizesInfo from "@/components/redeem/RedeemPrizesInfo";
+import RedeemPrizesGrid from "@/components/redeem/RedeemPrizesGrid";
+import RedeemConfirmationDialog from "@/components/redeem/RedeemConfirmationDialog";
 
 // Sample data for prizes (same as in Prize.tsx)
 const prizes: Prize[] = [
@@ -116,10 +102,6 @@ const RedeemPrizes: React.FC = () => {
     setShowConfirmation(false);
   };
   
-  const handleCancelRedeem = () => {
-    setShowConfirmation(false);
-  };
-  
   const totalSelectedPoints = calculateTotalPoints();
   const canRedeem = selectedPrizes.length > 0 && totalSelectedPoints <= userPoints;
   const remainingPoints = userPoints - totalSelectedPoints;
@@ -139,118 +121,39 @@ const RedeemPrizes: React.FC = () => {
         <main className="flex-1 bg-[#EFEFEF] p-6">
           <div className="max-w-7xl mx-auto">
             {/* Header */}
-            <div className="flex justify-between items-center mb-10">
-              <div className="flex items-center gap-2">
-                <Link to="/dashboard" className="flex items-center gap-2 text-[#737373]">
-                  <ArrowLeft className="text-[#BFA76F]" />
-                  <span className="text-xl font-semibold">Voltar</span>
-                </Link>
-              </div>
-              <div className="flex items-center gap-4">
-                <span className="text-sm text-[#737373]">{formattedDate}</span>
-              </div>
-            </div>
+            <RedeemPrizesHeader formattedDate={formattedDate} />
             
             {/* Main Information Row */}
-            <div className="flex flex-row items-center justify-between w-full mb-8" style={{gap: "177px"}}>
-              {/* Left Side: Title & Count - Updated to show available prizes */}
-              <div className="flex flex-col">
-                <h1 className="text-4xl font-bold text-[#737373] text-left">Resgate de Prêmios</h1>
-                <p className="text-xl text-[#737373] mt-2 text-left">Total de Prêmios: {availablePrizes}</p>
-              </div>
-              
-              {/* Right Side: Calculator & Button - Widened calculator box */}
-              <div className="flex flex-col">
-                {/* Points Calculator - Widened with more padding */}
-                <div className="bg-white p-4 px-8 rounded-md w-full mb-4 min-w-[280px]">
-                  <div className="flex justify-between">
-                    <p className="text-[#737373] font-medium">Pontos disponíveis:</p>
-                    <span className="text-[#BFA76F] font-bold">{userPoints}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <p className="text-[#737373] font-medium">Pontos selecionados:</p>
-                    <span className="text-[#737373] font-bold">-{totalSelectedPoints}</span>
-                  </div>
-                  <hr className="my-2" />
-                  <div className="flex justify-between">
-                    <p className="text-[#737373] font-medium">Saldo de pontos:</p>
-                    <span className="text-[#BFA76F] font-bold">{remainingPoints}</span>
-                  </div>
-                </div>
-                
-                {/* Redeem Button */}
-                <Button 
-                  disabled={!canRedeem} 
-                  onClick={handleRedeemClick}
-                  className="bg-[#BFA76F] hover:bg-[#BFA76F]/90 text-white w-full py-3"
-                >
-                  RESGATAR AGORA!
-                </Button>
-              </div>
-            </div>
+            <RedeemPrizesInfo 
+              availablePrizes={availablePrizes}
+              userPoints={userPoints}
+              totalSelectedPoints={totalSelectedPoints}
+              remainingPoints={remainingPoints}
+              canRedeem={canRedeem}
+              onRedeemClick={handleRedeemClick}
+            />
             
             {/* Prize Cards Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-              {prizes.map((prize) => (
-                <RedeemPrizeCard 
-                  key={prize.id}
-                  id={prize.id}
-                  name={prize.name}
-                  image={prize.image}
-                  points={prize.points}
-                  userPoints={userPoints}
-                  isSelected={selectedPrizes.includes(prize.id)}
-                  onSelectChange={handleSelectChange}
-                />
-              ))}
-            </div>
+            <RedeemPrizesGrid 
+              prizes={prizes}
+              userPoints={userPoints}
+              selectedPrizes={selectedPrizes}
+              onSelectChange={handleSelectChange}
+            />
           </div>
         </main>
       </div>
       
-      {/* Updated Confirmation Dialog to match standard styling */}
-      <Dialog open={showConfirmation} onOpenChange={setShowConfirmation}>
-        <DialogContent className="bg-[#E4E4E4] border border-[#737373]/50 shadow-[10px_10px_15px_#737373] rounded-[10px] p-6 max-w-[428px] flex flex-col gap-6">
-          <DialogHeader className="flex items-start gap-2">
-            <div className="flex items-center gap-2">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-[#BFA76F]">
-                <path d="M12 1.99L20.53 19H3.47L12 1.99ZM12 0L1.61 21H22.39L12 0Z" fill="#BFA76F"/>
-                <path d="M11 10V14H13V10H11ZM11 18V16H13V18H11Z" fill="#BFA76F"/>
-              </svg>
-              <DialogTitle className="text-xl text-[#737373] font-semibold">Confirmação de Resgate</DialogTitle>
-            </div>
-          </DialogHeader>
-          <div className="flex flex-col gap-2 text-left">
-            <div className="flex justify-between">
-              <p className="text-[#737373] font-medium">Total de Pontos:</p>
-              <span className="text-[#BFA76F] font-bold">{userPoints} pontos</span>
-            </div>
-            <div className="flex justify-between">
-              <p className="text-[#737373] font-medium">Pontos Selecionados:</p>
-              <span className="text-[#737373] font-bold">-{totalSelectedPoints} pontos</span>
-            </div>
-            <div className="flex justify-between">
-              <p className="text-[#737373] font-medium">Saldo de Pontos:</p>
-              <span className="text-[#BFA76F] font-bold">{remainingPoints} pontos</span>
-            </div>
-            {selectedPrizeNames && (
-              <div className="mt-2">
-                <p className="text-[#737373] font-medium">Prêmios selecionados:</p>
-                <p className="text-[#737373]">{selectedPrizeNames}</p>
-              </div>
-            )}
-          </div>
-          <DialogDescription className="text-center text-[#737373]">
-            Aperte o botão abaixo para confirmar o Resgate.
-          </DialogDescription>
-          <Button 
-            onClick={handleConfirmRedeem}
-            className="bg-[#BFA76F] hover:bg-[#BFA76F]/90 text-white w-full py-3"
-          >
-            RESGATAR AGORA!
-          </Button>
-        </DialogContent>
-      </Dialog>
+      {/* Confirmation Dialog */}
+      <RedeemConfirmationDialog 
+        open={showConfirmation}
+        onOpenChange={setShowConfirmation}
+        userPoints={userPoints}
+        totalSelectedPoints={totalSelectedPoints}
+        remainingPoints={remainingPoints}
+        selectedPrizeNames={selectedPrizeNames}
+        onConfirm={handleConfirmRedeem}
+      />
     </SidebarProvider>
   );
 };
