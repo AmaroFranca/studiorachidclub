@@ -5,7 +5,7 @@ import { Users, CircleDollarSign, List, Settings, MessageSquare, Gift, LayoutDas
 import { SidebarHeader, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarFooter } from "@/components/ui/sidebar";
 
 interface AppSidebarProps {
-  activeSection?: "dashboard" | "rewards" | "prizes" | "experiences" | "referrals" | "redeem";
+  activeSection?: "dashboard" | "rewards" | "prizes" | "experiences" | "referrals" | "redeem" | "settings";
 }
 
 const AppSidebar: React.FC<AppSidebarProps> = ({
@@ -99,8 +99,8 @@ const AppSidebar: React.FC<AppSidebarProps> = ({
       <SidebarFooter className="mt-auto bg-[#d9d9d9] py-[50px]">
         <SidebarMenu>
           <SidebarMenuItem>
-            <Link to="#">
-              <SidebarMenuButton className="text-[#737373] hover:bg-[#B1C9C3] px-[15px]">
+            <Link to="/settings">
+              <SidebarMenuButton className={`text-[#737373] hover:bg-[#B1C9C3] px-[15px] ${activeSection === "settings" || currentPath === "/settings" ? "bg-[#B1C9C3]" : ""}`}>
                 <Settings className="text-[#BFA76F]" />
                 <span>Configurações</span>
               </SidebarMenuButton>
