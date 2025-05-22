@@ -1,83 +1,22 @@
+
 import React from "react";
-import { LayoutDashboard, Gift, Users, CircleDollarSign, List, Settings, MessageSquare, Heart, ArrowRight, Menu } from "lucide-react";
-import { SidebarProvider, Sidebar, SidebarHeader, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarFooter } from "@/components/ui/sidebar";
+import { Gift, Users, CircleDollarSign, Heart, ArrowRight } from "lucide-react";
+import { SidebarProvider, Sidebar } from "@/components/ui/sidebar";
 import { Progress } from "@/components/ui/progress";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import AppSidebar from "@/components/layout/AppSidebar";
+
 const Dashboard: React.FC = () => {
   const currentDate = new Date();
   const formattedDate = `${currentDate.getDate()} de ${getMonthName(currentDate.getMonth())} de ${currentDate.getFullYear()}`;
-  return <SidebarProvider defaultOpen={true}>
+  
+  return (
+    <SidebarProvider defaultOpen={true}>
       <div className="flex min-h-screen w-full">
         <Sidebar className="border-r bg-[#D9D9D9]">
-          <SidebarHeader className="flex items-center justify-between bg-[#d9d9d9] py-[30px] px-4 mx-0">
-            <div className="flex items-center gap-2">
-              <h1 className="text-xl font-semibold text-[#737373] text-left">Studio Rachid</h1>
-              {/* Removido o ícone de recolher menu */}
-            </div>
-          </SidebarHeader>
-          
-          <SidebarContent className="bg-[D9D9D9] bg-[#d9d9d9]">
-            <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton className="rounded-md text-[#737373] px-[15px] hover:bg-[#B1C9C3] bg-[#B1C9C3]">
-                  <LayoutDashboard className="text-[#BFA76F]" />
-                  <span>Painel</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              
-              <SidebarMenuItem>
-                <Link to="/rewards">
-                  <SidebarMenuButton className="text-[#737373] hover:bg-[#B1C9C3] px-[15px]">
-                    <Gift className="text-[#BFA76F]" />
-                    <span>Recompensas</span>
-                  </SidebarMenuButton>
-                </Link>
-              </SidebarMenuItem>
-              
-              <SidebarMenuItem>
-                <Link to="/referrals">
-                  <SidebarMenuButton className="text-[#737373] hover:bg-[#B1C9C3] px-[15px]">
-                    <Users className="text-[#BFA76F]" />
-                    <span>Indicados</span>
-                  </SidebarMenuButton>
-                </Link>
-              </SidebarMenuItem>
-              
-              <SidebarMenuItem>
-                <SidebarMenuButton className="text-[#737373] hover:bg-[#B1C9C3] px-[15px]">
-                  <CircleDollarSign className="text-[#BFA76F]" />
-                  <span>Resgates</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              
-              <SidebarMenuItem>
-                <SidebarMenuButton className="text-[#737373] hover:bg-[#B1C9C3] px-[15px]">
-                  <List className="text-[#BFA76F]" />
-                  <span>Regras</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            </SidebarMenu>
-          </SidebarContent>
-          
-          <SidebarFooter className="mt-auto bg-[#d9d9d9] py-[50px]">
-            <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton className="text-[#737373] hover:bg-[#B1C9C3] px-[15px]">
-                  <Settings className="text-[#BFA76F]" />
-                  <span>Configurações</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              
-              <SidebarMenuItem>
-                <SidebarMenuButton className="text-[#737373] hover:bg-[#B1C9C3] px-[15px]">
-                  <MessageSquare className="text-[#BFA76F]" />
-                  <span>Suporte</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            </SidebarMenu>
-          </SidebarFooter>
+          <AppSidebar activeSection="dashboard" />
         </Sidebar>
         
         <main className="flex-1 bg-[#EFEFEF] p-6">
@@ -87,7 +26,6 @@ const Dashboard: React.FC = () => {
               <h2 className="text-2xl font-semibold text-[#737373]">Olá, Amaro</h2>
               <div className="flex items-center gap-4">
                 <span className="text-sm text-[#737373]">{formattedDate}</span>
-                
               </div>
             </div>
             
@@ -170,7 +108,7 @@ const Dashboard: React.FC = () => {
                     
                     <div className="flex items-center text-sm my-0 py-[30px]">
                       <ArrowRight className="h-5 w-5 text-[#BFA76F] mr-2" />
-                      <span className="text-sm">Veja as regras do programa</span>
+                      <Link to="/rules" className="text-sm hover:underline">Veja as regras do programa</Link>
                     </div>
                   </div>
                   
@@ -185,7 +123,8 @@ const Dashboard: React.FC = () => {
           </div>
         </main>
       </div>
-    </SidebarProvider>;
+    </SidebarProvider>
+  );
 };
 
 // Helper function to get month name
@@ -193,4 +132,5 @@ function getMonthName(month: number): string {
   const months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
   return months[month];
 }
+
 export default Dashboard;

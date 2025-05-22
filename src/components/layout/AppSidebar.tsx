@@ -6,7 +6,7 @@ import { SidebarHeader, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMen
 import { SettingsDialog } from "@/components/settings/SettingsDialog";
 
 interface AppSidebarProps {
-  activeSection?: "dashboard" | "rewards" | "prizes" | "experiences" | "referrals" | "redeem";
+  activeSection?: "dashboard" | "rewards" | "prizes" | "experiences" | "referrals" | "redeem" | "rules";
 }
 
 const AppSidebar: React.FC<AppSidebarProps> = ({
@@ -90,8 +90,8 @@ const AppSidebar: React.FC<AppSidebarProps> = ({
             </div>}
           
           <SidebarMenuItem>
-            <Link to="#">
-              <SidebarMenuButton className="text-[#737373] hover:bg-[#B1C9C3] px-[15px]">
+            <Link to="/rules">
+              <SidebarMenuButton className={`text-[#737373] hover:bg-[#B1C9C3] px-[15px] ${activeSection === "rules" ? "bg-[#B1C9C3]" : ""}`}>
                 <List className="text-[#BFA76F]" />
                 <span>Regras</span>
               </SidebarMenuButton>
