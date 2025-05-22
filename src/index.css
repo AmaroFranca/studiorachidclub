@@ -102,7 +102,7 @@
   }
 
   /* Dialog backdrop with semi-transparency and blur */
-  [data-state="open"] ~ .bg-black\/80 {
+  [data-state="open"] ~ .bg-black\/50 {
     @apply bg-black/50 backdrop-blur-sm;
   }
 

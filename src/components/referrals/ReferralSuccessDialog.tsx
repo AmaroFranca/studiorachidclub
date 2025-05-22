@@ -43,15 +43,19 @@ const ReferralSuccessDialog: React.FC<ReferralSuccessDialogProps> = ({
       });
   };
 
-  // When dialog opens/closes, dispatch a custom event to notify the app
+  // Standardize the dialog state management and event dispatching
   useEffect(() => {
     if (open) {
+      document.body.classList.add('dialog-open');
       document.dispatchEvent(new CustomEvent('dialog-state-change', { detail: { open: true } }));
+    } else {
+      document.body.classList.remove('dialog-open');
+      document.dispatchEvent(new CustomEvent('dialog-state-change', { detail: { open: false } }));
     }
+    
+    // Cleanup on unmount
     return () => {
-      if (open) {
-        document.dispatchEvent(new CustomEvent('dialog-state-change', { detail: { open: false } }));
-      }
+      document.body.classList.remove('dialog-open');
     };
   }, [open]);
 

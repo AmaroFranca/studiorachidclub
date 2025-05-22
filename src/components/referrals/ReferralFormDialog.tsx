@@ -64,15 +64,19 @@ const ReferralFormDialog: React.FC<ReferralFormDialogProps> = ({
     onSubmit();
   });
 
-  // When dialog opens/closes, dispatch a custom event to notify the app
+  // When dialog opens/closes, add/remove class to body with same pattern as SettingsDialog
   React.useEffect(() => {
     if (open) {
+      document.body.classList.add('dialog-open');
       document.dispatchEvent(new CustomEvent('dialog-state-change', { detail: { open: true } }));
+    } else {
+      document.body.classList.remove('dialog-open');
+      document.dispatchEvent(new CustomEvent('dialog-state-change', { detail: { open: false } }));
     }
+    
+    // Cleanup on unmount
     return () => {
-      if (open) {
-        document.dispatchEvent(new CustomEvent('dialog-state-change', { detail: { open: false } }));
-      }
+      document.body.classList.remove('dialog-open');
     };
   }, [open]);
 
