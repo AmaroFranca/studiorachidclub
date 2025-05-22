@@ -1,4 +1,3 @@
-
 import React from "react";
 import { LayoutDashboard, Gift, Users, CircleDollarSign, List, Settings, MessageSquare, Heart, ArrowRight, Menu } from "lucide-react";
 import { SidebarProvider, Sidebar, SidebarHeader, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarFooter } from "@/components/ui/sidebar";
@@ -6,13 +5,10 @@ import { Progress } from "@/components/ui/progress";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-
 const Dashboard: React.FC = () => {
   const currentDate = new Date();
   const formattedDate = `${currentDate.getDate()} de ${getMonthName(currentDate.getMonth())} de ${currentDate.getFullYear()}`;
-  
-  return (
-    <SidebarProvider defaultOpen={true}>
+  return <SidebarProvider defaultOpen={true}>
       <div className="flex min-h-screen w-full">
         <Sidebar className="border-r bg-[#D9D9D9]">
           <SidebarHeader className="flex items-center justify-between bg-[#d9d9d9] py-[30px] px-4 mx-0">
@@ -158,21 +154,21 @@ const Dashboard: React.FC = () => {
                   <div className="border border-white/60 rounded-lg p-4 mb-6">
                     <div className="flex items-center mb-4">
                       <Heart className="text-[#BFA76F] mr-2 " />
-                      <h3 className="font-semibold text-xl text-center">Indique e Ganhe</h3>
+                      <h3 className="font-semibold text-center text-4xl">Indique e Ganhe</h3>
                     </div>
                     
-                    <h2 className="text-xl font-semibold mb-4 text-left">Indique alguém especial e ganhem juntos.</h2>
+                    <h2 className="font-semibold mb-4 text-left text-2xl">Indique alguém especial e ganhem juntos.</h2>
                     
-                    <p className="mb-4 text-left">
+                    <p className="mb-4 text-left text-xl">
                       Pontos pra você. Presente pra quem você indica.
                     </p>
-                    <p className="mb-4 text-left">
+                    <p className="mb-4 text-left text-lg">
                       Você pode ganhar de 20 a 250 pontos por cada indicação e a pessoa indicada 
                       ganha um presente especial da clínica - um Checkup Digital e desconto na 
                       primeira profilaxia.
                     </p>
                     
-                    <div className="flex items-center text-sm">
+                    <div className="flex items-center text-sm my-0 py-[30px]">
                       <ArrowRight className="h-5 w-5 text-[#BFA76F] mr-2" />
                       <span className="text-sm">Veja as regras do programa</span>
                     </div>
@@ -189,8 +185,7 @@ const Dashboard: React.FC = () => {
           </div>
         </main>
       </div>
-    </SidebarProvider>
-  );
+    </SidebarProvider>;
 };
 
 // Helper function to get month name
@@ -198,5 +193,4 @@ function getMonthName(month: number): string {
   const months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
   return months[month];
 }
-
 export default Dashboard;
