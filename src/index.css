@@ -102,8 +102,9 @@
   }
 
   /* Dialog backdrop with semi-transparency and blur */
-  [data-state="open"] ~ .bg-black\/50 {
-    @apply bg-black/50 backdrop-blur-sm;
+  [data-state="open"] ~ .dialog-backdrop {
+    @apply backdrop-blur-sm;
+    background-color: rgba(0, 0, 0, 0.5); /* This replaces bg-black/50 */
   }
 
   /* Apply blur only to content marked with blur-on-dialog class when dialog is open */
