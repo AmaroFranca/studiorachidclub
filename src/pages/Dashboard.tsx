@@ -7,10 +7,29 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import AppSidebar from "@/components/layout/AppSidebar";
+import { useAuth } from "@/hooks/useAuth";
+import { useProfile } from "@/hooks/useProfile";
+import { useReferrals } from "@/hooks/useReferrals";
 
 const Dashboard: React.FC = () => {
+  const { user } = useAuth();
+  const { profile, loading: profileLoading } = useProfile(user);
+  const { referrals, loading: referralsLoading } = useReferrals(user);
+  
   const currentDate = new Date();
   const formattedDate = `${currentDate.getDate()} de ${getMonthName(currentDate.getMonth())} de ${currentDate.getFullYear()}`;
+  
+  const totalReferrals = referrals.length;
+  const userPoints = profile?.points || 0;
+  const progressPercentage = Math.min((userPoints / 1000) * 100, 100);
+  
+  if (profileLoading || referralsLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-[#737373]">Carregando...</div>
+      </div>
+    );
+  }
   
   return (
     <SidebarProvider defaultOpen={true}>
@@ -23,7 +42,7 @@ const Dashboard: React.FC = () => {
           <div className="max-w-7xl mx-auto">
             {/* Header */}
             <div className="flex justify-between items-center mb-10">
-              <h2 className="text-2xl font-semibold text-[#737373]">Olá, Amaro</h2>
+              <h2 className="text-2xl font-semibold text-[#737373]">Olá, {profile?.full_name || 'Usuário'}</h2>
               <div className="flex items-center gap-4">
                 <span className="text-sm text-[#737373]">{formattedDate}</span>
               </div>
@@ -45,10 +64,10 @@ const Dashboard: React.FC = () => {
                         <h3 className="font-semibold text-lg text-[#737373]">Sua Pontuação</h3>
                         <CircleDollarSign className="ml-2 text-[#BFA76F] h-5 w-5" />
                       </div>
-                      <span className="font-semibold text-xl text-[#737373]">270</span>
+                      <span className="font-semibold text-xl text-[#737373]">{userPoints}</span>
                     </div>
                     
-                    <Progress value={27} className="bg-[#737373] h-7 rounded">
+                    <Progress value={progressPercentage} className="bg-[#737373] h-7 rounded">
                       <div className="bg-[#B1C9C3] h-full rounded" />
                     </Progress>
                     
@@ -62,7 +81,7 @@ const Dashboard: React.FC = () => {
                         <h3 className="font-semibold text-lg text-[#737373]">Indicados</h3>
                         <Users className="ml-2 text-[#BFA76F] h-5 w-5" />
                       </div>
-                      <span className="font-semibold text-xl text-[#737373]">3</span>
+                      <span className="font-semibold text-xl text-[#737373]">{totalReferrals}</span>
                     </div>
                   </div>
                   
@@ -72,7 +91,9 @@ const Dashboard: React.FC = () => {
                       <img alt="Copo Térmico" className="w-40 h-40 object-cover rounded shadow-md" src="/lovable-uploads/18579148-cc6d-439b-b115-3d26c0b4a45a.png" />
                       <div className="px-0 py-[50px]">
                         <h3 className="font-semibold text-[#737373] text-left">Copo Térmico 1,2L</h3>
-                        <p className="font-semibold text-[#bfa76f]">Faltam: xxx pontos</p>
+                        <p className="font-semibold text-[#bfa76f]">
+                          {userPoints >= 250 ? "Você pode resgatar!" : `Faltam: ${250 - userPoints} pontos`}
+                        </p>
                       </div>
                     </div>
                   </div>
