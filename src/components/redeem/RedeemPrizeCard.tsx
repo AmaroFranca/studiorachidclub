@@ -39,7 +39,7 @@ const RedeemPrizeCard: React.FC<RedeemPrizeCardProps> = ({
     onSelectChange(id, checked);
   };
   
-  // Mobile: Square format
+  // Mobile: Square format (mantém o mesmo)
   if (isMobile) {
     return (
       <Card className="bg-[#D9D9D9] shadow-[5px_5px_10px_#737373] rounded-lg border-none overflow-hidden cursor-pointer hover:scale-[1.02] transition-transform aspect-square">
@@ -86,7 +86,7 @@ const RedeemPrizeCard: React.FC<RedeemPrizeCardProps> = ({
     );
   }
   
-  // Desktop: Horizontal format
+  // Desktop: Horizontal format - altura padronizada h-32 igual aos cards de experiências
   return (
     <Card className={`flex h-32 bg-[#D9D9D9] shadow-[10px_10px_15px_#737373] rounded-lg border-none overflow-hidden cursor-pointer hover:scale-[1.02] transition-transform`}>
       <div className="w-[132px] h-full">

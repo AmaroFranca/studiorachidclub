@@ -1,12 +1,12 @@
 
 import React, { useState, useEffect } from "react";
 import { Sidebar } from "@/components/ui/sidebar";
+import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import AppSidebar from "@/components/layout/AppSidebar";
 import { useAuth } from "@/hooks/useAuth";
 import { useProfile } from "@/hooks/useProfile";
 import { useRewards } from "@/hooks/useRewards";
-import RedeemPrizesInfo from "@/components/redeem/RedeemPrizesInfo";
 import RedeemPrizesGrid from "@/components/redeem/RedeemPrizesGrid";
 import RedeemConfirmationDialog from "@/components/redeem/RedeemConfirmationDialog";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -109,15 +109,79 @@ const RedeemPrizes: React.FC = () => {
             backLink="/dashboard"
           />
           
-          {/* Main Information Row */}
-          <RedeemPrizesInfo 
-            availablePrizes={availablePrizes}
-            userPoints={userPoints}
-            totalSelectedPoints={totalSelectedPoints}
-            remainingPoints={remainingPoints}
-            canRedeem={canRedeem}
-            onRedeemClick={handleRedeemClick}
-          />
+          {/* Main Information Section */}
+          {isMobile ? (
+            <div className="flex flex-col gap-4 mb-6">
+              {/* Title & Count */}
+              <div className="flex flex-col">
+                <h1 className="text-2xl font-bold text-[#737373] text-left">Resgate de Prêmios</h1>
+                <p className="text-base text-[#737373] mt-1 text-left">Total de Prêmios: {availablePrizes}</p>
+              </div>
+              
+              {/* Points Calculator */}
+              <div className="bg-white p-3 rounded-md w-full">
+                <div className="flex justify-between text-sm">
+                  <p className="text-[#737373] font-medium">Pontos disponíveis:</p>
+                  <span className="text-[#BFA76F] font-bold">{userPoints}</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <p className="text-[#737373] font-medium">Pontos selecionados:</p>
+                  <span className="text-[#737373] font-bold">-{totalSelectedPoints}</span>
+                </div>
+                <hr className="my-2" />
+                <div className="flex justify-between text-sm">
+                  <p className="text-[#737373] font-medium">Saldo de pontos:</p>
+                  <span className="text-[#BFA76F] font-bold">{remainingPoints}</span>
+                </div>
+              </div>
+              
+              {/* Redeem Button */}
+              <Button 
+                disabled={!canRedeem} 
+                onClick={handleRedeemClick}
+                className="bg-[#BFA76F] hover:bg-[#BFA76F]/90 text-white w-full py-3 min-h-[44px]"
+              >
+                RESGATAR AGORA!
+              </Button>
+            </div>
+          ) : (
+            <div className="flex flex-row items-center justify-between w-full mb-8" style={{gap: "177px"}}>
+              {/* Left Side: Title & Count */}
+              <div className="flex flex-col">
+                <h1 className="text-4xl font-bold text-[#737373] text-left">Resgate de Prêmios</h1>
+                <p className="text-xl text-[#737373] mt-2 text-left">Total de Prêmios: {availablePrizes}</p>
+              </div>
+              
+              {/* Right Side: Calculator & Button */}
+              <div className="flex flex-col">
+                {/* Points Calculator */}
+                <div className="bg-white p-4 px-8 rounded-md w-full mb-4 min-w-[280px]">
+                  <div className="flex justify-between">
+                    <p className="text-[#737373] font-medium">Pontos disponíveis:</p>
+                    <span className="text-[#BFA76F] font-bold">{userPoints}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <p className="text-[#737373] font-medium">Pontos selecionados:</p>
+                    <span className="text-[#737373] font-bold">-{totalSelectedPoints}</span>
+                  </div>
+                  <hr className="my-2" />
+                  <div className="flex justify-between">
+                    <p className="text-[#737373] font-medium">Saldo de pontos:</p>
+                    <span className="text-[#BFA76F] font-bold">{remainingPoints}</span>
+                  </div>
+                </div>
+                
+                {/* Redeem Button */}
+                <Button 
+                  disabled={!canRedeem} 
+                  onClick={handleRedeemClick}
+                  className="bg-[#BFA76F] hover:bg-[#BFA76F]/90 text-white w-full py-3"
+                >
+                  RESGATAR AGORA!
+                </Button>
+              </div>
+            </div>
+          )}
           
           {/* Prize Cards Grid */}
           <RedeemPrizesGrid 
