@@ -18,6 +18,13 @@ const Prizes: React.FC = () => {
   
   const userPoints = profile?.points || 0;
   
+  React.useEffect(() => {
+    // Log available prizes on component mount for debugging
+    if (prizes && prizes.length > 0) {
+      console.log('Available prizes:', prizes);
+    }
+  }, [prizes]);
+  
   // Show loading state
   if (profileLoading || prizesLoading) {
     return (
@@ -68,15 +75,21 @@ const Prizes: React.FC = () => {
             
             {/* Prize Cards Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-10">
-              {prizes.map((prize) => (
-                <PrizeCard 
-                  key={prize.id}
-                  name={prize.name}
-                  image={prize.image_url}
-                  points={prize.points}
-                  userPoints={userPoints}
-                />
-              ))}
+              {prizes.length > 0 ? (
+                prizes.map((prize) => (
+                  <PrizeCard 
+                    key={prize.id}
+                    name={prize.name}
+                    image={prize.image_url}
+                    points={prize.points}
+                    userPoints={userPoints}
+                  />
+                ))
+              ) : (
+                <div className="col-span-3 text-center py-10">
+                  <p className="text-[#737373]">Nenhum prêmio disponível no momento.</p>
+                </div>
+              )}
             </div>
           </div>
         </main>

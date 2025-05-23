@@ -7,8 +7,7 @@ export const DEFAULT_IMAGE = "/placeholder.svg";
 
 /**
  * Handle image loading with fallback
- * @param imagePath - Original image path
- * @returns A function to handle image errors
+ * @param e - Image error event
  */
 export const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
   console.log(`Image failed to load: ${e.currentTarget.src}`);
@@ -28,6 +27,11 @@ export const getSafeImageUrl = (imagePath: string): string => {
     return imagePath;
   }
   
+  // Handle lovable-uploads paths specifically
+  if (imagePath.includes('lovable-uploads')) {
+    return `/${imagePath.split('lovable-uploads')[1]}`;
+  }
+  
   // Otherwise, ensure it has a leading /
-  return `/${imagePath}`;
+  return `/lovable-uploads/${imagePath}`;
 };
