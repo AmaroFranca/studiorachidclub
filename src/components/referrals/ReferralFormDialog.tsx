@@ -87,7 +87,7 @@ const ReferralFormDialog: React.FC<ReferralFormDialogProps> = ({
   }, [open]);
   return <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="w-[360px] bg-[#E4E4E4] border border-[rgba(115,115,115,0.5)] rounded-[10px] shadow-[10px_10px_15px_#737373] p-[26px_15px] flex flex-col items-center overflow-y-auto max-h-[90vh] z-50">
-        <div className="w-[368px] border border-[rgba(115,115,115,0.5)] rounded-[10px] p-[20px_15px] flex flex-col items-center">
+        <div className="w-[340px] border border-[rgba(115,115,115,0.5)] rounded-[10px] p-[20px_15px] flex flex-col items-center px-[10px] py-[10px]">
           <div className="w-full flex flex-col items-center gap-[15px] mb-[30px]">
             <div className="flex justify-center items-center gap-[10px]">
               <Heart className="w-6 h-6 text-[#BFA76F]" />
