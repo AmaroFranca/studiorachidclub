@@ -32,14 +32,14 @@ const ReferralSuccessDialog: React.FC<ReferralSuccessDialogProps> = ({
       await navigator.clipboard.writeText(messageTemplate);
       setCopied(true);
       
-      // Registrar que a mensagem foi copiada e conceder pontos adicionais
+      // Registrar que a mensagem foi copiada e conceder pontos
       if (referralId) {
         await markMessageCopied(referralId);
       }
       
       toast({
         title: "Mensagem copiada!",
-        description: "A mensagem foi copiada para a área de transferência e você ganhou 10 pontos adicionais.",
+        description: "A mensagem foi copiada para a área de transferência e você ganhou 10 pontos!",
       });
       
       setTimeout(() => {
@@ -89,10 +89,11 @@ const ReferralSuccessDialog: React.FC<ReferralSuccessDialogProps> = ({
 
             <div className="w-full flex flex-col items-start gap-[20px]">
               <h3 className="w-full font-bold text-[16px] text-[#BFA76F] text-center">
-                Quer ganhar mais 10 pontos agora?
+                Quer ganhar 10 pontos agora?
               </h3>
               <p className="w-full font-bold text-[12px] text-[#737373] text-center">
-                É só tocar no botão, copiar a mensagem abaixo e enviar para quem você indicou
+                É só tocar no botão, copiar a mensagem abaixo e enviar para quem você indicou.
+                Você receberá mais 20 pontos quando o indicado comparecer à clínica!
               </p>
             </div>
 

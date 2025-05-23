@@ -78,7 +78,7 @@ export const useReferrals = (user: User | null) => {
           user_id: user.id,
           ...referralData,
           phase: 1, // Fase inicial
-          points_awarded: 20, // Pontos iniciais para criar a indicação
+          points_awarded: 0, // Sem pontos iniciais
         })
         .select()
         .single();
@@ -92,23 +92,11 @@ export const useReferrals = (user: User | null) => {
         });
         return false;
       } else {
-        // Criar transação de pontos para a indicação (fase 1)
-        await supabase
-          .from('points_transactions')
-          .insert({
-            user_id: user.id,
-            amount: 20,
-            description: `Indicação de ${referralData.name}`,
-            referral_id: data.id,
-          });
-
         setReferrals(prev => [data, ...prev]);
-        // Atualizar o perfil para refletir os novos pontos
-        refetchProfile();
         
         toast({
           title: "Indicação criada com sucesso!",
-          description: "Você ganhou 20 pontos pela indicação.",
+          description: "Copie a mensagem para ganhar 10 pontos.",
         });
         return true;
       }
@@ -153,7 +141,7 @@ export const useReferrals = (user: User | null) => {
           
           toast({
             title: "Mensagem copiada!",
-            description: "Você ganhou 10 pontos adicionais!",
+            description: "Você ganhou 10 pontos! Receberá mais 20 pontos quando seu indicado retirar o presente na clínica.",
           });
           return true;
         }

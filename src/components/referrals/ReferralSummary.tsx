@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Plus } from "lucide-react";
 import ReferralFilter from "./ReferralFilter";
@@ -37,7 +38,6 @@ const ReferralSummary: React.FC<ReferralSummaryProps> = ({
     
     if (success) {
       // Aqui precisamos obter o ID da indicação recém-criada
-      // Como não temos acesso direto, vamos buscar a mais recente após criação
       const { data: newReferrals } = await supabase
         .from('referrals')
         .select('id')
