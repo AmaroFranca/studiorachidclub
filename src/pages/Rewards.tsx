@@ -13,11 +13,8 @@ const Rewards: React.FC = () => {
   const formattedDate = getFormattedDate();
   const isMobile = useIsMobile();
   
-  // State for active submenu buttons
-  const [activeMenu, setActiveMenu] = useState<string>("premios");
-  
   return (
-    <div className="flex min-h-screen w-full">
+    <>
       {!isMobile && (
         <Sidebar className="border-r bg-[#D9D9D9]">
           <AppSidebar activeSection="rewards" />
@@ -128,7 +125,7 @@ const Rewards: React.FC = () => {
           </div>
         </div>
       </main>
-    </div>
+    </>
   );
 };
 
