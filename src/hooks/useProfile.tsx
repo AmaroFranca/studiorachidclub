@@ -51,18 +51,7 @@ export const useProfile = (user: User | null) => {
         await createProfile();
       } else {
         console.log('Profile fetched:', data);
-        // Verificar se o nome está vazio, é um email ou é um nome genérico
-        if (!data.full_name || 
-            data.full_name === '' || 
-            data.full_name.includes('@') ||
-            data.full_name === 'Usuário' ||
-            data.full_name.toLowerCase() === 'usuário') {
-          // Atualize com um nome melhor baseado no email
-          const betterName = extractNameFromEmail(user.email);
-          await updateProfile({ full_name: betterName });
-        } else {
-          setProfile(data);
-        }
+        setProfile(data);
       }
     } catch (error) {
       console.error('Error in fetchProfile:', error);
@@ -71,23 +60,11 @@ export const useProfile = (user: User | null) => {
     }
   };
 
-  const extractNameFromEmail = (email: string | undefined): string => {
-    if (!email) return 'Usuário';
-    
-    const emailName = email.split('@')[0];
-    
-    // Dividir por pontos, underscores ou números e capitalizar cada parte
-    return emailName
-      .split(/[._\d]+/)
-      .filter(part => part.length > 0)
-      .map(part => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase())
-      .join(' ');
-  };
-
   const createProfile = async () => {
     if (!user) return;
 
-    const userName = extractNameFromEmail(user.email);
+    // Usar o nome dos metadados se disponível, senão extrair do email
+    const userName = user.user_metadata?.name || extractNameFromEmail(user.email);
 
     try {
       console.log('Creating profile with name:', userName);
@@ -116,6 +93,19 @@ export const useProfile = (user: User | null) => {
     } catch (error) {
       console.error('Error in createProfile:', error);
     }
+  };
+
+  const extractNameFromEmail = (email: string | undefined): string => {
+    if (!email) return 'Usuário';
+    
+    const emailName = email.split('@')[0];
+    
+    // Dividir por pontos, underscores ou números e capitalizar cada parte
+    return emailName
+      .split(/[._\d]+/)
+      .filter(part => part.length > 0)
+      .map(part => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase())
+      .join(' ');
   };
 
   const updateProfile = async (updates: Partial<Pick<Profile, 'full_name' | 'phone'>>) => {
