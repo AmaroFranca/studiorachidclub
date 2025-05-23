@@ -1,17 +1,18 @@
-
 import React from "react";
-import { List } from "lucide-react";
+import { List, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
-import { SidebarProvider, Sidebar } from "@/components/ui/sidebar";
+import { SidebarProvider, Sidebar, SidebarTrigger } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import AppSidebar from "@/components/layout/AppSidebar";
+import { getFormattedDate } from "@/utils/dateUtils";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const Rules: React.FC = () => {
-  const currentDate = new Date();
-  const formattedDate = `${currentDate.getDate()} de ${getMonthName(currentDate.getMonth())} de ${currentDate.getFullYear()}`;
+  const formattedDate = getFormattedDate();
+  const isMobile = useIsMobile();
   
   return (
-    <SidebarProvider defaultOpen={true}>
+    <SidebarProvider defaultOpen={!isMobile}>
       <div className="flex min-h-screen w-full">
         <Sidebar className="border-r bg-[#D9D9D9]">
           <AppSidebar activeSection="rules" />
@@ -20,21 +21,29 @@ const Rules: React.FC = () => {
         <main className="flex-1 bg-[#EFEFEF] p-6">
           <div className="max-w-5xl mx-auto">
             {/* Header */}
-            <div className="flex justify-between items-center mb-10">
-              <h2 className="text-2xl font-semibold text-[#737373]">Olá, Amaro</h2>
-              <div className="flex items-center gap-4">
-                <span className="text-sm text-[#737373]">{formattedDate}</span>
+            <div className="flex justify-between items-center mb-6 md:mb-10">
+              <div className="flex items-center gap-2">
+                <Link to="/dashboard" className="flex items-center gap-2 text-[#737373]">
+                  <ArrowLeft className="text-[#BFA76F]" />
+                  <span className="text-sm md:text-xl font-semibold">Voltar</span>
+                </Link>
+              </div>
+              <div className="flex items-center gap-2 md:gap-4">
+                <span className="text-xs md:text-sm text-[#737373]">{formattedDate}</span>
+                {isMobile && (
+                  <SidebarTrigger className="bg-[#B1C9C3] hover:bg-[#9fb9b2] text-[#737373] h-8 w-8 flex items-center justify-center rounded-md" />
+                )}
               </div>
             </div>
             
             {/* Page Title */}
-            <div className="flex items-center justify-center gap-3 mb-8">
-              <List className="text-[#BFA76F] h-8 w-8" />
-              <h1 className="text-3xl font-bold text-[#737373]">Regras do Programa</h1>
+            <div className="flex items-center justify-center gap-3 mb-6 md:mb-8">
+              <List className="text-[#BFA76F] h-6 w-6 md:h-8 md:w-8" />
+              <h1 className="text-2xl md:text-3xl font-bold text-[#737373]">Regras do Programa</h1>
             </div>
             
             {/* Rules Content */}
-            <div className="bg-[#D9D9D9] rounded-lg shadow-[10px_10px_15px_#737373] p-8">
+            <div className="bg-[#D9D9D9] rounded-lg shadow-[10px_10px_15px_#737373] p-4 md:p-8">
               <div className="text-left max-w-4xl mx-auto space-y-8 text-[#737373]">
                 
                 <section>

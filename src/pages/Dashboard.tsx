@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Gift, Users, CircleDollarSign, Heart, ArrowRight } from "lucide-react";
 import { SidebarProvider, Sidebar, SidebarTrigger } from "@/components/ui/sidebar";
@@ -51,25 +50,22 @@ const Dashboard: React.FC = () => {
         </Sidebar>
         
         <main className="flex-1 bg-[#EFEFEF] p-3 md:p-6">
-          {isMobile && (
-            <div className="mb-4">
-              <SidebarTrigger className="bg-[#B1C9C3] hover:bg-[#9fb9b2] text-[#737373]" />
-            </div>
-          )}
-          
           <div className="max-w-7xl mx-auto">
             {/* Header */}
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 md:mb-10 gap-2">
+            <div className="flex justify-between items-center mb-6 md:mb-10">
               <h2 className="text-lg md:text-2xl font-semibold text-[#737373]">
                 Olá, {getUserDisplayName()}
               </h2>
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2 md:gap-4">
                 <span className="text-xs md:text-sm text-[#737373]">{formattedDate}</span>
+                {isMobile && (
+                  <SidebarTrigger className="bg-[#B1C9C3] hover:bg-[#9fb9b2] text-[#737373] h-8 w-8 flex items-center justify-center rounded-md" />
+                )}
               </div>
             </div>
             
             {/* Page Title */}
-            <div className="text-center mb-8 md:mb-12">
+            <div className="text-center mb-6 md:mb-12">
               <h1 className="text-2xl md:text-4xl font-bold text-[#737373]">Studio Rachid Club</h1>
             </div>
             

@@ -125,7 +125,7 @@ const Referrals: React.FC = () => {
   }
 
   return (
-    <SidebarProvider defaultOpen={true}>
+    <SidebarProvider defaultOpen={!isMobile}>
       <div className="flex min-h-screen w-full">
         {/* Sidebar - Not affected by blur */}
         <Sidebar className="border-r bg-[#D9D9D9] z-10">

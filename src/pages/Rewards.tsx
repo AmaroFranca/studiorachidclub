@@ -1,20 +1,22 @@
 
 import React, { useState } from "react";
 import { ArrowLeft, LockOpen, Lock } from "lucide-react";
-import { SidebarProvider, Sidebar } from "@/components/ui/sidebar";
+import { SidebarProvider, Sidebar, SidebarTrigger } from "@/components/ui/sidebar";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 import AppSidebar from "@/components/layout/AppSidebar";
 import { getFormattedDate } from "@/utils/dateUtils";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const Rewards: React.FC = () => {
   const formattedDate = getFormattedDate();
+  const isMobile = useIsMobile();
   
   // State for active submenu buttons
   const [activeMenu, setActiveMenu] = useState<string>("premios");
   
   return (
-    <SidebarProvider defaultOpen={true}>
+    <SidebarProvider defaultOpen={!isMobile}>
       <div className="flex min-h-screen w-full">
         <Sidebar className="border-r bg-[#D9D9D9]">
           <AppSidebar activeSection="rewards" />
@@ -23,21 +25,24 @@ const Rewards: React.FC = () => {
         <main className="flex-1 bg-[#EFEFEF] p-6">
           <div className="max-w-7xl mx-auto">
             {/* Header */}
-            <div className="flex justify-between items-center mb-10">
+            <div className="flex justify-between items-center mb-6 md:mb-10">
               <div className="flex items-center gap-2">
                 <Link to="/dashboard" className="flex items-center gap-2 text-[#737373]">
                   <ArrowLeft className="text-[#BFA76F]" />
-                  <span className="text-xl font-semibold">Voltar</span>
+                  <span className="text-sm md:text-xl font-semibold">Voltar</span>
                 </Link>
               </div>
-              <div className="flex items-center gap-4">
-                <span className="text-sm text-[#737373]">{formattedDate}</span>
+              <div className="flex items-center gap-2 md:gap-4">
+                <span className="text-xs md:text-sm text-[#737373]">{formattedDate}</span>
+                {isMobile && (
+                  <SidebarTrigger className="bg-[#B1C9C3] hover:bg-[#9fb9b2] text-[#737373] h-8 w-8 flex items-center justify-center rounded-md" />
+                )}
               </div>
             </div>
             
             {/* Page Title */}
-            <div className="text-center mb-12">
-              <h1 className="text-4xl font-bold text-[#737373]">Prêmios & Experiências</h1>
+            <div className="text-center mb-8 md:mb-12">
+              <h1 className="text-2xl md:text-4xl font-bold text-[#737373]">Prêmios & Experiências</h1>
             </div>
             
             {/* Cards */}
