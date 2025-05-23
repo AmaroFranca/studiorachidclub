@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Plus } from "lucide-react";
 import ReferralFilter from "./ReferralFilter";
@@ -7,6 +6,7 @@ import ReferralSuccessDialog from "./ReferralSuccessDialog";
 import { useAuth } from "@/hooks/useAuth";
 import { useProfile } from "@/hooks/useProfile";
 import { useReferrals } from "@/hooks/useReferrals";
+import { supabase } from "@/integrations/supabase/client";
 
 interface ReferralSummaryProps {
   totalReferrals: number;
@@ -26,6 +26,7 @@ const ReferralSummary: React.FC<ReferralSummaryProps> = ({
   const { createReferral } = useReferrals(user);
   const [formDialogOpen, setFormDialogOpen] = useState(false);
   const [successDialogOpen, setSuccessDialogOpen] = useState(false);
+  const [lastCreatedReferralId, setLastCreatedReferralId] = useState<string | undefined>(undefined);
   
   const handleReferButtonClick = () => {
     setFormDialogOpen(true);
@@ -33,7 +34,21 @@ const ReferralSummary: React.FC<ReferralSummaryProps> = ({
   
   const handleFormSubmit = async (data: { name: string; phone: string; relationship: string }) => {
     const success = await createReferral(data);
+    
     if (success) {
+      // Aqui precisamos obter o ID da indicação recém-criada
+      // Como não temos acesso direto, vamos buscar a mais recente após criação
+      const { data: newReferrals } = await supabase
+        .from('referrals')
+        .select('id')
+        .eq('user_id', user?.id)
+        .order('created_at', { ascending: false })
+        .limit(1);
+      
+      if (newReferrals && newReferrals.length > 0) {
+        setLastCreatedReferralId(newReferrals[0].id);
+      }
+      
       setFormDialogOpen(false);
       setSuccessDialogOpen(true);
       onReferralCreated();
@@ -83,7 +98,8 @@ const ReferralSummary: React.FC<ReferralSummaryProps> = ({
       
       <ReferralSuccessDialog 
         open={successDialogOpen} 
-        onOpenChange={setSuccessDialogOpen} 
+        onOpenChange={setSuccessDialogOpen}
+        referralId={lastCreatedReferralId}
       />
     </>
   );

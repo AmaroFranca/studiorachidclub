@@ -126,8 +126,11 @@ export type Database = {
           collected_gift: boolean
           created_at: string
           id: string
+          message_copied_at: string | null
           name: string
+          phase: number | null
           phone: string
+          points_awarded: number | null
           relationship: string
           updated_at: string
           user_id: string
@@ -137,8 +140,11 @@ export type Database = {
           collected_gift?: boolean
           created_at?: string
           id?: string
+          message_copied_at?: string | null
           name: string
+          phase?: number | null
           phone: string
+          points_awarded?: number | null
           relationship: string
           updated_at?: string
           user_id: string
@@ -148,8 +154,11 @@ export type Database = {
           collected_gift?: boolean
           created_at?: string
           id?: string
+          message_copied_at?: string | null
           name?: string
+          phase?: number | null
           phone?: string
+          points_awarded?: number | null
           relationship?: string
           updated_at?: string
           user_id?: string
@@ -205,7 +214,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      award_referral_points: {
+        Args: {
+          referral_id_param: string
+          phase_param: number
+          points_param: number
+        }
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never

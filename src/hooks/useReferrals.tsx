@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { User } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { useProfile } from './useProfile';
 
 interface Referral {
   id: string;
@@ -14,6 +15,9 @@ interface Referral {
   became_patient: boolean;
   created_at: string;
   updated_at: string;
+  phase: number | null;
+  message_copied_at: string | null;
+  points_awarded: number | null;
 }
 
 interface CreateReferralData {
@@ -26,6 +30,7 @@ export const useReferrals = (user: User | null) => {
   const [referrals, setReferrals] = useState<Referral[]>([]);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
+  const { refetch: refetchProfile } = useProfile(user);
 
   useEffect(() => {
     if (user) {
@@ -72,6 +77,8 @@ export const useReferrals = (user: User | null) => {
         .insert({
           user_id: user.id,
           ...referralData,
+          phase: 1, // Fase inicial
+          points_awarded: 20, // Pontos iniciais para criar a indicação
         })
         .select()
         .single();
@@ -85,7 +92,7 @@ export const useReferrals = (user: User | null) => {
         });
         return false;
       } else {
-        // Criar transação de pontos para a indicação
+        // Criar transação de pontos para a indicação (fase 1)
         await supabase
           .from('points_transactions')
           .insert({
@@ -96,6 +103,9 @@ export const useReferrals = (user: User | null) => {
           });
 
         setReferrals(prev => [data, ...prev]);
+        // Atualizar o perfil para refletir os novos pontos
+        refetchProfile();
+        
         toast({
           title: "Indicação criada com sucesso!",
           description: "Você ganhou 20 pontos pela indicação.",
@@ -104,6 +114,53 @@ export const useReferrals = (user: User | null) => {
       }
     } catch (error) {
       console.error('Error in createReferral:', error);
+      return false;
+    }
+  };
+
+  const markMessageCopied = async (referralId: string) => {
+    if (!user) return false;
+
+    try {
+      // Verificar a fase atual
+      const { data: referral } = await supabase
+        .from('referrals')
+        .select('phase')
+        .eq('id', referralId)
+        .single();
+
+      if (referral && referral.phase < 2) {
+        // Chamar a função do banco de dados para atualizar fase e conceder pontos
+        const { error } = await supabase.rpc('award_referral_points', {
+          referral_id_param: referralId,
+          phase_param: 2,
+          points_param: 10
+        });
+
+        if (error) {
+          console.error('Error marking message copied:', error);
+          toast({
+            title: "Erro ao registrar mensagem copiada",
+            description: "Não foi possível registrar os pontos.",
+            variant: "destructive",
+          });
+          return false;
+        } else {
+          // Atualizar a lista de indicações
+          await fetchReferrals();
+          // Atualizar o perfil para refletir os novos pontos
+          refetchProfile();
+          
+          toast({
+            title: "Mensagem copiada!",
+            description: "Você ganhou 10 pontos adicionais!",
+          });
+          return true;
+        }
+      }
+      return true; // Já está na fase 2 ou superior
+    } catch (error) {
+      console.error('Error in markMessageCopied:', error);
       return false;
     }
   };
@@ -123,6 +180,7 @@ export const useReferrals = (user: User | null) => {
     referrals,
     loading,
     createReferral,
+    markMessageCopied,
     filterReferralsByDays,
     refetch: fetchReferrals,
   };

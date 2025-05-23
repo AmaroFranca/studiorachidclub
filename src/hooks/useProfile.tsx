@@ -49,7 +49,14 @@ export const useProfile = (user: User | null) => {
         console.log('Profile not found, creating one...');
         await createProfile();
       } else {
-        setProfile(data);
+        // Verificar se o nome está vazio ou é um email
+        if (!data.full_name || data.full_name === '' || data.full_name.includes('@')) {
+          // Atualize com um nome padrão melhor ou com base no email
+          const betterName = user.email ? user.email.split('@')[0] : 'Usuário';
+          await updateProfile({ full_name: betterName });
+        } else {
+          setProfile(data);
+        }
       }
     } catch (error) {
       console.error('Error in fetchProfile:', error);
@@ -61,12 +68,23 @@ export const useProfile = (user: User | null) => {
   const createProfile = async () => {
     if (!user) return;
 
+    // Extrair um nome de usuário mais amigável do email
+    let userName = 'Usuário';
+    if (user.email) {
+      userName = user.email.split('@')[0];
+      // Capitalize first letter of each word
+      userName = userName
+        .split('.')
+        .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+        .join(' ');
+    }
+
     try {
       const { data, error } = await supabase
         .from('profiles')
         .insert({
           id: user.id,
-          full_name: user.email?.split('@')[0] || 'Usuário',
+          full_name: userName,
           phone: null,
           points: 0
         })

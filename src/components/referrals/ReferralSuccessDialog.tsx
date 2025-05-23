@@ -6,41 +6,53 @@ import {
   DialogContent,
 } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/useAuth";
+import { useReferrals } from "@/hooks/useReferrals";
 
 interface ReferralSuccessDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  referralId?: string; // ID da indicação que acabou de ser criada
 }
 
 const ReferralSuccessDialog: React.FC<ReferralSuccessDialogProps> = ({ 
   open, 
-  onOpenChange 
+  onOpenChange,
+  referralId
 }) => {
   const { toast } = useToast();
   const [copied, setCopied] = useState(false);
+  const { user } = useAuth();
+  const { markMessageCopied } = useReferrals(user);
   
   const messageTemplate = `Oi [NOME]! Tudo bem? Sou paciente da Clínica Studio Rachid, especialistas em Harmonização Facial e Estética do Sorriso. Gosto muito do cuidado deles e decidi indicar algumas pessoas especiais — como você! A clínica preparou um presente exclusivo para quem recebe essa indicação. Depois me conta se gostou!`;
 
-  const handleCopyMessage = () => {
-    navigator.clipboard.writeText(messageTemplate)
-      .then(() => {
-        setCopied(true);
-        toast({
-          title: "Mensagem copiada!",
-          description: "A mensagem foi copiada para a área de transferência.",
-        });
-        setTimeout(() => {
-          onOpenChange(false);
-        }, 1000);
-      })
-      .catch((err) => {
-        console.error('Erro ao copiar: ', err);
-        toast({
-          title: "Erro ao copiar a mensagem",
-          description: "Tente novamente.",
-          variant: "destructive",
-        });
+  const handleCopyMessage = async () => {
+    try {
+      await navigator.clipboard.writeText(messageTemplate);
+      setCopied(true);
+      
+      // Registrar que a mensagem foi copiada e conceder pontos adicionais
+      if (referralId) {
+        await markMessageCopied(referralId);
+      }
+      
+      toast({
+        title: "Mensagem copiada!",
+        description: "A mensagem foi copiada para a área de transferência e você ganhou 10 pontos adicionais.",
       });
+      
+      setTimeout(() => {
+        onOpenChange(false);
+      }, 1500);
+    } catch (err) {
+      console.error('Erro ao copiar: ', err);
+      toast({
+        title: "Erro ao copiar a mensagem",
+        description: "Tente novamente.",
+        variant: "destructive",
+      });
+    }
   };
 
   // Standardize the dialog state management and event dispatching
@@ -51,6 +63,7 @@ const ReferralSuccessDialog: React.FC<ReferralSuccessDialogProps> = ({
     } else {
       document.body.classList.remove('dialog-open');
       document.dispatchEvent(new CustomEvent('dialog-state-change', { detail: { open: false } }));
+      setCopied(false); // Reset o estado quando o diálogo é fechado
     }
     
     // Cleanup on unmount
