@@ -1,13 +1,13 @@
 
 import React, { useState } from "react";
-import { ArrowLeft } from "lucide-react";
-import { SidebarProvider, Sidebar } from "@/components/ui/sidebar";
-import { Link } from "react-router-dom";
+import { Sidebar } from "@/components/ui/sidebar";
 import RedeemExperienceCard from "@/components/redeem/RedeemExperienceCard";
 import AppSidebar from "@/components/layout/AppSidebar";
 import { getFormattedDate } from "@/utils/dateUtils";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import {
   Dialog,
   DialogContent,
@@ -15,6 +15,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import StandardHeader from "@/components/layout/StandardHeader";
 
 // Experience data structure
 interface Experience {
@@ -58,6 +59,7 @@ const RedeemExperiences: React.FC = () => {
   const [selectedExperiences, setSelectedExperiences] = useState<number[]>([]);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const userPoints = 270; // Fixed user points for now
+  const isMobile = useIsMobile();
   
   // Calculate available experiences based on user points
   const availableExperiences = experiences.filter(exp => userPoints >= exp.points).length;
@@ -104,128 +106,120 @@ const RedeemExperiences: React.FC = () => {
     .join(", ");
   
   return (
-    <SidebarProvider defaultOpen={true}>
-      <div className="flex min-h-screen w-full">
+    <div className="flex min-h-screen w-full">
+      {!isMobile && (
         <Sidebar className="border-r bg-[#D9D9D9]">
           <AppSidebar activeSection="redeem" />
         </Sidebar>
-        
-        <main className="flex-1 bg-[#EFEFEF] p-6">
-          <div className="max-w-7xl mx-auto">
-            {/* Header */}
-            <div className="flex justify-between items-center mb-10">
-              <div className="flex items-center gap-2">
-                <Link to="/dashboard" className="flex items-center gap-2 text-[#737373]">
-                  <ArrowLeft className="text-[#BFA76F]" />
-                  <span className="text-xl font-semibold">Voltar</span>
-                </Link>
-              </div>
-              <div className="flex items-center gap-4">
-                <span className="text-sm text-[#737373]">{formattedDate}</span>
-              </div>
+      )}
+      
+      <main className="flex-1 bg-[#EFEFEF] p-3 md:p-6">
+        <div className="max-w-7xl mx-auto">
+          {/* Header with StandardHeader component */}
+          <StandardHeader 
+            title="Resgate de Experiências"
+            backLink="/dashboard"
+          />
+          
+          {/* Main Information Row */}
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between w-full mb-6 md:mb-8 gap-4 md:gap-6">
+            {/* Left Side: Count info */}
+            <div className="flex flex-col w-full md:w-auto">
+              <p className="text-lg md:text-xl text-[#737373] mt-2 text-left">Total de Experiências: {availableExperiences}</p>
             </div>
             
-            {/* Main Information Row */}
-            <div className="flex flex-row items-center justify-between w-full mb-8" style={{gap: "177px"}}>
-              {/* Left Side: Title & Count - Updated to show available experiences */}
-              <div className="flex flex-col">
-                <h1 className="text-4xl font-bold text-[#737373] text-left">Resgate de Experiências</h1>
-                <p className="text-xl text-[#737373] mt-2 text-left">Total de Experiências: {availableExperiences}</p>
+            {/* Right Side: Calculator & Button */}
+            <div className="flex flex-col w-full md:w-auto md:min-w-[280px]">
+              {/* Points Calculator */}
+              <div className="bg-white p-3 md:p-4 px-4 md:px-8 rounded-md w-full mb-3 md:mb-4">
+                <div className="flex justify-between">
+                  <p className="text-sm md:text-base text-[#737373] font-medium">Pontos disponíveis:</p>
+                  <span className="text-sm md:text-base text-[#BFA76F] font-bold">{userPoints}</span>
+                </div>
+                <div className="flex justify-between">
+                  <p className="text-sm md:text-base text-[#737373] font-medium">Pontos selecionados:</p>
+                  <span className="text-sm md:text-base text-[#737373] font-bold">-{totalSelectedPoints}</span>
+                </div>
+                <hr className="my-2" />
+                <div className="flex justify-between">
+                  <p className="text-sm md:text-base text-[#737373] font-medium">Saldo de pontos:</p>
+                  <span className="text-sm md:text-base text-[#BFA76F] font-bold">{remainingPoints}</span>
+                </div>
               </div>
               
-              {/* Right Side: Calculator & Button - Widened calculator box */}
-              <div className="flex flex-col">
-                {/* Points Calculator - Widened with more padding */}
-                <div className="bg-white p-4 px-8 rounded-md w-full mb-4 min-w-[280px]">
-                  <div className="flex justify-between">
-                    <p className="text-[#737373] font-medium">Pontos disponíveis:</p>
-                    <span className="text-[#BFA76F] font-bold">{userPoints}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <p className="text-[#737373] font-medium">Pontos selecionados:</p>
-                    <span className="text-[#737373] font-bold">-{totalSelectedPoints}</span>
-                  </div>
-                  <hr className="my-2" />
-                  <div className="flex justify-between">
-                    <p className="text-[#737373] font-medium">Saldo de pontos:</p>
-                    <span className="text-[#BFA76F] font-bold">{remainingPoints}</span>
-                  </div>
-                </div>
-                
-                {/* Redeem Button */}
-                <Button 
-                  disabled={!canRedeem} 
-                  onClick={handleRedeemClick}
-                  className="bg-[#BFA76F] hover:bg-[#BFA76F]/90 text-white w-full py-3"
-                >
-                  RESGATAR AGORA!
-                </Button>
-              </div>
-            </div>
-            
-            {/* Experience Cards Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-              {experiences.map((experience) => (
-                <RedeemExperienceCard 
-                  key={experience.id}
-                  id={experience.id}
-                  name={experience.name}
-                  image={experience.image}
-                  points={experience.points}
-                  userPoints={userPoints}
-                  isSelected={selectedExperiences.includes(experience.id)}
-                  onSelectChange={handleSelectChange}
-                />
-              ))}
+              {/* Redeem Button */}
+              <Button 
+                disabled={!canRedeem} 
+                onClick={handleRedeemClick}
+                className="bg-[#BFA76F] hover:bg-[#BFA76F]/90 text-white w-full py-2 md:py-3"
+              >
+                RESGATAR AGORA!
+              </Button>
             </div>
           </div>
-        </main>
-      </div>
+          
+          {/* Experience Cards Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-10">
+            {experiences.map((experience) => (
+              <RedeemExperienceCard 
+                key={experience.id}
+                id={experience.id}
+                name={experience.name}
+                image={experience.image}
+                points={experience.points}
+                userPoints={userPoints}
+                isSelected={selectedExperiences.includes(experience.id)}
+                onSelectChange={handleSelectChange}
+              />
+            ))}
+          </div>
+        </div>
+      </main>
       
       {/* Confirmation Dialog */}
       <Dialog open={showConfirmation} onOpenChange={setShowConfirmation}>
-        <DialogContent className="bg-[#E4E4E4] border border-[#737373]/50 shadow-[10px_10px_15px_#737373] rounded-[10px] p-6 max-w-[428px] flex flex-col gap-6">
+        <DialogContent className="bg-[#E4E4E4] border border-[#737373]/50 shadow-[10px_10px_15px_#737373] rounded-[10px] p-4 md:p-6 max-w-[90%] md:max-w-[428px] mx-4 md:mx-auto flex flex-col gap-4 md:gap-6">
           <DialogHeader className="flex items-start gap-2">
             <div className="flex items-center gap-2">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-[#BFA76F]">
                 <path d="M12 1.99L20.53 19H3.47L12 1.99ZM12 0L1.61 21H22.39L12 0Z" fill="#BFA76F"/>
                 <path d="M11 10V14H13V10H11ZM11 18V16H13V18H11Z" fill="#BFA76F"/>
               </svg>
-              <DialogTitle className="text-xl text-[#737373] font-semibold">Confirmação de Resgate</DialogTitle>
+              <DialogTitle className="text-lg md:text-xl text-[#737373] font-semibold">Confirmação de Resgate</DialogTitle>
             </div>
           </DialogHeader>
           <div className="flex flex-col gap-2 text-left">
             <div className="flex justify-between">
-              <p className="text-[#737373] font-medium">Total de Pontos:</p>
-              <span className="text-[#BFA76F] font-bold">{userPoints} pontos</span>
+              <p className="text-sm md:text-base text-[#737373] font-medium">Total de Pontos:</p>
+              <span className="text-sm md:text-base text-[#BFA76F] font-bold">{userPoints} pontos</span>
             </div>
             <div className="flex justify-between">
-              <p className="text-[#737373] font-medium">Pontos Selecionados:</p>
-              <span className="text-[#737373] font-bold">-{totalSelectedPoints} pontos</span>
+              <p className="text-sm md:text-base text-[#737373] font-medium">Pontos Selecionados:</p>
+              <span className="text-sm md:text-base text-[#737373] font-bold">-{totalSelectedPoints} pontos</span>
             </div>
             <div className="flex justify-between">
-              <p className="text-[#737373] font-medium">Saldo de Pontos:</p>
-              <span className="text-[#BFA76F] font-bold">{remainingPoints} pontos</span>
+              <p className="text-sm md:text-base text-[#737373] font-medium">Saldo de Pontos:</p>
+              <span className="text-sm md:text-base text-[#BFA76F] font-bold">{remainingPoints} pontos</span>
             </div>
             {selectedExperienceNames && (
               <div className="mt-2">
-                <p className="text-[#737373] font-medium">Experiências selecionadas:</p>
-                <p className="text-[#737373]">{selectedExperienceNames}</p>
+                <p className="text-sm md:text-base text-[#737373] font-medium">Experiências selecionadas:</p>
+                <p className="text-sm md:text-base text-[#737373]">{selectedExperienceNames}</p>
               </div>
             )}
           </div>
-          <DialogDescription className="text-center text-[#737373]">
+          <DialogDescription className="text-center text-sm md:text-base text-[#737373]">
             Aperte o botão abaixo para confirmar o Resgate.
           </DialogDescription>
           <Button 
             onClick={handleConfirmRedeem}
-            className="bg-[#BFA76F] hover:bg-[#BFA76F]/90 text-white w-full py-3"
+            className="bg-[#BFA76F] hover:bg-[#BFA76F]/90 text-white w-full py-2 md:py-3"
           >
             RESGATAR AGORA!
           </Button>
         </DialogContent>
       </Dialog>
-    </SidebarProvider>
+    </div>
   );
 };
 

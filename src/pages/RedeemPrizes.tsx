@@ -1,17 +1,17 @@
 
 import React, { useState, useEffect } from "react";
-import { SidebarProvider, Sidebar } from "@/components/ui/sidebar";
+import { Sidebar } from "@/components/ui/sidebar";
 import { useToast } from "@/hooks/use-toast";
 import { getFormattedDate } from "@/utils/dateUtils";
 import AppSidebar from "@/components/layout/AppSidebar";
 import { useAuth } from "@/hooks/useAuth";
 import { useProfile } from "@/hooks/useProfile";
 import { useRewards } from "@/hooks/useRewards";
-import RedeemPrizesHeader from "@/components/redeem/RedeemPrizesHeader";
 import RedeemPrizesInfo from "@/components/redeem/RedeemPrizesInfo";
 import RedeemPrizesGrid from "@/components/redeem/RedeemPrizesGrid";
 import RedeemConfirmationDialog from "@/components/redeem/RedeemConfirmationDialog";
 import { useIsMobile } from "@/hooks/use-mobile";
+import StandardHeader from "@/components/layout/StandardHeader";
 
 const RedeemPrizes: React.FC = () => {
   const formattedDate = getFormattedDate();
@@ -77,56 +77,59 @@ const RedeemPrizes: React.FC = () => {
   // Show loading state
   if (profileLoading || prizesLoading) {
     return (
-      <SidebarProvider defaultOpen={!isMobile}>
-        <div className="flex min-h-screen w-full">
+      <div className="flex min-h-screen w-full">
+        {!isMobile && (
           <Sidebar className="border-r bg-[#D9D9D9]">
             <AppSidebar activeSection="redeem" />
           </Sidebar>
-          
-          <main className="flex-1 bg-[#EFEFEF] p-3 md:p-6">
-            <div className="max-w-7xl mx-auto">
-              <div className="flex items-center justify-center min-h-[400px]">
-                <div className="text-[#737373] text-base md:text-lg">Carregando prêmios...</div>
-              </div>
+        )}
+        
+        <main className="flex-1 bg-[#EFEFEF] p-3 md:p-6">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex items-center justify-center min-h-[400px]">
+              <div className="text-[#737373] text-base md:text-lg">Carregando prêmios...</div>
             </div>
-          </main>
-        </div>
-      </SidebarProvider>
+          </div>
+        </main>
+      </div>
     );
   }
   
   return (
-    <SidebarProvider defaultOpen={!isMobile}>
-      <div className="flex min-h-screen w-full">
+    <div className="flex min-h-screen w-full">
+      {!isMobile && (
         <Sidebar className="border-r bg-[#D9D9D9]">
           <AppSidebar activeSection="redeem" />
         </Sidebar>
-        
-        <main className="flex-1 bg-[#EFEFEF] p-3 md:p-6">
-          <div className="max-w-7xl mx-auto">
-            {/* Header */}
-            <RedeemPrizesHeader formattedDate={formattedDate} />
-            
-            {/* Main Information Row */}
-            <RedeemPrizesInfo 
-              availablePrizes={availablePrizes}
-              userPoints={userPoints}
-              totalSelectedPoints={totalSelectedPoints}
-              remainingPoints={remainingPoints}
-              canRedeem={canRedeem}
-              onRedeemClick={handleRedeemClick}
-            />
-            
-            {/* Prize Cards Grid */}
-            <RedeemPrizesGrid 
-              prizes={prizes}
-              userPoints={userPoints}
-              selectedPrizes={selectedPrizes}
-              onSelectChange={handleSelectChange}
-            />
-          </div>
-        </main>
-      </div>
+      )}
+      
+      <main className="flex-1 bg-[#EFEFEF] p-3 md:p-6">
+        <div className="max-w-7xl mx-auto">
+          {/* Header */}
+          <StandardHeader 
+            title="Resgate de Prêmios"
+            backLink="/dashboard"
+          />
+          
+          {/* Main Information Row */}
+          <RedeemPrizesInfo 
+            availablePrizes={availablePrizes}
+            userPoints={userPoints}
+            totalSelectedPoints={totalSelectedPoints}
+            remainingPoints={remainingPoints}
+            canRedeem={canRedeem}
+            onRedeemClick={handleRedeemClick}
+          />
+          
+          {/* Prize Cards Grid */}
+          <RedeemPrizesGrid 
+            prizes={prizes}
+            userPoints={userPoints}
+            selectedPrizes={selectedPrizes}
+            onSelectChange={handleSelectChange}
+          />
+        </div>
+      </main>
       
       {/* Confirmation Dialog */}
       <RedeemConfirmationDialog 
@@ -138,7 +141,7 @@ const RedeemPrizes: React.FC = () => {
         selectedPrizeNames={selectedPrizeNames}
         onConfirm={handleConfirmRedeem}
       />
-    </SidebarProvider>
+    </div>
   );
 };
 

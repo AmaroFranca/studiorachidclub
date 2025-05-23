@@ -1,11 +1,11 @@
 
 import React from "react";
-import { ArrowLeft } from "lucide-react";
-import { SidebarProvider, Sidebar } from "@/components/ui/sidebar";
-import { Link } from "react-router-dom";
+import { Sidebar } from "@/components/ui/sidebar";
 import ExperienceCard from "@/components/experiences/ExperienceCard";
 import AppSidebar from "@/components/layout/AppSidebar";
-import { getFormattedDate } from "@/utils/dateUtils";
+import StandardHeader from "@/components/layout/StandardHeader";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 
 // Experience data structure
 interface Experience {
@@ -49,51 +49,38 @@ const experiences: Experience[] = [
 ];
 
 const Experiences: React.FC = () => {
-  const formattedDate = getFormattedDate();
+  const isMobile = useIsMobile();
   
   return (
-    <SidebarProvider defaultOpen={true}>
-      <div className="flex min-h-screen w-full">
+    <div className="flex min-h-screen w-full">
+      {!isMobile && (
         <Sidebar className="border-r bg-[#D9D9D9]">
           <AppSidebar activeSection="experiences" />
         </Sidebar>
-        
-        <main className="flex-1 bg-[#EFEFEF] p-6">
-          <div className="content-container">
-            {/* Header */}
-            <div className="flex justify-between items-center mb-10">
-              <div className="flex items-center gap-2">
-                <Link to="/rewards" className="flex items-center gap-2 text-[#737373]">
-                  <ArrowLeft className="text-[#BFA76F]" />
-                  <span className="text-xl font-semibold">Voltar</span>
-                </Link>
-              </div>
-              <div className="flex items-center gap-4">
-                <span className="text-sm text-[#737373]">{formattedDate}</span>
-              </div>
-            </div>
-            
-            {/* Page Title */}
-            <div className="text-center mb-12">
-              <h1 className="text-4xl font-bold text-[#737373]">Catálogo de Experiências</h1>
-            </div>
-            
-            {/* Experience Cards Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-10">
-              {experiences.map((experience) => (
-                <ExperienceCard 
-                  key={experience.id}
-                  name={experience.name}
-                  image={experience.image}
-                  points={experience.points}
-                  remainingPoints={experience.remainingPoints}
-                />
-              ))}
-            </div>
+      )}
+      
+      <main className="flex-1 bg-[#EFEFEF] p-3 md:p-6">
+        <div className="content-container">
+          <StandardHeader 
+            title="Catálogo de Experiências"
+            backLink="/rewards"
+          />
+          
+          {/* Experience Cards Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-10">
+            {experiences.map((experience) => (
+              <ExperienceCard 
+                key={experience.id}
+                name={experience.name}
+                image={experience.image}
+                points={experience.points}
+                remainingPoints={experience.remainingPoints}
+              />
+            ))}
           </div>
-        </main>
-      </div>
-    </SidebarProvider>
+        </div>
+      </main>
+    </div>
   );
 };
 
