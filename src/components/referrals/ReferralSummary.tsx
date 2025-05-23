@@ -56,8 +56,8 @@ const ReferralSummary: React.FC<ReferralSummaryProps> = ({
     }
   };
   return <>
-      <div className="mb-10">
-        <h1 className="text-2xl font-semibold text-[#737373] mb-4 text-left">Pessoas Indicadas</h1>
+      <div className="mb-1">
+        <h1 className="font-semibold text-[#737373] mb-4 text-left text-xl">Pessoas Indicadas</h1>
         
         <div className="flex flex-col md:flex-row justify-between md:items-start bg-[#EFEFEF] p-4 rounded-lg mb-8 px-0">
           <div className="mb-4 md:mb-0 text-left">
