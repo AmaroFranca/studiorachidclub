@@ -115,42 +115,50 @@ const Referrals: React.FC = () => {
     };
   }, []);
   if (loading) {
-    return <div className="flex items-center justify-center min-h-screen">
+    return (
+      <div className="flex items-center justify-center min-h-screen">
         <div className="text-[#737373]">Carregando...</div>
-      </div>;
+      </div>
+    );
   }
-  return <div className="flex min-h-screen w-full">
-      {!isMobile && <Sidebar className="border-r bg-[#D9D9D9] z-10">
+  return (
+    <div className="flex min-h-screen w-full">
+      {!isMobile && (
+        <Sidebar className="border-r bg-[#D9D9D9] z-10">
           <AppSidebar activeSection="referrals" />
-        </Sidebar>}
+        </Sidebar>
+      )}
       
       <main className="flex-1 bg-[#EFEFEF] p-6 flex flex-col">
         <div className="max-w-7xl mx-auto w-full flex-1 flex flex-col">
-          {/* Header - Not affected by blur */}
-          <div className="z-10 relative flex justify-between items-center my-0 py-0">
-            <div>
-              <ReferralHeader />
-            </div>
-            {isMobile && <div className="mt-0 md:mt-6">
-                <MobileDropdown activeSection="referrals" />
-              </div>}
-          </div>
+          {/* Header - Simplified */}
+          <ReferralHeader />
           
           {/* Content area - Affected by blur */}
           <div className="flex-1 flex flex-col blur-on-dialog">
             {/* Summary and Actions */}
-            <ReferralSummary totalReferrals={totalReferrals} filterDays={filterDays} setFilterDays={setFilterDays} onReferralCreated={refetch} />
+            <ReferralSummary 
+              totalReferrals={totalReferrals} 
+              filterDays={filterDays} 
+              setFilterDays={setFilterDays} 
+              onReferralCreated={refetch} 
+            />
             
             {/* Referral List */}
             <ReferralList referrals={paginatedReferrals} blurred={isDialogOpen} />
             
             {/* Pagination - in footer */}
             <footer className="mt-auto py-4">
-              <ReferralPagination currentPage={currentPage} pageCount={pageCount} setCurrentPage={setCurrentPage} />
+              <ReferralPagination 
+                currentPage={currentPage} 
+                pageCount={pageCount} 
+                setCurrentPage={setCurrentPage} 
+              />
             </footer>
           </div>
         </div>
       </main>
-    </div>;
+    </div>
+  );
 };
 export default Referrals;
