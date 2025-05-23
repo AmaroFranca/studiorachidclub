@@ -74,7 +74,7 @@ const ReferralSummary: React.FC<ReferralSummaryProps> = ({
           </div>
           
           <div>
-            <button className="px-6 py-3 bg-[#BFA76F] rounded-md text-white font-semibold hover:bg-[#BFA76F]/90 transition-colors flex items-center gap-2" onClick={handleReferButtonClick}>
+            <button onClick={handleReferButtonClick} className="px-6 py-3 bg-[#BFA76F] rounded-md text-white font-semibold hover:bg-[#BFA76F]/90 transition-colors flex items-center gap-2 text-justify">
               <Plus className="h-5 w-5" />
               QUERO INDICAR AGORA!
             </button>
