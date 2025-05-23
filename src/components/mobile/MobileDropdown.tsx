@@ -4,6 +4,7 @@ import { Menu, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Users, CircleDollarSign, List, Settings, MessageSquare, Gift, LayoutDashboard } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
+import { SettingsDialog } from "@/components/settings/SettingsDialog";
 
 interface MobileDropdownProps {
   activeSection?: "dashboard" | "rewards" | "prizes" | "experiences" | "referrals" | "redeem" | "rules";
@@ -11,6 +12,7 @@ interface MobileDropdownProps {
 
 const MobileDropdown: React.FC<MobileDropdownProps> = ({ activeSection }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const location = useLocation();
   const currentPath = location.pathname;
 
@@ -20,6 +22,11 @@ const MobileDropdown: React.FC<MobileDropdownProps> = ({ activeSection }) => {
 
   const closeDropdown = () => {
     setIsOpen(false);
+  };
+
+  const handleSettingsClick = () => {
+    setIsSettingsOpen(true);
+    closeDropdown();
   };
   
   // Check if we're on any redeem page (prizes or experiences)
@@ -141,10 +148,10 @@ const MobileDropdown: React.FC<MobileDropdownProps> = ({ activeSection }) => {
 
                 {/* Footer */}
                 <div className="border-t border-[#B1C9C3] pt-4 space-y-1">
-                  <div className="flex items-center gap-3 rounded-md text-[#737373] px-3 py-2 hover:bg-[#B1C9C3]">
+                  <button onClick={handleSettingsClick} className="w-full flex items-center gap-3 rounded-md text-[#737373] px-3 py-2 hover:bg-[#B1C9C3]">
                     <Settings className="text-[#BFA76F] w-5 h-5" />
                     <span>Configurações</span>
-                  </div>
+                  </button>
                   <div className="flex items-center gap-3 rounded-md text-[#737373] px-3 py-2 hover:bg-[#B1C9C3]">
                     <MessageSquare className="text-[#BFA76F] w-5 h-5" />
                     <span>Suporte</span>
@@ -155,6 +162,12 @@ const MobileDropdown: React.FC<MobileDropdownProps> = ({ activeSection }) => {
           </>
         )}
       </AnimatePresence>
+
+      {/* Settings Dialog */}
+      <SettingsDialog 
+        open={isSettingsOpen} 
+        onOpenChange={setIsSettingsOpen} 
+      />
     </>
   );
 };
