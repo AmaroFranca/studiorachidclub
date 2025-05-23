@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import { Sidebar } from "@/components/ui/sidebar";
 import { useToast } from "@/hooks/use-toast";
-import { getFormattedDate } from "@/utils/dateUtils";
 import AppSidebar from "@/components/layout/AppSidebar";
 import { useAuth } from "@/hooks/useAuth";
 import { useProfile } from "@/hooks/useProfile";
@@ -14,7 +13,6 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import StandardHeader from "@/components/layout/StandardHeader";
 
 const RedeemPrizes: React.FC = () => {
-  const formattedDate = getFormattedDate();
   const { toast } = useToast();
   const { user } = useAuth();
   const { profile, loading: profileLoading } = useProfile(user);

@@ -5,7 +5,6 @@ import ExperienceCard from "@/components/experiences/ExperienceCard";
 import AppSidebar from "@/components/layout/AppSidebar";
 import StandardHeader from "@/components/layout/StandardHeader";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 
 // Experience data structure
 interface Experience {

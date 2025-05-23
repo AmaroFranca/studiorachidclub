@@ -8,7 +8,6 @@ import { useProfile } from "@/hooks/useProfile";
 import { useRewards } from "@/hooks/useRewards";
 import StandardHeader from "@/components/layout/StandardHeader";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 
 const Prizes: React.FC = () => {
   const { user } = useAuth();

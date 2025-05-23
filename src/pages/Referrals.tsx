@@ -1,6 +1,6 @@
 
 import React, { useState, useMemo } from "react";
-import { SidebarProvider, Sidebar } from "@/components/ui/sidebar";
+import { Sidebar } from "@/components/ui/sidebar";
 import { useIsMobile } from "@/hooks/use-mobile";
 import AppSidebar from "@/components/layout/AppSidebar";
 import ReferralHeader from "@/components/referrals/ReferralHeader";
@@ -9,6 +9,7 @@ import ReferralList from "@/components/referrals/ReferralList";
 import ReferralPagination from "@/components/referrals/ReferralPagination";
 import { useAuth } from "@/hooks/useAuth";
 import { useReferrals } from "@/hooks/useReferrals";
+import MobileDropdown from "@/components/mobile/MobileDropdown";
 
 // UI Referral interface to match ReferralCard expectations
 interface UIReferral {
@@ -125,49 +126,55 @@ const Referrals: React.FC = () => {
   }
 
   return (
-    <SidebarProvider defaultOpen={!isMobile}>
-      <div className="flex min-h-screen w-full">
-        {/* Sidebar - Not affected by blur */}
+    <div className="flex min-h-screen w-full">
+      {!isMobile && (
         <Sidebar className="border-r bg-[#D9D9D9] z-10">
           <AppSidebar activeSection="referrals" />
         </Sidebar>
-        
-        <main className="flex-1 bg-[#EFEFEF] p-6 flex flex-col">
-          <div className="max-w-7xl mx-auto w-full flex-1 flex flex-col">
-            {/* Header - Not affected by blur */}
-            <div className="z-10 relative">
+      )}
+      
+      <main className="flex-1 bg-[#EFEFEF] p-6 flex flex-col">
+        <div className="max-w-7xl mx-auto w-full flex-1 flex flex-col">
+          {/* Header - Not affected by blur */}
+          <div className="z-10 relative flex justify-between items-center">
+            <div>
               <ReferralHeader />
             </div>
-            
-            {/* Content area - Affected by blur */}
-            <div className="flex-1 flex flex-col blur-on-dialog">
-              {/* Summary and Actions */}
-              <ReferralSummary
-                totalReferrals={totalReferrals}
-                filterDays={filterDays}
-                setFilterDays={setFilterDays}
-                onReferralCreated={refetch}
-              />
-              
-              {/* Referral List */}
-              <ReferralList 
-                referrals={paginatedReferrals} 
-                blurred={isDialogOpen}
-              />
-              
-              {/* Pagination - in footer */}
-              <footer className="mt-auto py-4">
-                <ReferralPagination
-                  currentPage={currentPage}
-                  pageCount={pageCount}
-                  setCurrentPage={setCurrentPage}
-                />
-              </footer>
-            </div>
+            {isMobile && (
+              <div className="mt-0 md:mt-6">
+                <MobileDropdown activeSection="referrals" />
+              </div>
+            )}
           </div>
-        </main>
-      </div>
-    </SidebarProvider>
+          
+          {/* Content area - Affected by blur */}
+          <div className="flex-1 flex flex-col blur-on-dialog">
+            {/* Summary and Actions */}
+            <ReferralSummary
+              totalReferrals={totalReferrals}
+              filterDays={filterDays}
+              setFilterDays={setFilterDays}
+              onReferralCreated={refetch}
+            />
+            
+            {/* Referral List */}
+            <ReferralList 
+              referrals={paginatedReferrals} 
+              blurred={isDialogOpen}
+            />
+            
+            {/* Pagination - in footer */}
+            <footer className="mt-auto py-4">
+              <ReferralPagination
+                currentPage={currentPage}
+                pageCount={pageCount}
+                setCurrentPage={setCurrentPage}
+              />
+            </footer>
+          </div>
+        </div>
+      </main>
+    </div>
   );
 };
 

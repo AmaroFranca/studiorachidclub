@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Gift, Users, CircleDollarSign, Heart, ArrowRight } from "lucide-react";
-import { SidebarProvider, Sidebar } from "@/components/ui/sidebar";
+import { Sidebar } from "@/components/ui/sidebar";
 import { Progress } from "@/components/ui/progress";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
