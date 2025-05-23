@@ -1,6 +1,6 @@
 
 import React from "react";
-import { LockOpen } from "lucide-react";
+import { LockOpen, Lock } from "lucide-react";
 import { Card } from "@/components/ui/card";
 
 interface PrizeCardProps {
@@ -11,7 +11,7 @@ interface PrizeCardProps {
 }
 
 const PrizeCard: React.FC<PrizeCardProps> = ({ image, name, points, userPoints = 0 }) => {
-  const canRedeem = userPoints >= points || !userPoints;
+  const canRedeem = userPoints >= points;
   const pointsRemaining = points - userPoints;
   
   return (
@@ -20,13 +20,22 @@ const PrizeCard: React.FC<PrizeCardProps> = ({ image, name, points, userPoints =
         <img 
           src={image}
           alt={name} 
-          className="w-full h-full object-cover"
+          className={`w-full h-full object-cover ${!canRedeem ? "grayscale" : ""}`}
         />
       </div>
       <div className="flex flex-col flex-1 p-4">
         <div className="flex items-center mb-2">
-          <LockOpen className="w-4 h-4 text-[#BFA76F] mr-1" />
-          <span className="text-xs font-medium text-[#BFA76F]">Desbloqueado</span>
+          {canRedeem ? (
+            <>
+              <LockOpen className="w-4 h-4 text-[#BFA76F] mr-1" />
+              <span className="text-xs font-medium text-[#BFA76F]">Desbloqueado</span>
+            </>
+          ) : (
+            <>
+              <Lock className="w-4 h-4 text-[#BFA76F] mr-1" />
+              <span className="text-xs font-medium text-[#BFA76F]">Bloqueado</span>
+            </>
+          )}
         </div>
         <h3 className="font-semibold text-sm text-[#737373] text-left line-clamp-1">{name}</h3>
         <p className="font-bold text-sm text-[#BFA76F] mt-1 text-left">{points} pontos</p>
