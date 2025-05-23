@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Plus } from "lucide-react";
 import ReferralFilter from "./ReferralFilter";
@@ -8,59 +7,59 @@ import { useAuth } from "@/hooks/useAuth";
 import { useProfile } from "@/hooks/useProfile";
 import { useReferrals } from "@/hooks/useReferrals";
 import { supabase } from "@/integrations/supabase/client";
-
 interface ReferralSummaryProps {
   totalReferrals: number;
   filterDays: number | null;
   setFilterDays: (days: number | null) => void;
   onReferralCreated: () => void;
 }
-
-const ReferralSummary: React.FC<ReferralSummaryProps> = ({ 
-  totalReferrals, 
-  filterDays, 
+const ReferralSummary: React.FC<ReferralSummaryProps> = ({
+  totalReferrals,
+  filterDays,
   setFilterDays,
   onReferralCreated
 }) => {
-  const { user } = useAuth();
-  const { profile } = useProfile(user);
-  const { createReferral } = useReferrals(user);
+  const {
+    user
+  } = useAuth();
+  const {
+    profile
+  } = useProfile(user);
+  const {
+    createReferral
+  } = useReferrals(user);
   const [formDialogOpen, setFormDialogOpen] = useState(false);
   const [successDialogOpen, setSuccessDialogOpen] = useState(false);
   const [lastCreatedReferralId, setLastCreatedReferralId] = useState<string | undefined>(undefined);
-  
   const handleReferButtonClick = () => {
     setFormDialogOpen(true);
   };
-  
-  const handleFormSubmit = async (data: { name: string; phone: string; relationship: string }) => {
+  const handleFormSubmit = async (data: {
+    name: string;
+    phone: string;
+    relationship: string;
+  }) => {
     const success = await createReferral(data);
-    
     if (success) {
       // Aqui precisamos obter o ID da indicação recém-criada
-      const { data: newReferrals } = await supabase
-        .from('referrals')
-        .select('id')
-        .eq('user_id', user?.id)
-        .order('created_at', { ascending: false })
-        .limit(1);
-      
+      const {
+        data: newReferrals
+      } = await supabase.from('referrals').select('id').eq('user_id', user?.id).order('created_at', {
+        ascending: false
+      }).limit(1);
       if (newReferrals && newReferrals.length > 0) {
         setLastCreatedReferralId(newReferrals[0].id);
       }
-      
       setFormDialogOpen(false);
       setSuccessDialogOpen(true);
       onReferralCreated();
     }
   };
-
-  return (
-    <>
+  return <>
       <div className="mb-10">
         <h1 className="text-2xl font-semibold text-[#737373] mb-4 text-left">Pessoas Indicadas</h1>
         
-        <div className="flex flex-col md:flex-row justify-between md:items-start bg-[#EFEFEF] p-4 rounded-lg mb-8">
+        <div className="flex flex-col md:flex-row justify-between md:items-start bg-[#EFEFEF] p-4 rounded-lg mb-8 px-0">
           <div className="mb-4 md:mb-0 text-left">
             <h2 className="text-xl font-semibold text-[#737373] text-left">
               Total de <span className="text-[#BFA76F]">{totalReferrals.toString().padStart(2, '0')}</span> indicações Realizadas
@@ -70,19 +69,12 @@ const ReferralSummary: React.FC<ReferralSummaryProps> = ({
             </p>
             
             <div className="mt-4">
-              <ReferralFilter 
-                filterDays={filterDays} 
-                setFilterDays={setFilterDays} 
-                totalReferrals={totalReferrals} 
-              />
+              <ReferralFilter filterDays={filterDays} setFilterDays={setFilterDays} totalReferrals={totalReferrals} />
             </div>
           </div>
           
           <div>
-            <button 
-              className="px-6 py-3 bg-[#BFA76F] rounded-md text-white font-semibold hover:bg-[#BFA76F]/90 transition-colors flex items-center gap-2"
-              onClick={handleReferButtonClick}
-            >
+            <button className="px-6 py-3 bg-[#BFA76F] rounded-md text-white font-semibold hover:bg-[#BFA76F]/90 transition-colors flex items-center gap-2" onClick={handleReferButtonClick}>
               <Plus className="h-5 w-5" />
               QUERO INDICAR AGORA!
             </button>
@@ -90,19 +82,9 @@ const ReferralSummary: React.FC<ReferralSummaryProps> = ({
         </div>
       </div>
 
-      <ReferralFormDialog 
-        open={formDialogOpen} 
-        onOpenChange={setFormDialogOpen}
-        onSubmit={handleFormSubmit}  
-      />
+      <ReferralFormDialog open={formDialogOpen} onOpenChange={setFormDialogOpen} onSubmit={handleFormSubmit} />
       
-      <ReferralSuccessDialog 
-        open={successDialogOpen} 
-        onOpenChange={setSuccessDialogOpen}
-        referralId={lastCreatedReferralId}
-      />
-    </>
-  );
+      <ReferralSuccessDialog open={successDialogOpen} onOpenChange={setSuccessDialogOpen} referralId={lastCreatedReferralId} />
+    </>;
 };
-
 export default ReferralSummary;
