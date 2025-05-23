@@ -23,6 +23,22 @@ const Dashboard: React.FC = () => {
   const userPoints = profile?.points || 0;
   const progressPercentage = Math.min((userPoints / 1000) * 100, 100);
   
+  // Determinar o nome a ser exibido
+  const getUserDisplayName = () => {
+    if (profile?.full_name && profile.full_name.trim() !== '') {
+      return profile.full_name;
+    }
+    if (user?.email) {
+      // Extrair nome do email e capitalizar
+      const emailName = user.email.split('@')[0];
+      return emailName
+        .split('.')
+        .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+        .join(' ');
+    }
+    return 'Usuário';
+  };
+  
   if (profileLoading || referralsLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -42,7 +58,9 @@ const Dashboard: React.FC = () => {
           <div className="max-w-7xl mx-auto">
             {/* Header */}
             <div className="flex justify-between items-center mb-10">
-              <h2 className="text-2xl font-semibold text-[#737373]">Olá, {profile?.full_name || 'Usuário'}</h2>
+              <h2 className="text-2xl font-semibold text-[#737373]">
+                Olá, {getUserDisplayName()}
+              </h2>
               <div className="flex items-center gap-4">
                 <span className="text-sm text-[#737373]">{formattedDate}</span>
               </div>

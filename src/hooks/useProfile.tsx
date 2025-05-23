@@ -31,6 +31,7 @@ export const useProfile = (user: User | null) => {
     if (!user) return;
 
     try {
+      console.log('Fetching profile for user:', user.id);
       const { data, error } = await supabase
         .from('profiles')
         .select('*')
@@ -49,6 +50,7 @@ export const useProfile = (user: User | null) => {
         console.log('Profile not found, creating one...');
         await createProfile();
       } else {
+        console.log('Profile fetched:', data);
         // Verificar se o nome está vazio ou é um email
         if (!data.full_name || data.full_name === '' || data.full_name.includes('@')) {
           // Atualize com um nome padrão melhor ou com base no email
@@ -80,6 +82,7 @@ export const useProfile = (user: User | null) => {
     }
 
     try {
+      console.log('Creating profile with name:', userName);
       const { data, error } = await supabase
         .from('profiles')
         .insert({
@@ -99,8 +102,8 @@ export const useProfile = (user: User | null) => {
           variant: "destructive",
         });
       } else {
-        setProfile(data);
         console.log('Profile created successfully:', data);
+        setProfile(data);
       }
     } catch (error) {
       console.error('Error in createProfile:', error);
@@ -111,6 +114,7 @@ export const useProfile = (user: User | null) => {
     if (!user) return false;
 
     try {
+      console.log('Updating profile with:', updates);
       const { data, error } = await supabase
         .from('profiles')
         .update(updates)
@@ -127,6 +131,7 @@ export const useProfile = (user: User | null) => {
         });
         return false;
       } else {
+        console.log('Profile updated successfully:', data);
         setProfile(data);
         toast({
           title: "Perfil atualizado",
