@@ -34,7 +34,7 @@ const Dashboard: React.FC = () => {
   // Determinar o nome a ser exibido
   const getUserDisplayName = () => {
     if (profile?.full_name && profile.full_name.trim() !== '') {
-      return profile.full_name;
+      return profile.full_name.trim().split(' ')[0];
     }
     if (user?.email) {
       const emailName = user.email.split('@')[0];
