@@ -75,7 +75,7 @@ const ReferralSuccessDialog: React.FC<ReferralSuccessDialogProps> = ({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="w-[428px] bg-[#E4E4E4] border border-[rgba(115,115,115,0.5)] rounded-[10px] shadow-[10px_10px_15px_#737373] p-[26px_0px] flex flex-col items-center overflow-y-auto max-h-[90vh] z-50">
-        <div className="w-[398px] border border-[rgba(115,115,115,0.5)] rounded-[10px] p-[20px_15px] flex flex-col items-center">
+        <div className="w-[368px] border border-[rgba(115,115,115,0.5)] rounded-[10px] p-[20px_15px] flex flex-col items-center">
           <div className="w-full flex flex-col items-start gap-[40px]">
             <div className="w-full flex flex-col items-start gap-[15px]">
               <div className="w-full flex justify-center items-center gap-[10px]">
@@ -112,7 +112,7 @@ const ReferralSuccessDialog: React.FC<ReferralSuccessDialogProps> = ({
 
         <button
           onClick={handleCopyMessage}
-          className="w-[378px] py-[15px] bg-[#BFA76F] rounded-[5px] text-[16px] font-bold text-[#EFEFEF] mt-[30px] flex items-center justify-center gap-2"
+          className="w-[348px] py-[15px] bg-[#BFA76F] rounded-[5px] text-[16px] font-bold text-[#EFEFEF] mt-[30px] flex items-center justify-center gap-2"
         >
           {copied ? <Check className="w-4 h-4" /> : null}
           COPIAR A MENSAGEM
