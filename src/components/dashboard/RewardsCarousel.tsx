@@ -31,7 +31,7 @@ const RewardsCarousel: React.FC = () => {
         >
           <img 
             alt={currentItem?.name} 
-            className={`${isMobile ? 'w-16 h-16' : 'w-20 h-20 md:w-40 md:h-40'} object-cover rounded shadow-md flex-shrink-0`} 
+            className={`${isMobile ? 'w-[150px] h-[150px]' : 'w-20 h-20 md:w-40 md:h-40'} object-cover rounded shadow-md flex-shrink-0`} 
             src={currentItem?.imageUrl} 
             onError={handleImageError} 
           />
