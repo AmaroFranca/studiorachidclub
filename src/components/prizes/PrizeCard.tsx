@@ -26,7 +26,7 @@ const PrizeCard: React.FC<PrizeCardProps> = ({ image, name, points, userPoints =
           src={safeImageUrl}
           alt={name} 
           onError={handleImageError}
-          className={`w-full h-full object-cover ${!canRedeem ? "grayscale" : ""}`}
+          className="w-full h-full object-cover"
         />
       </div>
       <div className="flex flex-col flex-1 p-4">

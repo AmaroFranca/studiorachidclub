@@ -1,4 +1,3 @@
-
 /**
  * Utility functions for image handling
  */
@@ -25,7 +24,7 @@ export const AVAILABLE_IMAGES = {
   beauty: "/lovable-uploads/dfb3b80c-7f29-40d6-b7b1-1d827cd87ff0.png",       // Beauty treatment
   echo: "/lovable-uploads/f7afd67d-49ee-43f6-a067-16c030bc25e4.png",         // Amazon Echo
   cinema: "/lovable-uploads/e9857fc5-e7e2-4208-99ae-452d8645297a.png",       // Cinema tickets
-  beer: "/lovable-uploads/5572915d-e298-43f5-a117-a656b484c79e.png",         // Beer voucher
+  beer: "/lovable-uploads/9bf2ec72-b9cf-4615-913f-b8261e488e60.png",         // Beer/Outback voucher
   toothbrush: "/lovable-uploads/46667bd5-e88a-4654-896b-575930b009f1.png",   // Electric toothbrush
   tumbler: "/lovable-uploads/082827ab-8847-46da-928b-1aa7ccf628d2.png",      // Tumbler cup
   mug: "/lovable-uploads/8951efa5-0923-4b31-9ce6-a538e97ffa6a.png"           // Mug
@@ -42,7 +41,7 @@ export const getImageByName = (name: string): string => {
   if (lowerName.includes('echo') || lowerName.includes('alexa')) return AVAILABLE_IMAGES.echo;
   if (lowerName.includes('escova') || lowerName.includes('toothbrush')) return AVAILABLE_IMAGES.toothbrush;
   if (lowerName.includes('cinema') || lowerName.includes('ingresso')) return AVAILABLE_IMAGES.cinema;
-  if (lowerName.includes('cerveja') || lowerName.includes('beer')) return AVAILABLE_IMAGES.beer;
+  if (lowerName.includes('outback') || lowerName.includes('gift card')) return AVAILABLE_IMAGES.beer;
   if (lowerName.includes('copo') || lowerName.includes('tumbler')) return AVAILABLE_IMAGES.tumbler;
   if (lowerName.includes('caneca') || lowerName.includes('mug')) return AVAILABLE_IMAGES.mug;
   if (lowerName.includes('spa') || lowerName.includes('massage')) return AVAILABLE_IMAGES.massage;
