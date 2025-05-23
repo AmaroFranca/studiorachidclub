@@ -35,7 +35,7 @@ export const useProfile = (user: User | null) => {
         .from('profiles')
         .select('*')
         .eq('id', user.id)
-        .single();
+        .maybeSingle();
 
       if (error) {
         console.error('Error fetching profile:', error);
@@ -44,6 +44,10 @@ export const useProfile = (user: User | null) => {
           description: "Não foi possível carregar seus dados.",
           variant: "destructive",
         });
+      } else if (!data) {
+        // Perfil não existe, vamos criar um
+        console.log('Profile not found, creating one...');
+        await createProfile();
       } else {
         setProfile(data);
       }
@@ -54,8 +58,39 @@ export const useProfile = (user: User | null) => {
     }
   };
 
-  const updateProfile = async (updates: Partial<Pick<Profile, 'full_name' | 'phone'>>) => {
+  const createProfile = async () => {
     if (!user) return;
+
+    try {
+      const { data, error } = await supabase
+        .from('profiles')
+        .insert({
+          id: user.id,
+          full_name: user.email?.split('@')[0] || 'Usuário',
+          phone: null,
+          points: 0
+        })
+        .select()
+        .single();
+
+      if (error) {
+        console.error('Error creating profile:', error);
+        toast({
+          title: "Erro ao criar perfil",
+          description: "Não foi possível criar seu perfil.",
+          variant: "destructive",
+        });
+      } else {
+        setProfile(data);
+        console.log('Profile created successfully:', data);
+      }
+    } catch (error) {
+      console.error('Error in createProfile:', error);
+    }
+  };
+
+  const updateProfile = async (updates: Partial<Pick<Profile, 'full_name' | 'phone'>>) => {
+    if (!user) return false;
 
     try {
       const { data, error } = await supabase
