@@ -103,7 +103,7 @@ const ReferralSuccessDialog: React.FC<ReferralSuccessDialogProps> = ({
               <label className="text-[12px] font-normal text-[#737373]">
                 Mensagem para o WhatsApp
               </label>
-              <div className="relative w-full border border-[rgba(115,115,115,0.5)] rounded-[5px] p-[10px] min-h-[138px]">
+              <div className="relative w-full border border-[rgba(115,115,115,0.5)] rounded-[5px] p-[10px] min-h-[138px] py-[20px]">
                 <p className="text-[10px] text-[#737373]">{messageTemplate}</p>
               </div>
             </div>
