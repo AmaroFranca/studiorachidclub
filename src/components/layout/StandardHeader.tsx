@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
@@ -45,7 +46,8 @@ function getCurrentSection(backLink: string): any {
   if (backLink === '/rewards') return 'rewards';
   if (backLink.includes('prize')) return 'prizes';
   if (backLink.includes('experience')) return 'experiences';
-  if (backLink.includes('redeem')) return 'redeem';
+  if (backLink.includes('redeem-prize')) return 'redeem';
+  if (backLink.includes('redeem-experience')) return 'redeem';
   if (backLink.includes('referral')) return 'referrals';
   if (backLink.includes('rule')) return 'rules';
   return undefined;

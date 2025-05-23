@@ -21,6 +21,9 @@ const MobileDropdown: React.FC<MobileDropdownProps> = ({ activeSection }) => {
   const closeDropdown = () => {
     setIsOpen(false);
   };
+  
+  // Check if we're on any redeem page (prizes or experiences)
+  const isRedeemPage = currentPath.includes('/redeem-');
 
   return (
     <>
@@ -105,14 +108,14 @@ const MobileDropdown: React.FC<MobileDropdownProps> = ({ activeSection }) => {
 
                   {/* Resgates */}
                   <Link to="/redeem-prizes" onClick={closeDropdown}>
-                    <div className={`flex items-center gap-3 rounded-md text-[#737373] px-3 py-2 ${activeSection === "redeem" ? "bg-[#B1C9C3]" : "hover:bg-[#B1C9C3]"}`}>
+                    <div className={`flex items-center gap-3 rounded-md text-[#737373] px-3 py-2 ${activeSection === "redeem" || isRedeemPage ? "bg-[#B1C9C3]" : "hover:bg-[#B1C9C3]"}`}>
                       <CircleDollarSign className="text-[#BFA76F] w-5 h-5" />
                       <span>Resgates</span>
                     </div>
                   </Link>
 
-                  {/* Sub-items for Resgates */}
-                  {activeSection === "redeem" && (
+                  {/* Sub-items for Resgates - Always show when on any redeem page */}
+                  {(activeSection === "redeem" || isRedeemPage) && (
                     <div className="ml-8 space-y-1">
                       <Link to="/redeem-prizes" onClick={closeDropdown}>
                         <div className={`text-sm font-medium py-1 px-2 rounded ${currentPath === "/redeem-prizes" ? "text-[#737373]" : "text-[#BFA76F]"} hover:text-[#737373]`}>
