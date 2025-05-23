@@ -23,24 +23,6 @@ const RedeemPrizes: React.FC = () => {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const isMobile = useIsMobile();
   
-  // Add useEffect for handling body class when dialog is open
-  useEffect(() => {
-    if (showConfirmation) {
-      document.body.classList.add("dialog-open");
-      // Add blur class for background when dialog is open
-      document.querySelector("main")?.classList.add("backdrop-blur-sm");
-    } else {
-      document.body.classList.remove("dialog-open");
-      document.querySelector("main")?.classList.remove("backdrop-blur-sm");
-    }
-    
-    // Cleanup on unmount
-    return () => {
-      document.body.classList.remove("dialog-open");
-      document.querySelector("main")?.classList.remove("backdrop-blur-sm");
-    };
-  }, [showConfirmation]);
-  
   const userPoints = profile?.points || 0;
   
   // Debug logging to check data
@@ -120,7 +102,7 @@ const RedeemPrizes: React.FC = () => {
           <AppSidebar activeSection="redeem" />
         </Sidebar>
         
-        <main className="flex-1 bg-[#EFEFEF] p-3 md:p-6 transition-all duration-300">
+        <main className="flex-1 bg-[#EFEFEF] p-3 md:p-6">
           <div className="max-w-7xl mx-auto">
             {/* Header */}
             <RedeemPrizesHeader formattedDate={formattedDate} />

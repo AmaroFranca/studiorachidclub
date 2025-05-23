@@ -1,6 +1,7 @@
 
 import React from "react";
 import RedeemPrizeCard from "./RedeemPrizeCard";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface Reward {
   id: string;
@@ -27,8 +28,10 @@ const RedeemPrizesGrid: React.FC<RedeemPrizesGridProps> = ({
   selectedPrizes,
   onSelectChange,
 }) => {
+  const isMobile = useIsMobile();
+  
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+    <div className={`grid ${isMobile ? 'grid-cols-2 gap-4' : 'grid-cols-1 md:grid-cols-2 gap-10'}`}>
       {prizes.map((prize) => (
         <RedeemPrizeCard 
           key={prize.id}
