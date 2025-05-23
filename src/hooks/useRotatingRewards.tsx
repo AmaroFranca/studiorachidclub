@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useRewards } from './useRewards';
 import { useProfile } from './useProfile';
@@ -51,7 +50,7 @@ export const useRotatingRewards = () => {
     }
   }, [rewards, profile, loading]);
 
-  // Rotate items every 3 seconds
+  // Rotate items every 5 seconds
   useEffect(() => {
     if (allItems.length <= 1) return;
 
@@ -63,7 +62,7 @@ export const useRotatingRewards = () => {
         const nextIndex = (currentIndex + 1) % allItems.length;
         return allItems[nextIndex];
       });
-    }, 3000);
+    }, 5000); // Changed from 3000 to 5000 ms
 
     return () => clearInterval(interval);
   }, [allItems]);

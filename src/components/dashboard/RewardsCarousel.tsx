@@ -17,7 +17,7 @@ const RewardsCarousel: React.FC = () => {
   }
 
   return (
-    <div className="border border-[rgba(115,115,115,0.5)] rounded p-4 mb-6 py-[10px]">
+    <div className="border border-[rgba(115,115,115,0.5)] rounded p-4 mb-6 py-[10px] h-[180px] overflow-hidden">
       <AnimatePresence mode="wait">
         <motion.div 
           key={currentItem?.id}
@@ -25,7 +25,7 @@ const RewardsCarousel: React.FC = () => {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
-          className="flex gap-5 py-0 my-0"
+          className="flex gap-5 h-full"
         >
           <img 
             alt={currentItem?.name} 
@@ -33,9 +33,9 @@ const RewardsCarousel: React.FC = () => {
             src={currentItem?.imageUrl} 
             onError={handleImageError}
           />
-          <div className="px-0 py-[50px]">
+          <div className="flex flex-col justify-between h-full overflow-hidden">
             <h3 className="font-semibold text-[#737373] text-left">{currentItem?.name}</h3>
-            <p className="font-semibold text-[#bfa76f]">
+            <p className="font-semibold text-[#bfa76f] text-left">
               {currentItem?.canRedeem 
                 ? "Você pode resgatar!" 
                 : `Faltam: ${currentItem?.pointsRemaining} pontos`}
