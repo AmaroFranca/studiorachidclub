@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Heart, Check } from "lucide-react";
 import { 
@@ -74,37 +73,35 @@ const ReferralSuccessDialog: React.FC<ReferralSuccessDialogProps> = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[428px] bg-[#E4E4E4] border border-[rgba(115,115,115,0.5)] rounded-[10px] shadow-[10px_10px_15px_#737373] p-[26px_0px] flex flex-col items-center overflow-y-auto max-h-[90vh] z-50">
+      <DialogContent className="w-[428px] bg-[#E4E4E4] border border-[rgba(115,115,115,0.5)] rounded-[10px] shadow-[10px_10px_15px_#737373] p-[26px_15px] flex flex-col items-center overflow-y-auto max-h-[90vh] z-50">
         <div className="w-[368px] border border-[rgba(115,115,115,0.5)] rounded-[10px] p-[20px_15px] flex flex-col items-center">
           <div className="w-full flex flex-col items-start gap-[40px]">
-            <div className="w-full flex flex-col items-start gap-[15px]">
-              <div className="w-full flex justify-center items-center gap-[10px]">
-                <Heart className="w-6 h-6 text-[#BFA76F]" />
-                <h2 className="font-semibold text-[22px] text-[#737373]">Meus parabéns!</h2>
-              </div>
-              <p className="w-full text-[12px] text-center text-[#737373]">
-                Você acaba de indicar mais uma pessoa. Indicar algo que confiamos é um sinal de carinho.
-              </p>
+            <div className="w-full flex justify-center items-center gap-[10px]">
+              <Heart className="w-6 h-6 text-[#BFA76F]" />
+              <h2 className="font-semibold text-[22px] text-[#737373]">Meus parabéns!</h2>
             </div>
+            <p className="w-full text-[12px] text-center text-[#737373]">
+              Você acaba de indicar mais uma pessoa. Indicar algo que confiamos é um sinal de carinho.
+            </p>
+          </div>
 
-            <div className="w-full flex flex-col items-start gap-[20px]">
-              <h3 className="w-full font-bold text-[16px] text-[#BFA76F] text-center">
-                Quer ganhar 10 pontos agora?
-              </h3>
-              <p className="w-full font-bold text-[12px] text-[#737373] text-center">
-                É só tocar no botão, copiar a mensagem abaixo e enviar para quem você indicou.
-                Você receberá mais 20 pontos quando o indicado comparecer à clínica!
-              </p>
-            </div>
+          <div className="w-full flex flex-col items-start gap-[20px]">
+            <h3 className="w-full font-bold text-[16px] text-[#BFA76F] text-center">
+              Quer ganhar 10 pontos agora?
+            </h3>
+            <p className="w-full font-bold text-[12px] text-[#737373] text-center">
+              É só tocar no botão, copiar a mensagem abaixo e enviar para quem você indicou.
+              Você receberá mais 20 pontos quando o indicado comparecer à clínica!
+            </p>
+          </div>
 
-            <div className="w-full flex flex-col items-start gap-[20px]">
-              <div className="w-full flex flex-col items-start gap-[5px]">
-                <label className="text-[12px] font-normal text-[#737373]">
-                  Mensagem para o WhatsApp
-                </label>
-                <div className="relative w-full border border-[rgba(115,115,115,0.5)] rounded-[5px] p-[10px] min-h-[138px]">
-                  <p className="text-[10px] text-[#737373]">{messageTemplate}</p>
-                </div>
+          <div className="w-full flex flex-col items-start gap-[20px]">
+            <div className="w-full flex flex-col items-start gap-[5px]">
+              <label className="text-[12px] font-normal text-[#737373]">
+                Mensagem para o WhatsApp
+              </label>
+              <div className="relative w-full border border-[rgba(115,115,115,0.5)] rounded-[5px] p-[10px] min-h-[138px]">
+                <p className="text-[10px] text-[#737373]">{messageTemplate}</p>
               </div>
             </div>
           </div>
