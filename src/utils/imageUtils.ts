@@ -1,3 +1,4 @@
+
 /**
  * Utility functions for image handling
  */
@@ -26,7 +27,8 @@ export const AVAILABLE_IMAGES = {
   cinema: "/lovable-uploads/e9857fc5-e7e2-4208-99ae-452d8645297a.png",       // Cinema tickets
   beer: "/lovable-uploads/9bf2ec72-b9cf-4615-913f-b8261e488e60.png",         // Beer/Outback voucher
   toothbrush: "/lovable-uploads/46667bd5-e88a-4654-896b-575930b009f1.png",   // Electric toothbrush
-  tumbler: "/lovable-uploads/082827ab-8847-46da-928b-1aa7ccf628d2.png",      // Tumbler cup
+  tumbler: "/lovable-uploads/082827ab-8847-46da-928b-1aa7ccf628d2.png",      // Tumbler cup 500ml
+  tumbler_large: "/lovable-uploads/ccc23710-74c5-4efb-8480-e0454134139e.png", // Tumbler cup 1,2L
   mug: "/lovable-uploads/8951efa5-0923-4b31-9ce6-a538e97ffa6a.png"           // Mug
 };
 
@@ -42,6 +44,7 @@ export const getImageByName = (name: string): string => {
   if (lowerName.includes('escova') || lowerName.includes('toothbrush')) return AVAILABLE_IMAGES.toothbrush;
   if (lowerName.includes('cinema') || lowerName.includes('ingresso')) return AVAILABLE_IMAGES.cinema;
   if (lowerName.includes('outback') || lowerName.includes('gift card')) return AVAILABLE_IMAGES.beer;
+  if (lowerName.includes('copo') && lowerName.includes('1,2')) return AVAILABLE_IMAGES.tumbler_large;
   if (lowerName.includes('copo') || lowerName.includes('tumbler')) return AVAILABLE_IMAGES.tumbler;
   if (lowerName.includes('caneca') || lowerName.includes('mug')) return AVAILABLE_IMAGES.mug;
   if (lowerName.includes('spa') || lowerName.includes('massage')) return AVAILABLE_IMAGES.massage;
