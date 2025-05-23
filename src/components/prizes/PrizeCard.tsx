@@ -15,7 +15,8 @@ const PrizeCard: React.FC<PrizeCardProps> = ({ image, name, points, userPoints =
   const canRedeem = userPoints >= points;
   const pointsRemaining = points - userPoints;
   
-  const safeImageUrl = getSafeImageUrl(image);
+  // Use the improved getSafeImageUrl function with name matching
+  const safeImageUrl = getSafeImageUrl(image, name);
   console.log(`Prize ${name}: original path=${image}, safe path=${safeImageUrl}`);
   
   return (

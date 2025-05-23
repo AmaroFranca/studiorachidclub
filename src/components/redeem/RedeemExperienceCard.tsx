@@ -3,7 +3,7 @@ import React from "react";
 import { LockOpen, Lock } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
-import { handleImageError, getSafeImageUrl, DEFAULT_IMAGE } from "@/utils/imageUtils";
+import { handleImageError, getSafeImageUrl } from "@/utils/imageUtils";
 
 interface RedeemExperienceCardProps {
   id: number;
@@ -27,7 +27,8 @@ const RedeemExperienceCard: React.FC<RedeemExperienceCardProps> = ({
   const canRedeem = userPoints >= points;
   const pointsRemaining = points - userPoints;
   
-  const safeImageUrl = getSafeImageUrl(image);
+  // Use the improved getSafeImageUrl function with name matching
+  const safeImageUrl = getSafeImageUrl(image, name);
   console.log(`Experience ${name}: original path=${image}, safe path=${safeImageUrl}`);
   
   const handleChange = (checked: boolean) => {
