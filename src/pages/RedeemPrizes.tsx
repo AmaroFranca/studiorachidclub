@@ -11,6 +11,7 @@ import RedeemPrizesHeader from "@/components/redeem/RedeemPrizesHeader";
 import RedeemPrizesInfo from "@/components/redeem/RedeemPrizesInfo";
 import RedeemPrizesGrid from "@/components/redeem/RedeemPrizesGrid";
 import RedeemConfirmationDialog from "@/components/redeem/RedeemConfirmationDialog";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const RedeemPrizes: React.FC = () => {
   const formattedDate = getFormattedDate();
@@ -20,18 +21,23 @@ const RedeemPrizes: React.FC = () => {
   const { prizes, loading: prizesLoading } = useRewards();
   const [selectedPrizes, setSelectedPrizes] = useState<string[]>([]);
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const isMobile = useIsMobile();
   
   // Add useEffect for handling body class when dialog is open
   useEffect(() => {
     if (showConfirmation) {
       document.body.classList.add("dialog-open");
+      // Add blur class for background when dialog is open
+      document.querySelector("main")?.classList.add("backdrop-blur-sm");
     } else {
       document.body.classList.remove("dialog-open");
+      document.querySelector("main")?.classList.remove("backdrop-blur-sm");
     }
     
     // Cleanup on unmount
     return () => {
       document.body.classList.remove("dialog-open");
+      document.querySelector("main")?.classList.remove("backdrop-blur-sm");
     };
   }, [showConfirmation]);
   
@@ -89,16 +95,16 @@ const RedeemPrizes: React.FC = () => {
   // Show loading state
   if (profileLoading || prizesLoading) {
     return (
-      <SidebarProvider defaultOpen={true}>
+      <SidebarProvider defaultOpen={!isMobile}>
         <div className="flex min-h-screen w-full">
           <Sidebar className="border-r bg-[#D9D9D9]">
             <AppSidebar activeSection="redeem" />
           </Sidebar>
           
-          <main className="flex-1 bg-[#EFEFEF] p-6">
+          <main className="flex-1 bg-[#EFEFEF] p-3 md:p-6">
             <div className="max-w-7xl mx-auto">
               <div className="flex items-center justify-center min-h-[400px]">
-                <div className="text-[#737373] text-lg">Carregando prêmios...</div>
+                <div className="text-[#737373] text-base md:text-lg">Carregando prêmios...</div>
               </div>
             </div>
           </main>
@@ -108,13 +114,13 @@ const RedeemPrizes: React.FC = () => {
   }
   
   return (
-    <SidebarProvider defaultOpen={true}>
+    <SidebarProvider defaultOpen={!isMobile}>
       <div className="flex min-h-screen w-full">
         <Sidebar className="border-r bg-[#D9D9D9]">
           <AppSidebar activeSection="redeem" />
         </Sidebar>
         
-        <main className="flex-1 bg-[#EFEFEF] p-6">
+        <main className="flex-1 bg-[#EFEFEF] p-3 md:p-6 transition-all duration-300">
           <div className="max-w-7xl mx-auto">
             {/* Header */}
             <RedeemPrizesHeader formattedDate={formattedDate} />

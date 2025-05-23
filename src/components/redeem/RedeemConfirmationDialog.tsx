@@ -8,6 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface RedeemConfirmationDialogProps {
   open: boolean;
@@ -28,16 +29,18 @@ const RedeemConfirmationDialog: React.FC<RedeemConfirmationDialogProps> = ({
   selectedPrizeNames,
   onConfirm,
 }) => {
+  const isMobile = useIsMobile();
+  
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="bg-[#E4E4E4] border border-[#737373]/50 shadow-[10px_10px_15px_#737373] rounded-[10px] p-6 max-w-[428px] flex flex-col gap-6">
+      <DialogContent className="bg-[#E4E4E4] border border-[#737373]/50 shadow-[10px_10px_15px_#737373] rounded-[10px] p-4 md:p-6 max-w-[428px] mx-3 md:mx-auto flex flex-col gap-4 md:gap-6">
         <DialogHeader className="flex items-start gap-2">
           <div className="flex items-center gap-2">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-[#BFA76F]">
               <path d="M12 1.99L20.53 19H3.47L12 1.99ZM12 0L1.61 21H22.39L12 0Z" fill="#BFA76F"/>
               <path d="M11 10V14H13V10H11ZM11 18V16H13V18H11Z" fill="#BFA76F"/>
             </svg>
-            <DialogTitle className="text-xl text-[#737373] font-semibold">Confirmação de Resgate</DialogTitle>
+            <DialogTitle className="text-lg md:text-xl text-[#737373] font-semibold">Confirmação de Resgate</DialogTitle>
           </div>
         </DialogHeader>
         <div className="flex flex-col gap-2 text-left">
@@ -65,7 +68,7 @@ const RedeemConfirmationDialog: React.FC<RedeemConfirmationDialogProps> = ({
         </DialogDescription>
         <Button 
           onClick={onConfirm}
-          className="bg-[#BFA76F] hover:bg-[#BFA76F]/90 text-white w-full py-3"
+          className="bg-[#BFA76F] hover:bg-[#BFA76F]/90 text-white w-full py-3 min-h-[44px]"
         >
           RESGATAR AGORA!
         </Button>
