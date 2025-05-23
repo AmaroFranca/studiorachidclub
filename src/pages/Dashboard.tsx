@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Gift, Users, CircleDollarSign, Heart, ArrowRight } from "lucide-react";
 import { Sidebar } from "@/components/ui/sidebar";
@@ -13,13 +12,19 @@ import { useReferrals } from "@/hooks/useReferrals";
 import { useIsMobile } from "@/hooks/use-mobile";
 import RewardsCarousel from "@/components/dashboard/RewardsCarousel";
 import MobileDropdown from "@/components/mobile/MobileDropdown";
-
 const Dashboard: React.FC = () => {
-  const { user } = useAuth();
-  const { profile, loading: profileLoading } = useProfile(user);
-  const { referrals, loading: referralsLoading } = useReferrals(user);
+  const {
+    user
+  } = useAuth();
+  const {
+    profile,
+    loading: profileLoading
+  } = useProfile(user);
+  const {
+    referrals,
+    loading: referralsLoading
+  } = useReferrals(user);
   const isMobile = useIsMobile();
-  
   const currentDate = new Date();
   const formattedDate = `${currentDate.getDate()} de ${getMonthName(currentDate.getMonth())} de ${currentDate.getFullYear()}`;
   const totalReferrals = referrals.length;
@@ -37,23 +42,18 @@ const Dashboard: React.FC = () => {
     }
     return 'Usuário';
   };
-
   if (profileLoading || referralsLoading) {
     return <div className="flex items-center justify-center min-h-screen">
         <div className="text-[#737373]">Carregando...</div>
       </div>;
   }
-
-  return (
-    <>
-      {!isMobile && (
-        <Sidebar className="border-r bg-[#D9D9D9]">
+  return <>
+      {!isMobile && <Sidebar className="border-r bg-[#D9D9D9]">
           <AppSidebar activeSection="dashboard" />
-        </Sidebar>
-      )}
+        </Sidebar>}
       
       <main className="flex-1 bg-[#EFEFEF] p-3 md:p-6">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-7xl mx-auto py-0 my-[30px]">
           {/* Header */}
           <div className="flex justify-between items-center mb-6 md:mb-10">
             <h2 className="text-lg md:text-2xl font-semibold text-[#737373]">
@@ -61,9 +61,7 @@ const Dashboard: React.FC = () => {
             </h2>
             <div className="flex items-center gap-2 md:gap-4">
               <span className="text-xs md:text-sm text-[#737373]">{formattedDate}</span>
-              {isMobile && (
-                <MobileDropdown activeSection="dashboard" />
-              )}
+              {isMobile && <MobileDropdown activeSection="dashboard" />}
             </div>
           </div>
           
@@ -152,8 +150,7 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
       </main>
-    </>
-  );
+    </>;
 };
 
 // Helper function to get month name
@@ -161,5 +158,4 @@ function getMonthName(month: number): string {
   const months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
   return months[month];
 }
-
 export default Dashboard;
