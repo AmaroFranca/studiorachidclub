@@ -3,6 +3,7 @@ import React from "react";
 import { LockOpen, Lock } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
+import { handleImageError, DEFAULT_IMAGE } from "@/utils/imageUtils";
 
 interface RedeemPrizeCardProps {
   id: string;
@@ -27,7 +28,7 @@ const RedeemPrizeCard: React.FC<RedeemPrizeCardProps> = ({
   const pointsRemaining = points - userPoints;
   
   // Debug logging
-  console.log(`Prize ${name}: canRedeem=${canRedeem}, userPoints=${userPoints}, requiredPoints=${points}`);
+  console.log(`Prize ${name}: canRedeem=${canRedeem}, userPoints=${userPoints}, requiredPoints=${points}, image=${image}`);
   
   const handleChange = (checked: boolean) => {
     onSelectChange(id, checked);
@@ -37,8 +38,9 @@ const RedeemPrizeCard: React.FC<RedeemPrizeCardProps> = ({
     <Card className={`flex h-32 bg-[#D9D9D9] shadow-[10px_10px_15px_#737373] rounded-lg border-none overflow-hidden cursor-pointer hover:scale-[1.02] transition-transform`}>
       <div className="w-[132px] h-full">
         <img 
-          src={image}
+          src={image || DEFAULT_IMAGE}
           alt={name} 
+          onError={handleImageError}
           className={`w-full h-full object-cover ${!canRedeem ? "grayscale" : ""}`}
         />
       </div>

@@ -3,6 +3,7 @@ import React from "react";
 import { LockOpen, Lock } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
+import { handleImageError, DEFAULT_IMAGE } from "@/utils/imageUtils";
 
 interface RedeemExperienceCardProps {
   id: number;
@@ -34,8 +35,9 @@ const RedeemExperienceCard: React.FC<RedeemExperienceCardProps> = ({
     <Card className={`flex h-32 bg-[#D9D9D9] shadow-[10px_10px_15px_#737373] rounded-lg border-none overflow-hidden cursor-pointer hover:scale-[1.02] transition-transform`}>
       <div className="w-[132px] h-full">
         <img 
-          src={image}
+          src={image || DEFAULT_IMAGE}
           alt={name} 
+          onError={handleImageError}
           className={`w-full h-full object-cover ${!canRedeem && "grayscale"}`}
         />
       </div>

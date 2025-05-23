@@ -2,6 +2,7 @@
 import React from "react";
 import { LockOpen, Lock } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import { handleImageError, DEFAULT_IMAGE } from "@/utils/imageUtils";
 
 interface PrizeCardProps {
   image: string;
@@ -18,8 +19,9 @@ const PrizeCard: React.FC<PrizeCardProps> = ({ image, name, points, userPoints =
     <Card className="flex h-32 bg-[#D9D9D9] shadow-[10px_10px_15px_#737373] rounded-lg border-none overflow-hidden cursor-pointer hover:scale-[1.02] transition-transform max-w-md w-full mx-auto">
       <div className="w-[132px] h-full flex-shrink-0">
         <img 
-          src={image}
+          src={image || DEFAULT_IMAGE}
           alt={name} 
+          onError={handleImageError}
           className={`w-full h-full object-cover ${!canRedeem ? "grayscale" : ""}`}
         />
       </div>
