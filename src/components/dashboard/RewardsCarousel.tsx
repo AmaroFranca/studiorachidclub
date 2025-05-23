@@ -4,11 +4,9 @@ import { Card } from "@/components/ui/card";
 import { useRotatingRewards } from "@/hooks/useRotatingRewards";
 import { handleImageError } from "@/utils/imageUtils";
 import { AnimatePresence, motion } from "framer-motion";
-import { useIsMobile } from "@/hooks/use-mobile";
 
 const RewardsCarousel: React.FC = () => {
   const { currentItem, loading } = useRotatingRewards();
-  const isMobile = useIsMobile();
 
   if (loading) {
     return (
@@ -27,19 +25,19 @@ const RewardsCarousel: React.FC = () => {
           animate={{ opacity: 1 }} 
           exit={{ opacity: 0 }} 
           transition={{ duration: 0.5 }} 
-          className={`flex ${isMobile ? 'flex-col items-center text-center gap-2' : 'gap-3 md:gap-5'} h-full`}
+          className="flex gap-3 md:gap-5 h-full"
         >
           <img 
             alt={currentItem?.name} 
-            className={`${isMobile ? 'w-[150px] h-[150px]' : 'w-20 h-20 md:w-40 md:h-40'} object-cover rounded shadow-md flex-shrink-0`} 
+            className="w-16 h-16 md:w-20 md:h-20 lg:w-40 lg:h-40 object-cover rounded shadow-md flex-shrink-0" 
             src={currentItem?.imageUrl} 
             onError={handleImageError} 
           />
-          <div className={`flex flex-col justify-center h-full overflow-hidden ${isMobile ? 'items-center' : 'my-0 py-[20px] md:py-[50px]'}`}>
-            <h3 className={`font-semibold text-[#737373] ${isMobile ? 'text-center text-sm' : 'text-left text-sm md:text-base'} mb-1`}>
+          <div className="flex flex-col justify-center h-full overflow-hidden my-0 py-2 md:py-[20px] lg:py-[50px]">
+            <h3 className="font-semibold text-[#737373] text-left text-xs md:text-sm lg:text-base mb-1">
               {currentItem?.name}
             </h3>
-            <p className={`font-semibold text-[#bfa76f] ${isMobile ? 'text-center text-xs' : 'text-left text-sm md:text-base'}`}>
+            <p className="font-semibold text-[#bfa76f] text-left text-xs md:text-sm lg:text-base">
               {currentItem?.canRedeem ? "Você pode resgatar!" : `Faltam: ${currentItem?.pointsRemaining} pontos`}
             </p>
           </div>
