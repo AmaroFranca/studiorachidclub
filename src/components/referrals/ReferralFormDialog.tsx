@@ -33,7 +33,7 @@ interface ReferralFormValues {
 interface ReferralFormDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onSubmit: () => void;
+  onSubmit: (data: { name: string; phone: string; relationship: string }) => Promise<void>;
 }
 
 const relationshipOptions = [
@@ -52,9 +52,6 @@ const ReferralFormDialog: React.FC<ReferralFormDialogProps> = ({
   onOpenChange,
   onSubmit 
 }) => {
-  const { user } = useAuth();
-  const { createReferral } = useReferrals(user);
-  
   const form = useForm<ReferralFormValues>({
     defaultValues: {
       name: "",
@@ -66,11 +63,8 @@ const ReferralFormDialog: React.FC<ReferralFormDialogProps> = ({
   const handleSubmit = form.handleSubmit(async (data) => {
     console.log("Form submitted with data:", data);
     
-    const success = await createReferral(data);
-    if (success) {
-      form.reset();
-      onSubmit();
-    }
+    await onSubmit(data);
+    form.reset();
   });
 
   // When dialog opens/closes, add/remove class to body

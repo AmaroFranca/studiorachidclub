@@ -10,6 +10,15 @@ import ReferralPagination from "@/components/referrals/ReferralPagination";
 import { useAuth } from "@/hooks/useAuth";
 import { useReferrals } from "@/hooks/useReferrals";
 
+// UI Referral interface to match ReferralCard expectations
+interface UIReferral {
+  id: number;
+  name: string;
+  referralDate: string;
+  collectedGift: boolean;
+  becamePatient: boolean;
+}
+
 const Referrals: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [filterDays, setFilterDays] = useState<number | null>(null);
@@ -18,17 +27,30 @@ const Referrals: React.FC = () => {
   const { user } = useAuth();
   const { referrals, loading, refetch } = useReferrals(user);
   
+  // Transform database referrals to UI format
+  const transformedReferrals: UIReferral[] = useMemo(() => {
+    return referrals.map(referral => ({
+      id: parseInt(referral.id.slice(0, 8), 16), // Convert UUID to number for UI
+      name: referral.name,
+      referralDate: new Date(referral.created_at).toLocaleDateString('pt-BR'),
+      collectedGift: referral.collected_gift,
+      becamePatient: referral.became_patient,
+    }));
+  }, [referrals]);
+  
   // Filter referrals based on selected period
   const filteredReferrals = useMemo(() => {
-    if (!filterDays) return referrals;
+    if (!filterDays) return transformedReferrals;
     
     const dateLimit = new Date();
     dateLimit.setDate(dateLimit.getDate() - filterDays);
     
-    return referrals.filter(referral => 
-      new Date(referral.created_at) >= dateLimit
-    );
-  }, [referrals, filterDays]);
+    return transformedReferrals.filter(referral => {
+      // Convert back to check against original created_at
+      const originalReferral = referrals.find(r => r.name === referral.name);
+      return originalReferral && new Date(originalReferral.created_at) >= dateLimit;
+    });
+  }, [transformedReferrals, filterDays, referrals]);
 
   // Pagination logic
   const itemsPerPage = isMobile ? 10 : 5;
