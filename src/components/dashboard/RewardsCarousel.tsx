@@ -29,7 +29,7 @@ const RewardsCarousel: React.FC = () => {
         >
           <img 
             alt={currentItem?.name} 
-            className="w-16 h-16 md:w-20 md:h-20 lg:w-40 lg:h-40 object-cover rounded shadow-md flex-shrink-0" 
+            className="w-24 h-24 md:w-28 md:h-28 lg:w-40 lg:h-40 object-cover rounded shadow-md flex-shrink-0" 
             src={currentItem?.imageUrl} 
             onError={handleImageError} 
           />
