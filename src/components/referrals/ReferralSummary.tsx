@@ -6,6 +6,7 @@ import ReferralFormDialog from "./ReferralFormDialog";
 import ReferralSuccessDialog from "./ReferralSuccessDialog";
 import { useAuth } from "@/hooks/useAuth";
 import { useProfile } from "@/hooks/useProfile";
+import { useReferrals } from "@/hooks/useReferrals";
 
 interface ReferralSummaryProps {
   totalReferrals: number;
@@ -22,6 +23,7 @@ const ReferralSummary: React.FC<ReferralSummaryProps> = ({
 }) => {
   const { user } = useAuth();
   const { profile } = useProfile(user);
+  const { createReferral } = useReferrals(user);
   const [formDialogOpen, setFormDialogOpen] = useState(false);
   const [successDialogOpen, setSuccessDialogOpen] = useState(false);
   
@@ -29,10 +31,13 @@ const ReferralSummary: React.FC<ReferralSummaryProps> = ({
     setFormDialogOpen(true);
   };
   
-  const handleFormSubmit = () => {
-    setFormDialogOpen(false);
-    setSuccessDialogOpen(true);
-    onReferralCreated();
+  const handleFormSubmit = async (data: { name: string; phone: string; relationship: string }) => {
+    const success = await createReferral(data);
+    if (success) {
+      setFormDialogOpen(false);
+      setSuccessDialogOpen(true);
+      onReferralCreated();
+    }
   };
 
   return (

@@ -45,7 +45,8 @@ export const useRedeems = (user: User | null) => {
           variant: "destructive",
         });
       } else {
-        setRedeems(data || []);
+        // Type assertion to ensure proper typing
+        setRedeems((data as Redeem[]) || []);
       }
     } catch (error) {
       console.error('Error in fetchRedeems:', error);
@@ -85,7 +86,8 @@ export const useRedeems = (user: User | null) => {
         }
         return false;
       } else {
-        setRedeems(prev => [data, ...prev]);
+        // Type assertion for the returned data
+        setRedeems(prev => [data as Redeem, ...prev]);
         toast({
           title: "Resgate realizado com sucesso!",
           description: "Sua solicitação de resgate foi processada.",

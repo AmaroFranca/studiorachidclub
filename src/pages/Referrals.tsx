@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo } from "react";
 import { SidebarProvider, Sidebar } from "@/components/ui/sidebar";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -6,33 +7,28 @@ import ReferralHeader from "@/components/referrals/ReferralHeader";
 import ReferralSummary from "@/components/referrals/ReferralSummary";
 import ReferralList from "@/components/referrals/ReferralList";
 import ReferralPagination from "@/components/referrals/ReferralPagination";
-import { mockReferrals } from "@/utils/referralData";
-import { isDateWithinDays } from "@/utils/dateUtils";
-import type { Referral } from "@/utils/referralData";
-
-// Add a CSS class to specific elements when a dialog is open to enforce the blur effect
-const applyGlobalBlur = (shouldBlur: boolean) => {
-  if (shouldBlur) {
-    document.body.classList.add('dialog-open');
-  } else {
-    document.body.classList.remove('dialog-open');
-  }
-};
+import { useAuth } from "@/hooks/useAuth";
+import { useReferrals } from "@/hooks/useReferrals";
 
 const Referrals: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [filterDays, setFilterDays] = useState<number | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const isMobile = useIsMobile();
+  const { user } = useAuth();
+  const { referrals, loading, refetch } = useReferrals(user);
   
   // Filter referrals based on selected period
   const filteredReferrals = useMemo(() => {
-    if (!filterDays) return mockReferrals;
+    if (!filterDays) return referrals;
     
-    return mockReferrals.filter(referral => 
-      isDateWithinDays(referral.referralDate, filterDays)
+    const dateLimit = new Date();
+    dateLimit.setDate(dateLimit.getDate() - filterDays);
+    
+    return referrals.filter(referral => 
+      new Date(referral.created_at) >= dateLimit
     );
-  }, [filterDays]);
+  }, [referrals, filterDays]);
 
   // Pagination logic
   const itemsPerPage = isMobile ? 10 : 5;
@@ -55,7 +51,11 @@ const Referrals: React.FC = () => {
     const handleDialogChange = (event: CustomEvent) => {
       const isOpen = event.detail.open;
       setIsDialogOpen(isOpen);
-      applyGlobalBlur(isOpen);
+      if (isOpen) {
+        document.body.classList.add('dialog-open');
+      } else {
+        document.body.classList.remove('dialog-open');
+      }
     };
 
     // Listen for dialog open/close events
@@ -63,7 +63,7 @@ const Referrals: React.FC = () => {
     
     return () => {
       document.removeEventListener('dialog-state-change', handleDialogChange as EventListener);
-      applyGlobalBlur(false);
+      document.body.classList.remove('dialog-open');
     };
   }, []);
 
@@ -94,6 +94,14 @@ const Referrals: React.FC = () => {
     };
   }, []);
 
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-[#737373]">Carregando...</div>
+      </div>
+    );
+  }
+
   return (
     <SidebarProvider defaultOpen={true}>
       <div className="flex min-h-screen w-full">
@@ -116,6 +124,7 @@ const Referrals: React.FC = () => {
                 totalReferrals={totalReferrals}
                 filterDays={filterDays}
                 setFilterDays={setFilterDays}
+                onReferralCreated={refetch}
               />
               
               {/* Referral List */}

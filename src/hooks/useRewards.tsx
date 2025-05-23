@@ -40,7 +40,8 @@ export const useRewards = () => {
           variant: "destructive",
         });
       } else {
-        setRewards(data || []);
+        // Type assertion to ensure proper typing
+        setRewards((data as Reward[]) || []);
       }
     } catch (error) {
       console.error('Error in fetchRewards:', error);
