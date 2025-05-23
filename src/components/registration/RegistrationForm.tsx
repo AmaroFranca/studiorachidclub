@@ -1,11 +1,14 @@
-
 import React, { useState } from "react";
 import { FormInput } from "./FormInput";
 import { Heart } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 export const RegistrationForm: React.FC = () => {
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
   
   const [formData, setFormData] = useState({
     name: "",
@@ -15,18 +18,139 @@ export const RegistrationForm: React.FC = () => {
     confirmPassword: "",
   });
 
+  const [errors, setErrors] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
+    
+    // Clear error when typing
+    if (errors[name as keyof typeof errors]) {
+      setErrors(prev => ({
+        ...prev,
+        [name]: ""
+      }));
+    }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const validateForm = () => {
+    const newErrors = {
+      name: "",
+      email: "",
+      phone: "",
+      password: "",
+      confirmPassword: ""
+    };
+    let isValid = true;
+
+    if (!formData.name.trim()) {
+      newErrors.name = "Nome é obrigatório";
+      isValid = false;
+    }
+
+    if (!formData.email) {
+      newErrors.email = "E-mail é obrigatório";
+      isValid = false;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = "E-mail inválido";
+      isValid = false;
+    }
+
+    if (!formData.phone) {
+      newErrors.phone = "Telefone é obrigatório";
+      isValid = false;
+    }
+
+    if (!formData.password) {
+      newErrors.password = "Senha é obrigatória";
+      isValid = false;
+    } else if (formData.password.length < 6) {
+      newErrors.password = "Senha deve ter pelo menos 6 caracteres";
+      isValid = false;
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      newErrors.confirmPassword = "Senhas não coincidem";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Form submission logic would go here
-    console.log("Form submitted:", formData);
+    
+    if (!validateForm()) return;
+    
+    setIsSubmitting(true);
+    
+    try {
+      console.log('Attempting to sign up user:', formData.email);
+      
+      const { data, error } = await supabase.auth.signUp({
+        email: formData.email,
+        password: formData.password,
+        options: {
+          data: {
+            name: formData.name,
+            phone: formData.phone,
+          }
+        }
+      });
+
+      if (error) {
+        console.error('Signup error:', error);
+        
+        if (error.message.includes('already registered')) {
+          toast.error("Este e-mail já está cadastrado", {
+            description: "Tente fazer login ou use outro e-mail."
+          });
+        } else {
+          toast.error("Erro ao criar conta", {
+            description: error.message
+          });
+        }
+        return;
+      }
+
+      console.log('Signup successful:', data);
+      
+      toast.success("Conta criada com sucesso!", {
+        description: "Você pode fazer login agora."
+      });
+      
+      // Reset form
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        password: "",
+        confirmPassword: "",
+      });
+
+      // Navigate to login
+      navigate('/login');
+      
+    } catch (error) {
+      console.error('Unexpected error:', error);
+      toast.error("Erro inesperado", {
+        description: "Tente novamente em alguns instantes."
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   // Ajustes responsivos
@@ -59,6 +183,7 @@ export const RegistrationForm: React.FC = () => {
               name="name"
               onChange={handleChange}
               value={formData.name}
+              error={errors.name}
             />
 
             <FormInput
@@ -68,6 +193,7 @@ export const RegistrationForm: React.FC = () => {
               name="email"
               onChange={handleChange}
               value={formData.email}
+              error={errors.email}
             />
 
             <FormInput
@@ -77,6 +203,7 @@ export const RegistrationForm: React.FC = () => {
               name="phone"
               onChange={handleChange}
               value={formData.phone}
+              error={errors.phone}
             />
 
             <FormInput
@@ -86,6 +213,7 @@ export const RegistrationForm: React.FC = () => {
               name="password"
               onChange={handleChange}
               value={formData.password}
+              error={errors.password}
             />
 
             <FormInput
@@ -95,17 +223,18 @@ export const RegistrationForm: React.FC = () => {
               name="confirmPassword"
               onChange={handleChange}
               value={formData.confirmPassword}
+              error={errors.confirmPassword}
             />
           </div>
         
           <div className={`w-full flex justify-center ${buttonMargin}`}>
             <button
               type="submit"
-              className={`w-full max-w-[378px] ${buttonPadding} bg-[#BFA76F] rounded-[5px]`}
-              onClick={(e) => handleSubmit(e)}
+              disabled={isSubmitting}
+              className={`w-full max-w-[378px] ${buttonPadding} bg-[#BFA76F] hover:bg-[#A89057] disabled:opacity-50 disabled:cursor-not-allowed rounded-[5px] transition-colors`}
             >
               <span className={`font-poppins font-bold ${buttonFontSize} leading-[24px] text-[#EFEFEF] uppercase`}>
-                ENVIAR MEUS DADOS
+                {isSubmitting ? "CRIANDO CONTA..." : "ENVIAR MEUS DADOS"}
               </span>
             </button>
           </div>

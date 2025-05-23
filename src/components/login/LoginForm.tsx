@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Heart, EyeOff, Eye } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -6,9 +5,12 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
+import { useNavigate } from "react-router-dom";
 
 export const LoginForm: React.FC = () => {
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
   
   const [formData, setFormData] = useState({
     email: "",
@@ -62,9 +64,6 @@ export const LoginForm: React.FC = () => {
     if (!formData.password) {
       newErrors.password = "Senha é obrigatória";
       isValid = false;
-    } else if (formData.password.length < 6) {
-      newErrors.password = "Senha deve ter pelo menos 6 caracteres";
-      isValid = false;
     }
 
     setErrors(newErrors);
@@ -79,22 +78,41 @@ export const LoginForm: React.FC = () => {
     setIsSubmitting(true);
     
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      console.log('Attempting to sign in user:', formData.email);
       
-      // Success message
-      toast.success("Login realizado com sucesso", {
-        description: "Você será redirecionado em instantes."
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: formData.email,
+        password: formData.password,
+      });
+
+      if (error) {
+        console.error('Login error:', error);
+        
+        if (error.message.includes('Invalid login credentials')) {
+          toast.error("Credenciais inválidas", {
+            description: "Verifique seu e-mail e senha."
+          });
+        } else {
+          toast.error("Erro ao fazer login", {
+            description: error.message
+          });
+        }
+        return;
+      }
+
+      console.log('Login successful:', data);
+      
+      toast.success("Login realizado com sucesso!", {
+        description: "Redirecionando..."
       });
       
-      // Reset form
-      setFormData({
-        email: "",
-        password: ""
-      });
+      // Navigate to dashboard
+      navigate('/dashboard');
+      
     } catch (error) {
-      toast.error("Erro ao realizar login", {
-        description: "Verifique suas credenciais e tente novamente."
+      console.error('Unexpected error:', error);
+      toast.error("Erro inesperado", {
+        description: "Tente novamente em alguns instantes."
       });
     } finally {
       setIsSubmitting(false);
@@ -139,14 +157,10 @@ export const LoginForm: React.FC = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className={`h-[38px] text-sm font-poppins border-[rgba(115,115,115,0.5)] focus-visible:ring-[#B1C9C3] px-[11px] py-0 bg-transparent`}
+                  placeholder="Coloque aqui o seu melhor e-mail"
+                  className={`h-[38px] text-sm font-poppins border-[rgba(115,115,115,0.5)] focus-visible:ring-[#B1C9C3] px-[11px] py-0 bg-transparent placeholder:text-[rgba(115,115,115,0.5)]`}
                   aria-invalid={!!errors.email}
                 />
-                {!formData.email && (
-                  <div className="absolute left-[11px] top-[50%] transform -translate-y-1/2 font-poppins font-normal text-[12px] md:text-[10px] leading-[15px] text-[rgba(115,115,115,0.5)]">
-                    Coloque aqui o seu melhor e-mail
-                  </div>
-                )}
                 {errors.email && (
                   <p className="text-red-500 text-[10px] mt-1">{errors.email}</p>
                 )}
@@ -167,14 +181,10 @@ export const LoginForm: React.FC = () => {
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
-                  className="h-[38px] text-sm font-poppins border-[rgba(115,115,115,0.5)] pr-10 focus-visible:ring-[#B1C9C3] px-[11px] py-0 bg-transparent"
+                  placeholder="Insira uma senha"
+                  className="h-[38px] text-sm font-poppins border-[rgba(115,115,115,0.5)] pr-10 focus-visible:ring-[#B1C9C3] px-[11px] py-0 bg-transparent placeholder:text-[rgba(115,115,115,0.5)]"
                   aria-invalid={!!errors.password}
                 />
-                {!formData.password && (
-                  <div className="absolute left-[11px] top-[50%] transform -translate-y-1/2 font-poppins font-normal text-[12px] md:text-[10px] leading-[15px] text-[rgba(115,115,115,0.5)]">
-                    Insira uma senha
-                  </div>
-                )}
                 <button 
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
@@ -196,7 +206,7 @@ export const LoginForm: React.FC = () => {
               className={`w-full max-w-[378px] ${buttonPadding} font-poppins font-bold ${buttonFontSize} leading-[24px] text-[#EFEFEF] uppercase bg-[#BFA76F] hover:bg-[#A89057] rounded-[5px]`}
               disabled={isSubmitting}
             >
-              {isSubmitting ? "Enviando..." : "Enviar meus dados"}
+              {isSubmitting ? "Entrando..." : "Enviar meus dados"}
             </Button>
           </div>
         </form>
