@@ -19,10 +19,19 @@ export const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event
  * List of available uploaded images to use for prizes and experiences
  */
 export const AVAILABLE_IMAGES = {
+  // Experiences
   massage: "/lovable-uploads/f9a968b1-d1a4-4ebd-a3b5-af11022d1c3b.png",      // Massage spa experience
   pool: "/lovable-uploads/4e1a2d53-bfe3-4802-8ab8-efbc1385619a.png",         // Pool resort experience
   dinner: "/lovable-uploads/4f4b790f-74ab-4d46-8ce6-77ff945ba198.png",       // Romantic dinner experience
   beauty: "/lovable-uploads/dfb3b80c-7f29-40d6-b7b1-1d827cd87ff0.png",       // Beauty treatment
+  
+  // Day SPA & Botox session & Day Use Premium
+  day_spa: "/lovable-uploads/311d5302-7995-40d9-be5f-7e133f56ee02.png",      // Day SPA
+  botox: "/lovable-uploads/6c3d02cd-a2bb-4342-b029-77943282812d.png",        // Botox session
+  day_use: "/lovable-uploads/25a966a8-5d2d-4a7f-984e-f09c50bcddac.png",      // Day Use Premium Casal
+  jantar: "/lovable-uploads/58ca1406-12b0-40f7-99e4-3e95399aba2d.png",       // Jantar Romântico
+  
+  // Prizes
   echo: "/lovable-uploads/f7afd67d-49ee-43f6-a067-16c030bc25e4.png",         // Amazon Echo
   cinema: "/lovable-uploads/e9857fc5-e7e2-4208-99ae-452d8645297a.png",       // Cinema tickets
   beer: "/lovable-uploads/9bf2ec72-b9cf-4615-913f-b8261e488e60.png",         // Beer/Outback voucher
@@ -40,17 +49,29 @@ export const AVAILABLE_IMAGES = {
 export const getImageByName = (name: string): string => {
   const lowerName = name.toLowerCase();
   
-  if (lowerName.includes('echo') || lowerName.includes('alexa')) return AVAILABLE_IMAGES.echo;
-  if (lowerName.includes('escova') || lowerName.includes('toothbrush')) return AVAILABLE_IMAGES.toothbrush;
-  if (lowerName.includes('cinema') || lowerName.includes('ingresso')) return AVAILABLE_IMAGES.cinema;
-  if (lowerName.includes('outback') || lowerName.includes('gift card')) return AVAILABLE_IMAGES.beer;
-  if (lowerName.includes('copo') && lowerName.includes('1,2')) return AVAILABLE_IMAGES.tumbler_large;
-  if (lowerName.includes('copo') || lowerName.includes('tumbler')) return AVAILABLE_IMAGES.tumbler;
-  if (lowerName.includes('caneca') || lowerName.includes('mug')) return AVAILABLE_IMAGES.mug;
+  // Specific matches for experiences
+  if (lowerName.includes('day spa') || lowerName.includes('spa day')) return AVAILABLE_IMAGES.day_spa;
+  if (lowerName.includes('botox')) return AVAILABLE_IMAGES.botox;
+  if (lowerName.includes('day use') || lowerName.includes('premium casal')) return AVAILABLE_IMAGES.day_use;
+  if (lowerName.includes('jantar romântico') || lowerName.includes('jantar romantico')) return AVAILABLE_IMAGES.jantar;
+  
+  // Generic experiences
   if (lowerName.includes('spa') || lowerName.includes('massage')) return AVAILABLE_IMAGES.massage;
   if (lowerName.includes('piscina') || lowerName.includes('pool')) return AVAILABLE_IMAGES.pool;
   if (lowerName.includes('jantar') || lowerName.includes('dinner')) return AVAILABLE_IMAGES.dinner;
   if (lowerName.includes('beleza') || lowerName.includes('beauty')) return AVAILABLE_IMAGES.beauty;
+  
+  // Prizes
+  if (lowerName.includes('echo') || lowerName.includes('alexa')) return AVAILABLE_IMAGES.echo;
+  if (lowerName.includes('escova') || lowerName.includes('toothbrush')) return AVAILABLE_IMAGES.toothbrush;
+  if (lowerName.includes('cinema') || lowerName.includes('ingresso')) return AVAILABLE_IMAGES.cinema;
+  if (lowerName.includes('outback') || lowerName.includes('gift card')) return AVAILABLE_IMAGES.beer;
+  
+  // Specific handling for tumblers to distinguish between sizes
+  if (lowerName.includes('copo') && (lowerName.includes('1,2') || lowerName.includes('1.2'))) return AVAILABLE_IMAGES.tumbler_large;
+  if (lowerName.includes('copo') || lowerName.includes('tumbler')) return AVAILABLE_IMAGES.tumbler;
+  
+  if (lowerName.includes('caneca') || lowerName.includes('mug')) return AVAILABLE_IMAGES.mug;
   
   // Default fallback for unknown items
   return DEFAULT_IMAGE;

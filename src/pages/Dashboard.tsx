@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Gift, Users, CircleDollarSign, Heart, ArrowRight } from "lucide-react";
 import { SidebarProvider, Sidebar } from "@/components/ui/sidebar";
@@ -10,6 +9,7 @@ import AppSidebar from "@/components/layout/AppSidebar";
 import { useAuth } from "@/hooks/useAuth";
 import { useProfile } from "@/hooks/useProfile";
 import { useReferrals } from "@/hooks/useReferrals";
+import RewardsCarousel from "@/components/dashboard/RewardsCarousel";
 
 const Dashboard: React.FC = () => {
   const { user } = useAuth();
@@ -103,18 +103,8 @@ const Dashboard: React.FC = () => {
                     </div>
                   </div>
                   
-                  {/* Prize section */}
-                  <div className="border border-[rgba(115,115,115,0.5)] rounded p-4 mb-6 py-[10px]">
-                    <div className="flex gap-5 py-0 my-0">
-                      <img alt="Copo Térmico" className="w-40 h-40 object-cover rounded shadow-md" src="/lovable-uploads/18579148-cc6d-439b-b115-3d26c0b4a45a.png" />
-                      <div className="px-0 py-[50px]">
-                        <h3 className="font-semibold text-[#737373] text-left">Copo Térmico 1,2L</h3>
-                        <p className="font-semibold text-[#bfa76f]">
-                          {userPoints >= 250 ? "Você pode resgatar!" : `Faltam: ${250 - userPoints} pontos`}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+                  {/* Rotating Prize/Experience section */}
+                  <RewardsCarousel />
                   
                   <Link to="/rewards">
                     <Button className="w-full bg-[#B1C9C3] hover:bg-[#9fb9b2] text-[#737373] font-semibold flex gap-2 items-center justify-center py-3 px-4 mx-0 my-[5px]">
