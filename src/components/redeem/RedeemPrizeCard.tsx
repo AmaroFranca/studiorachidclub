@@ -26,6 +26,9 @@ const RedeemPrizeCard: React.FC<RedeemPrizeCardProps> = ({
   const canRedeem = userPoints >= points;
   const pointsRemaining = points - userPoints;
   
+  // Debug logging
+  console.log(`Prize ${name}: canRedeem=${canRedeem}, userPoints=${userPoints}, requiredPoints=${points}`);
+  
   const handleChange = (checked: boolean) => {
     onSelectChange(id, checked);
   };
@@ -36,7 +39,7 @@ const RedeemPrizeCard: React.FC<RedeemPrizeCardProps> = ({
         <img 
           src={image}
           alt={name} 
-          className={`w-full h-full object-cover ${!canRedeem && "grayscale"}`}
+          className={`w-full h-full object-cover ${!canRedeem ? "grayscale" : ""}`}
         />
       </div>
       <div className="flex flex-col flex-1 p-4">

@@ -37,10 +37,19 @@ const RedeemPrizes: React.FC = () => {
   
   const userPoints = profile?.points || 0;
   
+  // Debug logging to check data
+  useEffect(() => {
+    console.log('User points:', userPoints);
+    console.log('Available prizes:', prizes);
+    console.log('Prizes loading:', prizesLoading);
+    console.log('Profile loading:', profileLoading);
+  }, [userPoints, prizes, prizesLoading, profileLoading]);
+  
   // Calculate available prizes based on user points
   const availablePrizes = prizes.filter(prize => userPoints >= prize.points).length;
   
   const handleSelectChange = (id: string, selected: boolean) => {
+    console.log('Prize selection changed:', id, selected);
     if (selected) {
       setSelectedPrizes([...selectedPrizes, id]);
     } else {
