@@ -1,4 +1,3 @@
-
 import React from "react";
 import { List, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -8,21 +7,16 @@ import AppSidebar from "@/components/layout/AppSidebar";
 import { getFormattedDate } from "@/utils/dateUtils";
 import { useIsMobile } from "@/hooks/use-mobile";
 import MobileDropdown from "@/components/mobile/MobileDropdown";
-
 const Rules: React.FC = () => {
   const formattedDate = getFormattedDate();
   const isMobile = useIsMobile();
-  
-  return (
-    <div className="flex min-h-screen w-full">
-      {!isMobile && (
-        <Sidebar className="border-r bg-[#D9D9D9]">
+  return <div className="flex min-h-screen w-full">
+      {!isMobile && <Sidebar className="border-r bg-[#D9D9D9]">
           <AppSidebar activeSection="rules" />
-        </Sidebar>
-      )}
+        </Sidebar>}
       
       <main className="flex-1 bg-[#EFEFEF] p-6">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-5xl mx-auto my-[30px]">
           {/* Header */}
           <div className="flex justify-between items-center mb-6 md:mb-10">
             <div className="flex items-center gap-2">
@@ -33,9 +27,7 @@ const Rules: React.FC = () => {
             </div>
             <div className="flex items-center gap-2 md:gap-4">
               <span className="text-xs md:text-sm text-[#737373]">{formattedDate}</span>
-              {isMobile && (
-                <MobileDropdown activeSection="rules" />
-              )}
+              {isMobile && <MobileDropdown activeSection="rules" />}
             </div>
           </div>
           
@@ -113,8 +105,6 @@ const Rules: React.FC = () => {
           </div>
         </div>
       </main>
-    </div>
-  );
+    </div>;
 };
-
 export default Rules;
