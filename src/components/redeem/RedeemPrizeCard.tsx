@@ -5,13 +5,13 @@ import { Card } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 
 interface RedeemPrizeCardProps {
-  id: number;
+  id: string;
   image: string;
   name: string;
   points: number;
   userPoints: number;
   isSelected: boolean;
-  onSelectChange: (id: number, selected: boolean) => void;
+  onSelectChange: (id: string, selected: boolean) => void;
 }
 
 const RedeemPrizeCard: React.FC<RedeemPrizeCardProps> = ({ 

@@ -26,6 +26,7 @@ export const useRewards = () => {
 
   const fetchRewards = async () => {
     try {
+      console.log('Fetching rewards from database...');
       const { data, error } = await supabase
         .from('rewards_catalog')
         .select('*')
@@ -40,7 +41,7 @@ export const useRewards = () => {
           variant: "destructive",
         });
       } else {
-        // Type assertion to ensure proper typing
+        console.log('Rewards fetched successfully:', data);
         setRewards((data as Reward[]) || []);
       }
     } catch (error) {

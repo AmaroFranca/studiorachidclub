@@ -1,13 +1,24 @@
 
 import React from "react";
 import RedeemPrizeCard from "./RedeemPrizeCard";
-import { Prize } from "@/types/prize";
+
+interface Reward {
+  id: string;
+  name: string;
+  description: string | null;
+  points: number;
+  image_url: string;
+  type: 'prize' | 'experience';
+  active: boolean;
+  created_at: string;
+  updated_at: string;
+}
 
 interface RedeemPrizesGridProps {
-  prizes: Prize[];
+  prizes: Reward[];
   userPoints: number;
-  selectedPrizes: number[];
-  onSelectChange: (id: number, selected: boolean) => void;
+  selectedPrizes: string[];
+  onSelectChange: (id: string, selected: boolean) => void;
 }
 
 const RedeemPrizesGrid: React.FC<RedeemPrizesGridProps> = ({
@@ -23,7 +34,7 @@ const RedeemPrizesGrid: React.FC<RedeemPrizesGridProps> = ({
           key={prize.id}
           id={prize.id}
           name={prize.name}
-          image={prize.image}
+          image={prize.image_url}
           points={prize.points}
           userPoints={userPoints}
           isSelected={selectedPrizes.includes(prize.id)}
