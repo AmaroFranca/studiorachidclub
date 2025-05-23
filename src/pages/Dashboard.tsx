@@ -10,19 +10,24 @@ import { useAuth } from "@/hooks/useAuth";
 import { useProfile } from "@/hooks/useProfile";
 import { useReferrals } from "@/hooks/useReferrals";
 import RewardsCarousel from "@/components/dashboard/RewardsCarousel";
-
 const Dashboard: React.FC = () => {
-  const { user } = useAuth();
-  const { profile, loading: profileLoading } = useProfile(user);
-  const { referrals, loading: referralsLoading } = useReferrals(user);
-  
+  const {
+    user
+  } = useAuth();
+  const {
+    profile,
+    loading: profileLoading
+  } = useProfile(user);
+  const {
+    referrals,
+    loading: referralsLoading
+  } = useReferrals(user);
   const currentDate = new Date();
   const formattedDate = `${currentDate.getDate()} de ${getMonthName(currentDate.getMonth())} de ${currentDate.getFullYear()}`;
-  
   const totalReferrals = referrals.length;
   const userPoints = profile?.points || 0;
-  const progressPercentage = Math.min((userPoints / 1000) * 100, 100);
-  
+  const progressPercentage = Math.min(userPoints / 1000 * 100, 100);
+
   // Determinar o nome a ser exibido
   const getUserDisplayName = () => {
     if (profile?.full_name && profile.full_name.trim() !== '') {
@@ -31,24 +36,16 @@ const Dashboard: React.FC = () => {
     if (user?.email) {
       // Extrair nome do email e capitalizar
       const emailName = user.email.split('@')[0];
-      return emailName
-        .split('.')
-        .map(part => part.charAt(0).toUpperCase() + part.slice(1))
-        .join(' ');
+      return emailName.split('.').map(part => part.charAt(0).toUpperCase() + part.slice(1)).join(' ');
     }
     return 'Usuário';
   };
-  
   if (profileLoading || referralsLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
+    return <div className="flex items-center justify-center min-h-screen">
         <div className="text-[#737373]">Carregando...</div>
-      </div>
-    );
+      </div>;
   }
-  
-  return (
-    <SidebarProvider defaultOpen={true}>
+  return <SidebarProvider defaultOpen={true}>
       <div className="flex min-h-screen w-full">
         <Sidebar className="border-r bg-[#D9D9D9]">
           <AppSidebar activeSection="dashboard" />
@@ -121,15 +118,15 @@ const Dashboard: React.FC = () => {
                   <div className="border border-white/60 rounded-lg p-4 mb-6">
                     <div className="flex items-center mb-4">
                       <Heart className="text-[#BFA76F] mr-2 " />
-                      <h3 className="font-semibold text-center text-4xl">Indique e Ganhe</h3>
+                      <h3 className="font-semibold text-center text-2xl">Indique e Ganhe</h3>
                     </div>
                     
-                    <h2 className="font-semibold mb-4 text-left text-2xl">Indique alguém especial e ganhem juntos.</h2>
+                    <h2 className="font-semibold mb-4 text-left text-xl">Indique alguém especial e ganhem juntos.</h2>
                     
-                    <p className="mb-4 text-left text-xl">
+                    <p className="mb-4 text-left text-lg">
                       Pontos pra você. Presente pra quem você indica.
                     </p>
-                    <p className="mb-4 text-left text-lg">
+                    <p className="mb-4 text-left text-base">
                       Você pode ganhar de 20 a 250 pontos por cada indicação e a pessoa indicada 
                       ganha um presente especial da clínica - um Checkup Digital e desconto na 
                       primeira profilaxia.
@@ -152,8 +149,7 @@ const Dashboard: React.FC = () => {
           </div>
         </main>
       </div>
-    </SidebarProvider>
-  );
+    </SidebarProvider>;
 };
 
 // Helper function to get month name
@@ -161,5 +157,4 @@ function getMonthName(month: number): string {
   const months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
   return months[month];
 }
-
 export default Dashboard;
