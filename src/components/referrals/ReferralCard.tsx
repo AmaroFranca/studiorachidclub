@@ -1,7 +1,5 @@
-
 import React from "react";
 import { Check, User } from "lucide-react";
-
 interface Referral {
   id: number;
   name: string;
@@ -9,14 +7,13 @@ interface Referral {
   collectedGift: boolean;
   becamePatient: boolean;
 }
-
 interface ReferralCardProps {
   referral: Referral;
 }
-
-const ReferralCard: React.FC<ReferralCardProps> = ({ referral }) => {
-  return (
-    <div className="mb-4 bg-[#D9D9D9]/50 rounded-lg shadow-[10px_10px_15px_#737373] p-4 w-full max-w-3xl">
+const ReferralCard: React.FC<ReferralCardProps> = ({
+  referral
+}) => {
+  return <div className="mb-4 bg-[#D9D9D9]/50 rounded-lg shadow-[10px_10px_15px_#737373] p-4 w-full max-w-3xl my-[10px]">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div className="flex items-center gap-4">
           <div className="bg-[#B1C9C3] h-10 w-10 rounded-full flex items-center justify-center text-[#737373] flex-shrink-0">
@@ -38,9 +35,7 @@ const ReferralCard: React.FC<ReferralCardProps> = ({ referral }) => {
                 <span>Presente</span>
               </div>
               <div className="h-6 w-6 relative border-2 border-[#BFA76F] rounded">
-                {referral.collectedGift && (
-                  <Check className="h-5 w-5 absolute text-[#B1C9C3] stroke-[3]" />
-                )}
+                {referral.collectedGift && <Check className="h-5 w-5 absolute text-[#B1C9C3] stroke-[3]" />}
               </div>
             </div>
             
@@ -50,16 +45,12 @@ const ReferralCard: React.FC<ReferralCardProps> = ({ referral }) => {
                 <span>Paciente</span>
               </div>
               <div className="h-6 w-6 relative border-2 border-[#BFA76F] rounded">
-                {referral.becamePatient && (
-                  <Check className="h-5 w-5 absolute text-[#B1C9C3] stroke-[3]" />
-                )}
+                {referral.becamePatient && <Check className="h-5 w-5 absolute text-[#B1C9C3] stroke-[3]" />}
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default ReferralCard;
