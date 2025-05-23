@@ -4,20 +4,24 @@ import { Plus } from "lucide-react";
 import ReferralFilter from "./ReferralFilter";
 import ReferralFormDialog from "./ReferralFormDialog";
 import ReferralSuccessDialog from "./ReferralSuccessDialog";
-import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/useAuth";
+import { useProfile } from "@/hooks/useProfile";
 
 interface ReferralSummaryProps {
   totalReferrals: number;
   filterDays: number | null;
   setFilterDays: (days: number | null) => void;
+  onReferralCreated: () => void;
 }
 
 const ReferralSummary: React.FC<ReferralSummaryProps> = ({ 
   totalReferrals, 
   filterDays, 
-  setFilterDays
+  setFilterDays,
+  onReferralCreated
 }) => {
-  const { toast } = useToast();
+  const { user } = useAuth();
+  const { profile } = useProfile(user);
   const [formDialogOpen, setFormDialogOpen] = useState(false);
   const [successDialogOpen, setSuccessDialogOpen] = useState(false);
   
@@ -26,15 +30,9 @@ const ReferralSummary: React.FC<ReferralSummaryProps> = ({
   };
   
   const handleFormSubmit = () => {
-    // In a real app, this would send the data to a server
-    // For now, just close the form dialog and open the success dialog
     setFormDialogOpen(false);
     setSuccessDialogOpen(true);
-    
-    toast({
-      title: "Indicação enviada com sucesso!",
-      description: "Sua indicação foi registrada.",
-    });
+    onReferralCreated();
   };
 
   return (
@@ -48,7 +46,7 @@ const ReferralSummary: React.FC<ReferralSummaryProps> = ({
               Total de <span className="text-[#BFA76F]">{totalReferrals.toString().padStart(2, '0')}</span> indicações Realizadas
             </h2>
             <p className="text-base font-semibold text-[#737373] text-left">
-              Total de Pontos: <span className="text-[#BFA76F]">270</span> pontos
+              Total de Pontos: <span className="text-[#BFA76F]">{profile?.points || 0}</span> pontos
             </p>
             
             <div className="mt-4">
@@ -72,14 +70,12 @@ const ReferralSummary: React.FC<ReferralSummaryProps> = ({
         </div>
       </div>
 
-      {/* Referral Form Dialog */}
       <ReferralFormDialog 
         open={formDialogOpen} 
         onOpenChange={setFormDialogOpen}
         onSubmit={handleFormSubmit}  
       />
       
-      {/* Success Dialog */}
       <ReferralSuccessDialog 
         open={successDialogOpen} 
         onOpenChange={setSuccessDialogOpen} 

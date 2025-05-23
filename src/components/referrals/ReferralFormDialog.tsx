@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 import { 
   Dialog,
   DialogContent,
-  DialogHeader,
 } from "@/components/ui/dialog";
 import { 
   Form, 
@@ -22,10 +21,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useAuth } from "@/hooks/useAuth";
+import { useReferrals } from "@/hooks/useReferrals";
 
 interface ReferralFormValues {
   name: string;
-  whatsapp: string;
+  phone: string;
   relationship: string;
 }
 
@@ -51,20 +52,28 @@ const ReferralFormDialog: React.FC<ReferralFormDialogProps> = ({
   onOpenChange,
   onSubmit 
 }) => {
+  const { user } = useAuth();
+  const { createReferral } = useReferrals(user);
+  
   const form = useForm<ReferralFormValues>({
     defaultValues: {
       name: "",
-      whatsapp: "",
+      phone: "",
       relationship: "",
     },
   });
 
-  const handleSubmit = form.handleSubmit((data) => {
+  const handleSubmit = form.handleSubmit(async (data) => {
     console.log("Form submitted with data:", data);
-    onSubmit();
+    
+    const success = await createReferral(data);
+    if (success) {
+      form.reset();
+      onSubmit();
+    }
   });
 
-  // When dialog opens/closes, add/remove class to body with same pattern as SettingsDialog
+  // When dialog opens/closes, add/remove class to body
   React.useEffect(() => {
     if (open) {
       document.body.classList.add('dialog-open');
@@ -74,7 +83,6 @@ const ReferralFormDialog: React.FC<ReferralFormDialogProps> = ({
       document.dispatchEvent(new CustomEvent('dialog-state-change', { detail: { open: false } }));
     }
     
-    // Cleanup on unmount
     return () => {
       document.body.classList.remove('dialog-open');
     };
@@ -120,7 +128,7 @@ const ReferralFormDialog: React.FC<ReferralFormDialogProps> = ({
 
                 <FormField
                   control={form.control}
-                  name="whatsapp"
+                  name="phone"
                   render={({ field }) => (
                     <FormItem className="w-full">
                       <FormLabel className="text-[12px] font-normal text-[#737373]">Número com WhatsApp</FormLabel>
