@@ -61,7 +61,7 @@ const ReferralSummary: React.FC<ReferralSummaryProps> = ({
         
         <div className="flex flex-col md:flex-row justify-between md:items-start bg-[#EFEFEF] p-4 rounded-lg mb-8 px-0">
           <div className="mb-4 md:mb-0 text-left">
-            <h2 className="text-xl font-semibold text-[#737373] text-left">
+            <h2 className="font-semibold text-[#737373] text-left text-base">
               Total de <span className="text-[#BFA76F]">{totalReferrals.toString().padStart(2, '0')}</span> indicações Realizadas
             </h2>
             <p className="text-base font-semibold text-[#737373] text-left">
