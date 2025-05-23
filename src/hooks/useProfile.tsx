@@ -51,10 +51,14 @@ export const useProfile = (user: User | null) => {
         await createProfile();
       } else {
         console.log('Profile fetched:', data);
-        // Verificar se o nome está vazio ou é um email
-        if (!data.full_name || data.full_name === '' || data.full_name.includes('@')) {
-          // Atualize com um nome padrão melhor ou com base no email
-          const betterName = user.email ? user.email.split('@')[0] : 'Usuário';
+        // Verificar se o nome está vazio, é um email ou é um nome genérico
+        if (!data.full_name || 
+            data.full_name === '' || 
+            data.full_name.includes('@') ||
+            data.full_name === 'Usuário' ||
+            data.full_name.toLowerCase() === 'usuário') {
+          // Atualize com um nome melhor baseado no email
+          const betterName = extractNameFromEmail(user.email);
           await updateProfile({ full_name: betterName });
         } else {
           setProfile(data);
@@ -67,19 +71,23 @@ export const useProfile = (user: User | null) => {
     }
   };
 
+  const extractNameFromEmail = (email: string | undefined): string => {
+    if (!email) return 'Usuário';
+    
+    const emailName = email.split('@')[0];
+    
+    // Dividir por pontos, underscores ou números e capitalizar cada parte
+    return emailName
+      .split(/[._\d]+/)
+      .filter(part => part.length > 0)
+      .map(part => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase())
+      .join(' ');
+  };
+
   const createProfile = async () => {
     if (!user) return;
 
-    // Extrair um nome de usuário mais amigável do email
-    let userName = 'Usuário';
-    if (user.email) {
-      userName = user.email.split('@')[0];
-      // Capitalize first letter of each word
-      userName = userName
-        .split('.')
-        .map(part => part.charAt(0).toUpperCase() + part.slice(1))
-        .join(' ');
-    }
+    const userName = extractNameFromEmail(user.email);
 
     try {
       console.log('Creating profile with name:', userName);
