@@ -11,34 +11,36 @@ import {
 import { useIsMobile } from "@/hooks/use-mobile";
 
 interface RedeemConfirmationDialogProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
+  isOpen: boolean;
+  onClose: () => void;
+  onConfirm: () => void;
   userPoints: number;
   totalSelectedPoints: number;
   remainingPoints: number;
   selectedPrizeNames: string;
-  onConfirm: () => void;
+  isProcessing: boolean;
 }
 
 const RedeemConfirmationDialog: React.FC<RedeemConfirmationDialogProps> = ({
-  open,
-  onOpenChange,
+  isOpen,
+  onClose,
+  onConfirm,
   userPoints,
   totalSelectedPoints,
   remainingPoints,
   selectedPrizeNames,
-  onConfirm,
+  isProcessing,
 }) => {
   const isMobile = useIsMobile();
   
   return (
     <>
       {/* Background blur overlay */}
-      {open && (
+      {isOpen && (
         <div className="fixed inset-0 z-40 bg-black/20 backdrop-blur-sm" />
       )}
       
-      <Dialog open={open} onOpenChange={onOpenChange}>
+      <Dialog open={isOpen} onOpenChange={onClose}>
         <DialogContent className="bg-[#E4E4E4] border border-[#737373]/50 shadow-[10px_10px_15px_#737373] rounded-[10px] p-4 md:p-6 max-w-[428px] mx-4 md:mx-auto flex flex-col gap-4 md:gap-6 z-50">
           <DialogHeader className="flex items-start gap-2">
             <div className="flex items-center gap-2">
@@ -74,9 +76,10 @@ const RedeemConfirmationDialog: React.FC<RedeemConfirmationDialogProps> = ({
           </DialogDescription>
           <Button 
             onClick={onConfirm}
+            disabled={isProcessing}
             className="bg-[#BFA76F] hover:bg-[#BFA76F]/90 text-white w-full py-3 min-h-[44px]"
           >
-            RESGATAR AGORA!
+            {isProcessing ? "PROCESSANDO..." : "RESGATAR AGORA!"}
           </Button>
         </DialogContent>
       </Dialog>

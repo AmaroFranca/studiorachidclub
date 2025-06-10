@@ -9,6 +9,7 @@ interface RedeemPrizesInfoProps {
   totalSelectedPoints: number;
   remainingPoints: number;
   canRedeem: boolean;
+  isProcessing: boolean;
   onRedeemClick: () => void;
 }
 
@@ -18,6 +19,7 @@ const RedeemPrizesInfo: React.FC<RedeemPrizesInfoProps> = ({
   totalSelectedPoints,
   remainingPoints,
   canRedeem,
+  isProcessing,
   onRedeemClick,
 }) => {
   const isMobile = useIsMobile();
@@ -50,11 +52,11 @@ const RedeemPrizesInfo: React.FC<RedeemPrizesInfoProps> = ({
         
         {/* Redeem Button */}
         <Button 
-          disabled={!canRedeem} 
+          disabled={!canRedeem || isProcessing} 
           onClick={onRedeemClick}
           className="bg-[#BFA76F] hover:bg-[#BFA76F]/90 text-white w-full py-3 min-h-[44px]"
         >
-          RESGATAR AGORA!
+          {isProcessing ? "PROCESSANDO..." : "RESGATAR AGORA!"}
         </Button>
       </div>
     );
@@ -89,11 +91,11 @@ const RedeemPrizesInfo: React.FC<RedeemPrizesInfoProps> = ({
         
         {/* Redeem Button */}
         <Button 
-          disabled={!canRedeem} 
+          disabled={!canRedeem || isProcessing} 
           onClick={onRedeemClick}
           className="bg-[#BFA76F] hover:bg-[#BFA76F]/90 text-white w-full py-3"
         >
-          RESGATAR AGORA!
+          {isProcessing ? "PROCESSANDO..." : "RESGATAR AGORA!"}
         </Button>
       </div>
     </div>
