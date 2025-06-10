@@ -16,6 +16,13 @@ import ProtectedAdminRoute from './components/admin/ProtectedAdminRoute';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminUsers from './pages/admin/AdminUsers';
 
+// Import missing pages
+import Rewards from './pages/Rewards';
+import Prizes from './pages/Prizes';
+import Experiences from './pages/Experiences';
+import RedeemExperiences from './pages/RedeemExperiences';
+import Rules from './pages/Rules';
+
 const queryClient = new QueryClient();
 
 function App() {
@@ -31,6 +38,13 @@ function App() {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/redeem" element={<RedeemPrizes />} />
               <Route path="/refer" element={<Referrals />} />
+              
+              {/* Restored missing routes */}
+              <Route path="/rewards" element={<Rewards />} />
+              <Route path="/prizes" element={<Prizes />} />
+              <Route path="/experiences" element={<Experiences />} />
+              <Route path="/redeem-experiences" element={<RedeemExperiences />} />
+              <Route path="/rules" element={<Rules />} />
               
               {/* Admin Routes */}
               <Route 
