@@ -12,6 +12,13 @@ interface Redeem {
   created_at: string;
 }
 
+interface RedeemProcessResult {
+  success: boolean;
+  points_deducted?: number;
+  remaining_points?: number;
+  error?: string;
+}
+
 export const useRedeems = (user: User | null) => {
   const [redeems, setRedeems] = useState<Redeem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -73,17 +80,19 @@ export const useRedeems = (user: User | null) => {
         return false;
       } else {
         console.log('Redeem processed successfully:', data);
-        if (data.success) {
+        const result = data as RedeemProcessResult;
+        
+        if (result.success) {
           await fetchRedeems(); // Recarregar lista de resgates
           toast({
             title: "Resgate realizado com sucesso!",
-            description: `Você debitou ${data.points_deducted} pontos. Saldo atual: ${data.remaining_points} pontos.`,
+            description: `Você debitou ${result.points_deducted} pontos. Saldo atual: ${result.remaining_points} pontos.`,
           });
           return true;
         } else {
           toast({
             title: "Erro no resgate",
-            description: data.error || "Não foi possível processar o resgate.",
+            description: result.error || "Não foi possível processar o resgate.",
             variant: "destructive",
           });
           return false;
