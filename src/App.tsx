@@ -1,87 +1,62 @@
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './hooks/useAuth';
+import Dashboard from './pages/Dashboard';
+import Login from './pages/Login';
+import Registration from './pages/Registration';
+import Redeem from './pages/Redeem';
+import Refer from './pages/Refer';
+import Profile from './pages/Profile';
+import NotFound from './pages/NotFound';
+import { Toaster } from "@/components/ui/toaster"
+import { QueryClient } from 'react-query';
 
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { SidebarProvider } from "@/components/ui/sidebar";
-import { AuthProvider } from "@/hooks/useAuth";
-import { ProtectedRoute } from "@/components/ProtectedRoute";
-import Index from "./pages/Index";
-import Login from "./pages/Login";
-import Dashboard from "./pages/Dashboard";
-import Rewards from "./pages/Rewards";
-import Prizes from "./pages/Prizes";
-import Experiences from "./pages/Experiences";
-import Referrals from "./pages/Referrals";
-import RedeemPrizes from "./pages/RedeemPrizes";
-import RedeemExperiences from "./pages/RedeemExperiences";
-import Rules from "./pages/Rules";
-import NotFound from "./pages/NotFound";
+// Add new import for admin routes
+import ProtectedAdminRoute from './components/admin/ProtectedAdminRoute';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminUsers from './pages/admin/AdminUsers';
 
-const queryClient = new QueryClient();
-
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <AuthProvider>
-          <SidebarProvider>
-            <div className="min-h-screen flex w-full">
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/dashboard" element={
-                  <ProtectedRoute>
-                    <Dashboard />
-                  </ProtectedRoute>
-                } />
-                <Route path="/rewards" element={
-                  <ProtectedRoute>
-                    <Rewards />
-                  </ProtectedRoute>
-                } />
-                <Route path="/prizes" element={
-                  <ProtectedRoute>
-                    <Prizes />
-                  </ProtectedRoute>
-                } />
-                <Route path="/experiences" element={
-                  <ProtectedRoute>
-                    <Experiences />
-                  </ProtectedRoute>
-                } />
-                <Route path="/referrals" element={
-                  <ProtectedRoute>
-                    <Referrals />
-                  </ProtectedRoute>
-                } />
-                <Route path="/redeem-prizes" element={
-                  <ProtectedRoute>
-                    <RedeemPrizes />
-                  </ProtectedRoute>
-                } />
-                <Route path="/redeem-experiences" element={
-                  <ProtectedRoute>
-                    <RedeemExperiences />
-                  </ProtectedRoute>
-                } />
-                <Route path="/rules" element={
-                  <ProtectedRoute>
-                    <Rules />
-                  </ProtectedRoute>
-                } />
-                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </div>
-          </SidebarProvider>
-        </AuthProvider>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+function App() {
+  return (
+    <QueryClient>
+      <AuthProvider>
+        <div className="min-h-screen bg-gray-50">
+          <Toaster />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Registration />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/redeem" element={<Redeem />} />
+              <Route path="/refer" element={<Refer />} />
+              <Route path="/profile" element={<Profile />} />
+              
+              {/* Admin Routes */}
+              <Route 
+                path="/admin" 
+                element={
+                  <ProtectedAdminRoute>
+                    <AdminDashboard />
+                  </ProtectedAdminRoute>
+                } 
+              />
+              <Route 
+                path="/admin/users" 
+                element={
+                  <ProtectedAdminRoute>
+                    <AdminUsers />
+                  </ProtectedAdminRoute>
+                } 
+              />
+              
+              {/* Not Found Route */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </div>
+      </AuthProvider>
+    </QueryClient>
+  );
+}
 
 export default App;
