@@ -6,13 +6,13 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { handleImageError, getSafeImageUrl } from "@/utils/imageUtils";
 
 interface RedeemExperienceCardProps {
-  id: number;
+  id: string;
   image: string;
   name: string;
   points: number;
   userPoints: number;
   isSelected: boolean;
-  onSelectChange: (id: number, selected: boolean) => void;
+  onSelectChange: (id: string, selected: boolean) => void;
 }
 
 const RedeemExperienceCard: React.FC<RedeemExperienceCardProps> = ({ 

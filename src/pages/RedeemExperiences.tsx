@@ -1,92 +1,130 @@
+
 import React, { useState } from "react";
 import { Sidebar } from "@/components/ui/sidebar";
 import RedeemExperienceCard from "@/components/redeem/RedeemExperienceCard";
 import AppSidebar from "@/components/layout/AppSidebar";
-import { getFormattedDate } from "@/utils/dateUtils";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import StandardHeader from "@/components/layout/StandardHeader";
+import { useAuth } from "@/hooks/useAuth";
+import { useProfile } from "@/hooks/useProfile";
+import { useRewards } from "@/hooks/useRewards";
+import { useRedeems } from "@/hooks/useRedeems";
 
-// Experience data structure
-interface Experience {
-  id: number;
-  name: string;
-  image: string;
-  points: number;
-}
-
-// Updated data for experiences with correct image paths (same as in Experiences.tsx)
-const experiences: Experience[] = [{
-  id: 1,
-  name: "Jantar Romântico",
-  image: "/lovable-uploads/58ca1406-12b0-40f7-99e4-3e95399aba2d.png",
-  points: 1200
-}, {
-  id: 2,
-  name: "Day SPA",
-  image: "/lovable-uploads/311d5302-7995-40d9-be5f-7e133f56ee02.png",
-  points: 1500
-}, {
-  id: 3,
-  name: "Sessão de Botox",
-  image: "/lovable-uploads/6c3d02cd-a2bb-4342-b029-77943282812d.png",
-  points: 1800
-}, {
-  id: 4,
-  name: "Day Use Premium Casal",
-  image: "/lovable-uploads/25a966a8-5d2d-4a7f-984e-f09c50bcddac.png",
-  points: 2000
-}];
 const RedeemExperiences: React.FC = () => {
-  const formattedDate = getFormattedDate();
-  const {
-    toast
-  } = useToast();
-  const [selectedExperiences, setSelectedExperiences] = useState<number[]>([]);
+  const { toast } = useToast();
+  const { user } = useAuth();
+  const { profile, loading: profileLoading, refetch: refetchProfile } = useProfile(user);
+  const { experiences, loading: experiencesLoading } = useRewards();
+  const { createRedeem } = useRedeems(user);
+  const [selectedExperiences, setSelectedExperiences] = useState<string[]>([]);
   const [showConfirmation, setShowConfirmation] = useState(false);
-  const userPoints = 270; // Fixed user points for now
+  const [isProcessing, setIsProcessing] = useState(false);
   const isMobile = useIsMobile();
+
+  const userPoints = profile?.points || 0;
 
   // Calculate available experiences based on user points
   const availableExperiences = experiences.filter(exp => userPoints >= exp.points).length;
-  const handleSelectChange = (id: number, selected: boolean) => {
+
+  const handleSelectChange = (id: string, selected: boolean) => {
     if (selected) {
       setSelectedExperiences([...selectedExperiences, id]);
     } else {
       setSelectedExperiences(selectedExperiences.filter(expId => expId !== id));
     }
   };
+
   const calculateTotalPoints = () => {
     return selectedExperiences.reduce((total, id) => {
       const experience = experiences.find(e => e.id === id);
       return total + (experience ? experience.points : 0);
     }, 0);
   };
+
   const handleRedeemClick = () => {
     setShowConfirmation(true);
   };
-  const handleConfirmRedeem = () => {
-    toast({
-      title: "Resgate realizado com sucesso!",
-      description: `Você resgatou ${selectedExperiences.length} experiência(s) totalizando ${calculateTotalPoints()} pontos.`
-    });
-    setSelectedExperiences([]);
-    setShowConfirmation(false);
+
+  const handleConfirmRedeem = async () => {
+    if (isProcessing) return;
+    
+    setIsProcessing(true);
+    console.log('Processing experience redeems:', selectedExperiences);
+    
+    try {
+      let successCount = 0;
+      let failCount = 0;
+      
+      // Processar cada resgate individualmente
+      for (const experienceId of selectedExperiences) {
+        const success = await createRedeem(experienceId);
+        if (success) {
+          successCount++;
+        } else {
+          failCount++;
+        }
+      }
+      
+      // Recarregar o perfil para atualizar os pontos
+      await refetchProfile();
+      
+      if (successCount > 0) {
+        toast({
+          title: "Resgates processados!",
+          description: `${successCount} experiência(s) resgatada(s) com sucesso${failCount > 0 ? `, ${failCount} falharam` : ''}.`,
+        });
+      }
+      
+      setSelectedExperiences([]);
+      setShowConfirmation(false);
+    } catch (error) {
+      console.error('Error processing experience redeems:', error);
+      toast({
+        title: "Erro no processamento",
+        description: "Ocorreu um erro ao processar os resgates.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsProcessing(false);
+    }
   };
-  const handleCancelRedeem = () => {
-    setShowConfirmation(false);
-  };
+
   const totalSelectedPoints = calculateTotalPoints();
-  const canRedeem = selectedExperiences.length > 0 && totalSelectedPoints <= userPoints;
+  const canRedeem = selectedExperiences.length > 0 && totalSelectedPoints <= userPoints && !isProcessing;
   const remainingPoints = userPoints - totalSelectedPoints;
   const selectedExperienceNames = selectedExperiences.map(id => experiences.find(exp => exp.id === id)?.name).filter(Boolean).join(", ");
-  return <div className="flex min-h-screen w-full">
-      {!isMobile && <Sidebar className="border-r bg-[#D9D9D9]">
+
+  // Show loading state
+  if (profileLoading || experiencesLoading) {
+    return (
+      <div className="flex min-h-screen w-full">
+        {!isMobile && (
+          <Sidebar className="border-r bg-[#D9D9D9]">
+            <AppSidebar activeSection="redeem" />
+          </Sidebar>
+        )}
+        
+        <main className="flex-1 bg-[#EFEFEF] p-3 md:p-6">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex items-center justify-center min-h-[400px]">
+              <div className="text-[#737373] text-base md:text-lg">Carregando experiências...</div>
+            </div>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex min-h-screen w-full">
+      {!isMobile && (
+        <Sidebar className="border-r bg-[#D9D9D9]">
           <AppSidebar activeSection="redeem" />
-        </Sidebar>}
+        </Sidebar>
+      )}
       
       <main className="flex-1 bg-[#EFEFEF] p-3 md:p-6">
         <div className="max-w-7xl mx-auto my-[30px]">
@@ -120,15 +158,30 @@ const RedeemExperiences: React.FC = () => {
               </div>
               
               {/* Redeem Button */}
-              <Button disabled={!canRedeem} onClick={handleRedeemClick} className="bg-[#BFA76F] hover:bg-[#BFA76F]/90 text-white w-full py-2 md:py-3">
-                RESGATAR AGORA!
+              <Button 
+                disabled={!canRedeem} 
+                onClick={handleRedeemClick}
+                className="bg-[#BFA76F] hover:bg-[#BFA76F]/90 text-white w-full py-2 md:py-3"
+              >
+                {isProcessing ? "PROCESSANDO..." : "RESGATAR AGORA!"}
               </Button>
             </div>
           </div>
           
           {/* Experience Cards Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-10">
-            {experiences.map(experience => <RedeemExperienceCard key={experience.id} id={experience.id} name={experience.name} image={experience.image} points={experience.points} userPoints={userPoints} isSelected={selectedExperiences.includes(experience.id)} onSelectChange={handleSelectChange} />)}
+            {experiences.map((experience) => (
+              <RedeemExperienceCard 
+                key={experience.id}
+                id={experience.id}
+                name={experience.name}
+                image={experience.image_url}
+                points={experience.points}
+                userPoints={userPoints}
+                isSelected={selectedExperiences.includes(experience.id)}
+                onSelectChange={(id, selected) => handleSelectChange(id, selected)}
+              />
+            ))}
           </div>
         </div>
       </main>
@@ -158,19 +211,27 @@ const RedeemExperiences: React.FC = () => {
               <p className="text-sm md:text-base text-[#737373] font-medium">Saldo de Pontos:</p>
               <span className="text-sm md:text-base text-[#BFA76F] font-bold">{remainingPoints} pontos</span>
             </div>
-            {selectedExperienceNames && <div className="mt-2">
+            {selectedExperienceNames && (
+              <div className="mt-2">
                 <p className="text-sm md:text-base text-[#737373] font-medium">Experiências selecionadas:</p>
                 <p className="text-sm md:text-base text-[#737373]">{selectedExperienceNames}</p>
-              </div>}
+              </div>
+            )}
           </div>
           <DialogDescription className="text-center text-sm md:text-base text-[#737373]">
             Aperte o botão abaixo para confirmar o Resgate.
           </DialogDescription>
-          <Button onClick={handleConfirmRedeem} className="bg-[#BFA76F] hover:bg-[#BFA76F]/90 text-white w-full py-2 md:py-3">
-            RESGATAR AGORA!
+          <Button 
+            onClick={handleConfirmRedeem}
+            disabled={isProcessing}
+            className="bg-[#BFA76F] hover:bg-[#BFA76F]/90 text-white w-full py-2 md:py-3"
+          >
+            {isProcessing ? "PROCESSANDO..." : "RESGATAR AGORA!"}
           </Button>
         </DialogContent>
       </Dialog>
-    </div>;
+    </div>
+  );
 };
+
 export default RedeemExperiences;

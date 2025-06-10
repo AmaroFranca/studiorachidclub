@@ -222,6 +222,20 @@ export type Database = {
         }
         Returns: undefined
       }
+      get_user_redeems: {
+        Args: { user_id_param: string }
+        Returns: {
+          id: string
+          reward_name: string
+          reward_points: number
+          status: string
+          created_at: string
+        }[]
+      }
+      process_redeem: {
+        Args: { user_id_param: string; reward_id_param: string }
+        Returns: Json
+      }
     }
     Enums: {
       [_ in never]: never

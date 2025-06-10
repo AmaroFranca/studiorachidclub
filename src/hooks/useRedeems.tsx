@@ -6,11 +6,10 @@ import { useToast } from '@/hooks/use-toast';
 
 interface Redeem {
   id: string;
-  user_id: string;
-  reward_id: string;
+  reward_name: string;
+  reward_points: number;
   status: 'pending' | 'approved' | 'delivered' | 'cancelled';
   created_at: string;
-  updated_at: string;
 }
 
 export const useRedeems = (user: User | null) => {
@@ -31,11 +30,10 @@ export const useRedeems = (user: User | null) => {
     if (!user) return;
 
     try {
-      const { data, error } = await supabase
-        .from('redeems')
-        .select('*')
-        .eq('user_id', user.id)
-        .order('created_at', { ascending: false });
+      console.log('Fetching redeems for user:', user.id);
+      const { data, error } = await supabase.rpc('get_user_redeems', {
+        user_id_param: user.id
+      });
 
       if (error) {
         console.error('Error fetching redeems:', error);
@@ -45,7 +43,7 @@ export const useRedeems = (user: User | null) => {
           variant: "destructive",
         });
       } else {
-        // Type assertion to ensure proper typing
+        console.log('Redeems fetched successfully:', data);
         setRedeems((data as Redeem[]) || []);
       }
     } catch (error) {
@@ -59,43 +57,45 @@ export const useRedeems = (user: User | null) => {
     if (!user) return false;
 
     try {
-      const { data, error } = await supabase
-        .from('redeems')
-        .insert({
-          user_id: user.id,
-          reward_id: rewardId,
-          status: 'pending',
-        })
-        .select()
-        .single();
+      console.log('Creating redeem for reward:', rewardId, 'user:', user.id);
+      const { data, error } = await supabase.rpc('process_redeem', {
+        user_id_param: user.id,
+        reward_id_param: rewardId
+      });
 
       if (error) {
         console.error('Error creating redeem:', error);
-        if (error.message.includes('Pontos insuficientes')) {
-          toast({
-            title: "Pontos insuficientes",
-            description: "Você não tem pontos suficientes para resgatar esta recompensa.",
-            variant: "destructive",
-          });
-        } else {
-          toast({
-            title: "Erro ao resgatar recompensa",
-            description: "Não foi possível processar o resgate.",
-            variant: "destructive",
-          });
-        }
+        toast({
+          title: "Erro ao resgatar recompensa",
+          description: "Não foi possível processar o resgate.",
+          variant: "destructive",
+        });
         return false;
       } else {
-        // Type assertion for the returned data
-        setRedeems(prev => [data as Redeem, ...prev]);
-        toast({
-          title: "Resgate realizado com sucesso!",
-          description: "Sua solicitação de resgate foi processada.",
-        });
-        return true;
+        console.log('Redeem processed successfully:', data);
+        if (data.success) {
+          await fetchRedeems(); // Recarregar lista de resgates
+          toast({
+            title: "Resgate realizado com sucesso!",
+            description: `Você debitou ${data.points_deducted} pontos. Saldo atual: ${data.remaining_points} pontos.`,
+          });
+          return true;
+        } else {
+          toast({
+            title: "Erro no resgate",
+            description: data.error || "Não foi possível processar o resgate.",
+            variant: "destructive",
+          });
+          return false;
+        }
       }
     } catch (error) {
       console.error('Error in createRedeem:', error);
+      toast({
+        title: "Erro inesperado",
+        description: "Ocorreu um erro inesperado.",
+        variant: "destructive",
+      });
       return false;
     }
   };
