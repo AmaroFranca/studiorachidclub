@@ -36,8 +36,8 @@ function App() {
               <Route path="/" element={<Index />} />
               <Route path="/login" element={<Login />} />
               <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/redeem" element={<RedeemPrizes />} />
-              <Route path="/refer" element={<Referrals />} />
+              <Route path="/redeem-prizes" element={<RedeemPrizes />} />
+              <Route path="/referrals" element={<Referrals />} />
               
               {/* Restored missing routes */}
               <Route path="/rewards" element={<Rewards />} />

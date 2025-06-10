@@ -16,6 +16,20 @@ const AppSidebar: React.FC<AppSidebarProps> = ({
   const currentPath = location.pathname;
   const [settingsOpen, setSettingsOpen] = useState(false);
   
+  // Determine active sections based on current path if activeSection is not provided
+  const getActiveSection = () => {
+    if (activeSection) return activeSection;
+    
+    if (currentPath === "/dashboard") return "dashboard";
+    if (currentPath === "/rewards" || currentPath === "/prizes" || currentPath === "/experiences") return "rewards";
+    if (currentPath === "/referrals") return "referrals";
+    if (currentPath === "/redeem-prizes" || currentPath === "/redeem-experiences") return "redeem";
+    if (currentPath === "/rules") return "rules";
+    return "dashboard";
+  };
+
+  const currentActiveSection = getActiveSection();
+  
   return <>
       <SettingsDialog open={settingsOpen} onOpenChange={setSettingsOpen} />
       
@@ -29,7 +43,7 @@ const AppSidebar: React.FC<AppSidebarProps> = ({
         <SidebarMenu>
           <SidebarMenuItem>
             <Link to="/dashboard">
-              <SidebarMenuButton className={`rounded-md text-[#737373] px-[15px] ${activeSection === "dashboard" ? "bg-[#B1C9C3]" : "hover:bg-[#B1C9C3]"}`}>
+              <SidebarMenuButton className={`rounded-md text-[#737373] px-[15px] ${currentActiveSection === "dashboard" ? "bg-[#B1C9C3]" : "hover:bg-[#B1C9C3]"}`}>
                 <DashboardIcon className="text-[#BFA76F]" />
                 <span>Painel</span>
               </SidebarMenuButton>
@@ -38,21 +52,21 @@ const AppSidebar: React.FC<AppSidebarProps> = ({
           
           <SidebarMenuItem>
             <Link to="/rewards">
-              <SidebarMenuButton className={`text-[#737373] px-[15px] rounded-md ${activeSection === "rewards" || activeSection === "prizes" || activeSection === "experiences" ? "bg-[#B1C9C3] hover:bg-[#B1C9C3]" : "hover:bg-[#B1C9C3]"}`}>
+              <SidebarMenuButton className={`text-[#737373] px-[15px] rounded-md ${currentActiveSection === "rewards" || currentActiveSection === "prizes" || currentActiveSection === "experiences" ? "bg-[#B1C9C3] hover:bg-[#B1C9C3]" : "hover:bg-[#B1C9C3]"}`}>
                 <Gift className="text-[#BFA76F]" />
                 <span>Recompensas</span>
               </SidebarMenuButton>
             </Link>
           </SidebarMenuItem>
           
-          {(activeSection === "rewards" || activeSection === "prizes" || activeSection === "experiences") && <div className="flex flex-col gap-2 mt-2 bg-transparent">
+          {(currentActiveSection === "rewards" || currentActiveSection === "prizes" || currentActiveSection === "experiences") && <div className="flex flex-col gap-2 mt-2 bg-transparent">
               <Link to="/prizes">
-                <SidebarMenuButton className={`text-left text-sm font-medium pl-[44px] ${activeSection === "prizes" ? "text-[#737373]" : "text-[#BFA76F]"} hover:text-[#737373] transition-colors rounded-md`}>
+                <SidebarMenuButton className={`text-left text-sm font-medium pl-[44px] ${currentPath === "/prizes" ? "text-[#737373]" : "text-[#BFA76F]"} hover:text-[#737373] transition-colors rounded-md`}>
                   <span>Prêmios</span>
                 </SidebarMenuButton>
               </Link>
               <Link to="/experiences">
-                <SidebarMenuButton className={`text-left text-sm font-medium pl-[44px] ${activeSection === "experiences" ? "text-[#737373]" : "text-[#BFA76F]"} hover:text-[#737373] transition-colors rounded-md`}>
+                <SidebarMenuButton className={`text-left text-sm font-medium pl-[44px] ${currentPath === "/experiences" ? "text-[#737373]" : "text-[#BFA76F]"} hover:text-[#737373] transition-colors rounded-md`}>
                   <span>Experiências</span>
                 </SidebarMenuButton>
               </Link>
@@ -60,7 +74,7 @@ const AppSidebar: React.FC<AppSidebarProps> = ({
           
           <SidebarMenuItem>
             <Link to="/referrals">
-              <SidebarMenuButton className={`text-[#737373] hover:bg-[#B1C9C3] px-[15px] ${activeSection === "referrals" || currentPath === "/referrals" ? "bg-[#B1C9C3]" : ""}`}>
+              <SidebarMenuButton className={`text-[#737373] hover:bg-[#B1C9C3] px-[15px] ${currentActiveSection === "referrals" ? "bg-[#B1C9C3]" : ""}`}>
                 <Users className="text-[#BFA76F]" />
                 <span>Indicados</span>
               </SidebarMenuButton>
@@ -69,14 +83,14 @@ const AppSidebar: React.FC<AppSidebarProps> = ({
           
           <SidebarMenuItem>
             <Link to="/redeem-prizes">
-              <SidebarMenuButton className={`text-[#737373] hover:bg-[#B1C9C3] px-[15px] ${activeSection === "redeem" ? "bg-[#B1C9C3]" : ""}`}>
+              <SidebarMenuButton className={`text-[#737373] hover:bg-[#B1C9C3] px-[15px] ${currentActiveSection === "redeem" ? "bg-[#B1C9C3]" : ""}`}>
                 <CircleDollarSign className="text-[#BFA76F]" />
                 <span>Resgates</span>
               </SidebarMenuButton>
             </Link>
           </SidebarMenuItem>
           
-          {(activeSection === "redeem") && <div className="flex flex-col gap-2 mt-2 bg-transparent">
+          {(currentActiveSection === "redeem") && <div className="flex flex-col gap-2 mt-2 bg-transparent">
               <Link to="/redeem-prizes">
                 <SidebarMenuButton className={`text-left text-sm font-medium pl-[44px] ${currentPath === "/redeem-prizes" ? "text-[#737373]" : "text-[#BFA76F]"} hover:text-[#737373] transition-colors rounded-md`}>
                   <span>Prêmios</span>
@@ -91,7 +105,7 @@ const AppSidebar: React.FC<AppSidebarProps> = ({
           
           <SidebarMenuItem>
             <Link to="/rules">
-              <SidebarMenuButton className={`text-[#737373] hover:bg-[#B1C9C3] px-[15px] ${activeSection === "rules" ? "bg-[#B1C9C3]" : ""}`}>
+              <SidebarMenuButton className={`text-[#737373] hover:bg-[#B1C9C3] px-[15px] ${currentActiveSection === "rules" ? "bg-[#B1C9C3]" : ""}`}>
                 <List className="text-[#BFA76F]" />
                 <span>Regras</span>
               </SidebarMenuButton>
