@@ -80,7 +80,7 @@ export const useRedeems = (user: User | null) => {
         return false;
       } else {
         console.log('Redeem processed successfully:', data);
-        const result = data as RedeemProcessResult;
+        const result = data as unknown as RedeemProcessResult;
         
         if (result.success) {
           await fetchRedeems(); // Recarregar lista de resgates
