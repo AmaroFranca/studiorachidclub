@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import { Sidebar } from "@/components/ui/sidebar";
+import { SidebarProvider, Sidebar, SidebarInset } from "@/components/ui/sidebar";
 import AppSidebar from "@/components/layout/AppSidebar";
 import { useToast } from "@/hooks/use-toast";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -87,6 +87,28 @@ const RedeemExperiences: React.FC = () => {
 
   if (profileLoading || experiencesLoading) {
     return (
+      <SidebarProvider>
+        <div className="flex min-h-screen w-full">
+          {!isMobile && (
+            <Sidebar className="border-r bg-[#D9D9D9]">
+              <AppSidebar activeSection="redeem" />
+            </Sidebar>
+          )}
+          
+          <SidebarInset className="flex-1 bg-[#EFEFEF] p-3 md:p-6">
+            <div className="max-w-7xl mx-auto">
+              <div className="flex items-center justify-center min-h-[400px]">
+                <div className="text-[#737373] text-base md:text-lg">Carregando experiências...</div>
+              </div>
+            </div>
+          </SidebarInset>
+        </div>
+      </SidebarProvider>
+    );
+  }
+
+  return (
+    <SidebarProvider>
       <div className="flex min-h-screen w-full">
         {!isMobile && (
           <Sidebar className="border-r bg-[#D9D9D9]">
@@ -94,47 +116,29 @@ const RedeemExperiences: React.FC = () => {
           </Sidebar>
         )}
         
-        <main className="flex-1 bg-[#EFEFEF] p-3 md:p-6">
-          <div className="max-w-7xl mx-auto">
-            <div className="flex items-center justify-center min-h-[400px]">
-              <div className="text-[#737373] text-base md:text-lg">Carregando experiências...</div>
-            </div>
+        <SidebarInset className="flex-1 bg-[#EFEFEF] p-3 md:p-6">
+          <div className="max-w-7xl mx-auto my-[30px]">
+            <StandardHeader title="Resgate de Experiências" backLink="/dashboard" />
+            
+            <ExperienceRedeemInfo
+              availableExperiences={availableExperiences}
+              userPoints={userPoints}
+              totalSelectedPoints={totalSelectedPoints}
+              remainingPoints={remainingPoints}
+              canRedeem={canRedeem}
+              isProcessing={isProcessing}
+              onRedeemClick={handleRedeemClick}
+            />
+            
+            <ExperienceGrid
+              experiences={experiences}
+              userPoints={userPoints}
+              selectedExperiences={selectedExperiences}
+              onSelectChange={handleSelectChange}
+            />
           </div>
-        </main>
+        </SidebarInset>
       </div>
-    );
-  }
-
-  return (
-    <div className="flex min-h-screen w-full">
-      {!isMobile && (
-        <Sidebar className="border-r bg-[#D9D9D9]">
-          <AppSidebar activeSection="redeem" />
-        </Sidebar>
-      )}
-      
-      <main className="flex-1 bg-[#EFEFEF] p-3 md:p-6">
-        <div className="max-w-7xl mx-auto my-[30px]">
-          <StandardHeader title="Resgate de Experiências" backLink="/dashboard" />
-          
-          <ExperienceRedeemInfo
-            availableExperiences={availableExperiences}
-            userPoints={userPoints}
-            totalSelectedPoints={totalSelectedPoints}
-            remainingPoints={remainingPoints}
-            canRedeem={canRedeem}
-            isProcessing={isProcessing}
-            onRedeemClick={handleRedeemClick}
-          />
-          
-          <ExperienceGrid
-            experiences={experiences}
-            userPoints={userPoints}
-            selectedExperiences={selectedExperiences}
-            onSelectChange={handleSelectChange}
-          />
-        </div>
-      </main>
       
       <ExperienceConfirmationDialog
         isOpen={showConfirmation}
@@ -146,7 +150,7 @@ const RedeemExperiences: React.FC = () => {
         selectedExperienceNames={selectedExperienceNames}
         isProcessing={isProcessing}
       />
-    </div>
+    </SidebarProvider>
   );
 };
 
